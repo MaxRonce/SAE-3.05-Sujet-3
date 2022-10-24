@@ -28,7 +28,7 @@ auront des contenus individualisés (valeurs numériques ou autres différentes)
 valeurs initiales données aléatoirement</br>
 - etc.</br>
 - 
-### Technologie souhaitée
+### Technologie souhaitée :
  Application Web pour gérer les questionnaires, questions et imports/exports. </br>
  App mobile éventuelle pour passer des questionnaires.</br>
 
