@@ -31,3 +31,8 @@ valeurs initiales données aléatoirement</br>
 ### Technologie souhaitée
  Application Web pour gérer les questionnaires, questions et imports/exports. </br>
  App mobile éventuelle pour passer des questionnaires.</br>
+
+### Liens :
+
+- Drive : https://drive.google.com/drive/u/0/folders/1gAIm-eTTWUM5OioAYPuapIa_z06Ucecf </br>
+- Trello : https://trello.com/w/sae305sujet3 </br>
