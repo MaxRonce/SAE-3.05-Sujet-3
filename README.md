@@ -36,3 +36,4 @@ valeurs initiales données aléatoirement</br>
 
 - Drive : https://drive.google.com/drive/u/0/folders/1gAIm-eTTWUM5OioAYPuapIa_z06Ucecf </br>
 - Trello : https://trello.com/w/sae305sujet3 </br>
+- Figma : https://www.figma.com/team_invite/redeem/H4xrpIno8YTb91kIYF7qP5
