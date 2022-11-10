@@ -1,0 +1,80 @@
+nav {
+  background: #1D3557;
+  height: auto;
+  overflow: hidden;
+}
+nav ul {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+nav .mid-item {
+  padding-left: 1vw;
+  padding-right: 1vw;
+  font-size: 2.5vw;
+  width: auto;
+  --s: 0.5vw; /* the thickness of the line */
+  --c: #E63946; /* the color */
+  color: rgba(0, 0, 0, 0);
+  padding-bottom: var(--s);
+  background: linear-gradient(90deg, var(--c) 50%, #ffffff 0) calc(100% - var(--_p, 0%))/200% 100%, linear-gradient(var(--c) 0 0) 0% 100%/var(--_p, 0%) var(--s) no-repeat;
+  -webkit-background-clip: text, padding-box;
+  transition: 0.3s;
+}
+nav .mid-item:hover {
+  --_p: 100% ;
+}
+nav li {
+  float: left;
+}
+nav li a {
+  font-family: "Merriweather", serif;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 2vw;
+  text-decoration: none;
+}
+nav .last-item {
+  margin-left: auto;
+  margin-right: 2vw;
+  width: 10%;
+  background: #457B9D;
+  border-radius: 1.6vw;
+  transition: all 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+}
+nav .last-item a {
+  font-size: 2.5vw;
+  transition: all 0.2s ease-in-out;
+}
+nav .last-item a:hover {
+  color: #1D3557;
+}
+nav .last-item:hover {
+  background: #B7E3E5;
+}
+nav .first-item {
+  font-weight: bold;
+  margin-right: auto;
+}
+nav .first-item a {
+  font-family: "Merriweather", sans-serif;
+  font-size: 5vw;
+  transition: all 0.3s ease-in-out;
+}
+nav .first-item .O {
+  position: absolute;
+  transform: translateX(12vw) rotate(2deg);
+  font-size: 5vw;
+  text-shadow: -0.3vw 0.3vw 1px #E63946;
+}
+nav .first-item:hover .Kairo1 {
+  text-shadow: -0.3vw 0.3vw 1px #E63946;
+}
+
+/*# sourceMappingURL=navbar.css.map */
