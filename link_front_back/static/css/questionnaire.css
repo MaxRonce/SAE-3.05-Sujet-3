@@ -1,0 +1,90 @@
+body {
+  background-color: #FFF5EB;
+}
+
+.container {
+  display: flex;
+  font-family: "Merriweather", serif;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1D3557;
+  width: 96%;
+  height: 150vh;
+  border-radius: 5vh;
+  margin: 4vh;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
+.container h1 {
+  color: #FFF5EB;
+  font-size: 5em;
+  font-family: Merriweather, serif;
+  font-weight: bolder;
+  padding-top: 4vh;
+  text-shadow: -1px 4px 0px #E63946;
+}
+.container .titreq {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 95%;
+  height: 7vh;
+  transform: translateY(17vh);
+}
+.container .titreq h3 {
+  color: #FFF5EB;
+  font-size: 4em;
+  font-family: Oswald, serif;
+  font-weight: bolder;
+}
+.container .titreq input[type=text] {
+  width: 80%;
+  height: 3em;
+  border-radius: 0.7em;
+  border: none;
+  font-size: 1.5em;
+}
+.container .delete {
+  background-color: #FFF5EB;
+  margin-top: 22vh;
+  width: 15vw;
+  height: 7.5vh;
+  font-family: Oswald, serif;
+  font-size: 2em;
+  border-radius: 5vh;
+}
+.container .delete:hover {
+  background-color: #E63946;
+  color: #FFF5EB;
+}
+.container .listequestion {
+  color: #FFF5EB;
+  width: 95%;
+  height: 60vh;
+  margin-top: 5vh;
+}
+.container .listequestion h3 {
+  font-size: 2em;
+}
+.container .listequestion .questions {
+  margin-top: 5vh;
+  background-color: #2ca06c;
+  width: 100%;
+  height: 50vh;
+  border-radius: 2vh;
+}
+.container .listequestion .questions .quest {
+  margin-left: 2vh;
+  margin-top: 3vh;
+  font-size: 1.5em;
+  font-family: Oswald, serif;
+}
+.container .buttons {
+  margin-top: 17vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+/*# sourceMappingURL=questionnaire.css.map */

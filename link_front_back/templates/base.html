@@ -1,0 +1,46 @@
+<!-- macro bouton fléché-->
+<!-- TODO permettre d'ajouter les url_for dans la macro pour pouvoir cliquer sur le bouton-->
+{% macro buttonarrow(text, btype) %}
+    <div class="{{btype}}">
+        <div class="background"></div>
+        <div class="arrow">
+            <div class="body"></div>
+            <div class="tip"></div>
+        </div>
+        <span class="text">{{text}}</span>
+    </div>
+{% endmacro %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/navbar.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/button.css')}}">
+    <!-- for page specific stylesheets and page title MANDATORY-->
+    {% block styleandtitle %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="navigation-bar">
+            <nav>
+
+                <ul>
+                    <li class="first-item">
+                        <a class="O">O</a>
+                        <a class="Kairo1">Kair'</a>
+
+                    </li>
+                    <li class="mid-item"><a href="#news">Questionnaires</a></li>
+                    <li class="mid-item"><a href="#contact">Questions</a></li>
+                    <li class="mid-item"><a href="#contact">A propos</a></li>
+                    <li class="last-item" ><a href="#about">Profil</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    {% block content %}{% endblock %}
+
+<script src="button.js"></script>
+</body>
+</html>

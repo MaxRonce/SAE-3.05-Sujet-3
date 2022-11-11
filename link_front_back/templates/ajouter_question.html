@@ -1,30 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "base.html" %}
+    {% block styleandtitle %}
     <title>Ajouter Question</title>
-    <link rel="stylesheet" href="CSS/Ajouter_question.css">
-    <link rel="stylesheet" href="CSS/navbar.css">
-</head>
-<body>
-<header>
-    <div class="navigation-bar">
-        <nav>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/ajouter_question.css')}}">
+    {% endblock %}
 
-            <ul>
-                <li class="first-item">
-                    <a class="O">O</a>
-                    <a class="Kairo1">Kair'</a>
-                </li>
-                <li class="mid-item"><a href="#news">Questionnaires</a></li>
-                <li class="mid-item"><a href="#contact">Questions</a></li>
-                <li class="mid-item"><a href="#contact">A propos</a></li>
-                <li class="last-item"><a href="#about">Profil</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-<div class="Add_question_container">
+    {% block content %}
+    <div class="Add_question_container">
     <h1>Ajouter Question</h1>
     <div id="Add_title">
         <label for="title">Titre</label>
@@ -83,6 +64,5 @@
     </div>
 
 </div>
-<script src="JS/Ajouter_question.js"></script>
-</body>
-</html>
+<script src="{{url_for('static', filename='js/Ajouter_question.js')}}"></script>
+{% endblock %}

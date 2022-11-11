@@ -1,0 +1,99 @@
+body {
+  background-color: #457B9D;
+}
+
+.modal {
+  background-color: #FFF5EB;
+  box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.5);
+  display: none;
+  position: fixed;
+  z-index: 1;
+  width: 32vw;
+  height: 85vh;
+  border-radius: 7vh;
+  overflow: auto;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  left: 35%;
+  top: 10%;
+}
+.modal h1 {
+  font-size: 6vw;
+  font-family: "Oswald", serif;
+  font-weight: bold;
+  margin-left: 2vw;
+  margin-top: 2vh;
+  color: #1D3557;
+  padding-top: 5vh;
+}
+.modal .connexion {
+  display: flex;
+  flex-direction: column;
+  color: #1D3557;
+  font-family: "Merriweather", serif;
+  font-weight: bold;
+  margin-left: 2vw;
+  margin-top: 2vh;
+}
+.modal .connexion h3 {
+  font-family: Oswald, sans-serif;
+  font-size: 3.5vh;
+  padding: 1vh;
+}
+.modal .connexion .forgot-pass {
+  text-decoration: none;
+  font-family: Oswald, serif;
+  font-size: 2vh;
+  margin-top: 2vh;
+  color: #000000;
+  width: 17vh;
+}
+.modal .connexion p {
+  font-family: Oswald, serif;
+  font-size: 1vw;
+  margin-top: 2vh;
+  color: #000000;
+  font-weight: lighter;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 5vh;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  margin: auto;
+  padding: 0;
+  width: 80%;
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 10%;
+    opacity: 1;
+  }
+}
+.box {
+  width: 15vw;
+  height: 6vh;
+  border-radius: 0 1.5vh 1.5vh 1.5vh;
+  border: #457B9D 2px solid;
+  font-family: Oswald, serif;
+}
+
+/*# sourceMappingURL=connexion.css.map */
