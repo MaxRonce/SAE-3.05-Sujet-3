@@ -84,23 +84,35 @@ def get_answers(question):
             answers.append(answer)
     return answers
 def parse(path):
+    """
+    parse the xml file and return a dict with the category name and the questions
+    :param path:
+    :return:
+    """
     tree = ET.parse(path)
     root = tree.getroot()
-    questions = []
+    questions = {}
+    questions_list = []
     for question in root:
         if question.tag == 'question' and question.attrib['type'] == 'category':
             category = {'name': get_cat_name(question), 'info': get_cat_info(question)}
-            print(category)
+            #print(category)
+            questions['category'] = category
 
         elif question.tag == 'question' and question.attrib['type'] != 'category':
             question_dict = get_question(question)
-            print(question_dict)
-            questions.append(question_dict)
+            #print(question_dict)
+            questions_list.append(question_dict)
+    questions['questions'] = questions_list
     return questions
 
 if __name__ == '__main__':
     path = 'data/Multiple.xml'
-    parse(path)
+    path2 = 'data/Vrai_Faux.xml'
+    print(parse(path))
+    print(parse(path2))
+
+
 
 
 

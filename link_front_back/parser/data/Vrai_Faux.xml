@@ -40,4 +40,34 @@
     </answer>
   </question>
 
+
+    <!-- question: 212231  -->
+  <question type="truefalse">
+    <name>
+      <text>Question_2_Edited</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Vrai ou Faux ????????</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>1.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>true</text>
+      <feedback format="html">
+        <text><![CDATA[<p dir="ltr" style="text-align: left;">GG</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>false</text>
+      <feedback format="html">
+        <text><![CDATA[<p dir="ltr" style="text-align: left;">Sad</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
 </quiz>
