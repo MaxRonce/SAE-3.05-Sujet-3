@@ -1,5 +1,4 @@
-DROP DATABASE IF EXISTS KAIRO;
-CREATE DATABASE KAIRO;
+
 USE KAIRO;
 DROP TABLE IF EXISTS REPONSEUSER;
 DROP TABLE IF EXISTS REPONSEQUESTION;
@@ -19,7 +18,7 @@ CREATE TABLE USERS(
 CREATE TABLE QUESTIONNAIRE(
     idQuestionnaire INT(9),
     nom VARCHAR(500),
-    descr VARCHAR(500),
+    info VARCHAR(500),
     idUser INT(9),
     PRIMARY KEY (idQuestionnaire)
 );
@@ -36,9 +35,11 @@ CREATE TABLE QUESTION(
     idQuestion INT(9),
     question VARCHAR(500),
     template VARCHAR(500),
-    valeurPoint INT(9),
-    pointNegatif boolean,
+    valeurPoint INT(2),
+    hidden boolean,
+    pointNegatif INT(2),
     idQuestionnaire INT(9),
+    feedback VARCHAR(500),
     idType INT(9),
     PRIMARY KEY (idQuestion)
 );
@@ -47,8 +48,9 @@ CREATE TABLE QUESTION(
 CREATE TABLE REPONSEQUESTION(
     idReponse INT(9),
     reponse VARCHAR(500),
-    valide boolean,
     idQuestion INT(9),
+    fraction FLOAT,
+    feedback VARCHAR(500),
     PRIMARY KEY (idReponse)
     );
 

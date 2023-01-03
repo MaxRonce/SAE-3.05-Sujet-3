@@ -1,9 +1,9 @@
 INSERT INTO USERS (iduser, prof) VALUES
-    (30,true),
-    (31,true),
-    (32,true),
-    (33,false),
-    (34,false)
+    (0,true),
+    (1,true),
+    (2,true),
+    (3,false),
+    (4,false)
 ;
 
 
@@ -15,9 +15,9 @@ INSERT INTO QUESTIONNAIRE (idQuestionnaire, nom, descr, idUser) VALUES
 
 
 INSERT INTO TYPEQUESTION (idType,nomType) VALUES
-    (11,'QCM'),
-    (12,'Reponse courte'),
-    (13,'Reponse libre')
+    (1,'QCM'),
+    (2,'Reponse courte'),
+    (3,'Reponse libre')
 ;
 
 
@@ -36,7 +36,7 @@ INSERT INTO REPONSEQUESTION (idReponse, reponse, valide, idQuestion) VALUES
     (41,'4',true,20),
     (42,'je suis',true,21),
     (43,'suis',true,21),
-    (44,'sommes',true,21),
+    (44,'sommes',false,21),
     (45,'hello le monde',false,22),
     (46,'bonjour monde',true,22),
     (47,'5460',true,23),
