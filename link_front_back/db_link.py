@@ -5,16 +5,16 @@ from sqlalchemy import create_engine
 import pymysql
 pymysql.install_as_MySQLdb()
 
-login, passwd, serveur, bd = "root", "aled", "localhost", "KAIRO"
+login, passwd, serveur, bd = "root", "ronceray", "localhost", "KAIRO"
 engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
 
 ses = Session(engine)
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 
-User = Base.classes.USERS
-Questionnaire = Base.classes.QUESTIONNAIRE
-Question = Base.classes.QUESTION
+User = Base.classes.users
+Questionnaire = Base.classes.questionnaire
+Question = Base.classes.question
 
 def get_liste_questionnaire(idu: int = None):
     if idu is None:
