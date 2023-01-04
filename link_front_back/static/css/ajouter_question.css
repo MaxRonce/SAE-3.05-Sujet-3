@@ -15,6 +15,7 @@ body {
   padding: 5%;
   margin: auto;
   padding-top: 1%;
+  margin-top: 5%;
   height: fit-content;
   background: #fdf4ea;
   border-radius: 3vw;
@@ -131,4 +132,29 @@ body {
   background-color: #bbbcfd;
 }
 
+#pointneg {
+  display: none;
+  flex-direction: row;
+}
+
+#negq {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#valeurpn {
+  margin-top: 0.8vh;
+  margin-left: 0.5vw;
+}
+#pointneg.label {
+  width: 200px;
+}
+
+#templatef {
+  display : none;
+
+}
+.dashedline {
+
+}
 /*# sourceMappingURL=Ajouter_question.css.map */

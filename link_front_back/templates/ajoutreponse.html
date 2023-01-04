@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+    {% block styleandtitle %}
+    <title>Ajouter Question</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/ajouter_question.css')}}">
+    {% endblock %}
+
+    {% block content %}
+<form role="form"  method="post">
+    {{ form.hidden_tag() }}
+    <div class="Add_question_container">
+    <h1>Ajouter Réponse</h1>
+
+    <div id="Add_title">
+        <label for="title">Réponse: </label>
+        {{ form.reponse }}
+    </div>
+        <div id="nbrep">
+            <label for="nbrep">Fraction</label>
+            {{ form.fraction }}
+        </div>
+
+        {{ form.submit }}
+
+
+
+</div>
+
+
+</form>
+
+
+<script src="{{url_for('static', filename='js/Ajouter_question.js')}}"></script>
+{% endblock %}

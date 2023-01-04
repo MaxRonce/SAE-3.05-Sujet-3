@@ -5,17 +5,17 @@ from sqlalchemy import create_engine
 import pymysql
 pymysql.install_as_MySQLdb()
 
-login, passwd, serveur, bd = "root", "ronceray", "localhost", "KAIRO"
+login, passwd, serveur, bd = "antoninreydet", "root", "localhost", "KAIRO"
 engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
 
 ses = Session(engine)
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 
-User = Base.classes.users
-Questionnaire = Base.classes.questionnaire
-Question = Base.classes.question
-RepQuestion = Base.classes.reponsequestion
+User = Base.classes.USERS
+Questionnaire = Base.classes.QUESTIONNAIRE
+Question = Base.classes.QUESTION
+RepQuestion = Base.classes.REPONSEQUESTION
 
 def get_liste_questionnaire(idu: int = None):
     if idu is None:
@@ -24,20 +24,20 @@ def get_liste_questionnaire(idu: int = None):
         res = ses.query(Questionnaire).filter(Questionnaire.idUser == idu)
     test = list()
     for rw in res:
-        test.append({"idq":rw.idQuestionnaire, "nom":rw.nom, "descr":rw.descr, "idu":rw.idUser})
+        test.append({"idq":rw.idQuestionnaire, "nom":rw.nom, "info":rw.info, "idu":rw.idUser})
     return test
 
 def get_questions(idqq: int):
     res2 = ses.query(Question).filter(Question.idQuestionnaire == idqq)
     test2 = list()
     for rz in res2:
-        test2.append(rz.question)
+        test2.append([rz.idQuestion, rz.question])
     print(test2)
     return test2
 
-def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non'):
+def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = ("question "+ str(ses.query(Question).filter().count() + 1))):
 
-    q = Question(idQuestion=(ses.query(Question).filter().count() + 1), question=question, template=template, valeurPoint=valeur,hidden = hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
+    q = Question(idQuestion=(ses.query(Question).filter().count() + 1), name = name, question=question, template=template, valeurPoint=valeur,hidden = hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
     ses.add(q)
     ses.commit()
 
@@ -55,11 +55,13 @@ def add_questionnaire(questionnaire):
     ses.add(q)
     ses.commit()
     for question in questionnaire['questions']:
-        add_question(question['questiontext'], q.idQuestionnaire, 1, question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'])
+        add_question(question['questiontext'], q.idQuestionnaire, 1, question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'],"Non", question['name'])
         for answer in question['answers']:
             add_answer(answer['text'], answer['fraction'], ses.query(Question).filter(Question.idQuestionnaire == q.idQuestionnaire).count(), answer['feedback'])
 def main():
-    add_questionnaire(q)
+    #add_questionnaire(q)
+    t = get_questions(2)
+    print(t[0])
     #add_question("test", 1, 1)
     #add_answer("test", 100, 1)
     #print(get_liste_questionnaire())
@@ -67,3 +69,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

@@ -26,11 +26,13 @@
             <nav>
 
                 <ul>
+
                     <li class="first-item">
-                        <a class="O">O</a>
-                        <a class="Kairo1">Kair'</a>
+                        <a href="{{url_for('home')}}" class="O">O</a>
+                        <a href="{{url_for('home')}}" class="Kairo1">Kair'</a>
 
                     </li>
+
                     <li class="mid-item"><a href="#news">Questionnaires</a></li>
                     <li class="mid-item"><a href="#contact">Questions</a></li>
                     <li class="mid-item"><a href="#contact">A propos</a></li>
@@ -41,6 +43,9 @@
     </header>
     {% block content %}{% endblock %}
 
+    <footer>
+
+    </footer>
 <script src="button.js"></script>
 </body>
 </html>

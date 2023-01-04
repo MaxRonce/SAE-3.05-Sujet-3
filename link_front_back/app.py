@@ -3,37 +3,65 @@ from flask_wtf import FlaskForm
 from wtforms import *
 from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap
-from db_link import get_liste_questionnaire, get_questions, add_question
+from db_link import get_liste_questionnaire, get_questions, add_question, add_answer
+from werkzeug.utils import secure_filename
+import requests
+import os
+
+UPLOAD_FOLDER = 'static'
+ALLOWED_EXTENSIONS = set(['xml'])
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY']  = 'C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 Bootstrap(app)
 
 
+
 class QuestionForm(FlaskForm):
         titre = StringField('Titre', validators=[DataRequired()])
-        Nbrep = IntegerField('Nombre de réponses', validators=[DataRequired()])
-        Typeq = SelectField('Type de question', choices=[('11', 'QCM'),('12', 'Réponse courte'),('13', 'Réponse longue')], validators=[DataRequired()])
+        Typeq = SelectField('Type de question', choices=[('1', 'QCM'),('2', 'Réponse courte'),('3', 'Réponse longue')], validators=[DataRequired()])
+        points = IntegerField('Points', validators=[DataRequired()])
+        valeurpn = IntegerField('Valeur des points négatifs')
         submit = SubmitField('Submit')
+
+class ReponseForm(FlaskForm):
+        reponse = StringField('Réponse', validators=[DataRequired()])
+        fraction = IntegerField('Fraction', validators=[DataRequired()])
+        submit = SubmitField('Submit')
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 
 
 @app.route("/") # page de base du site
-def aff_home():
+def home():
     return render_template("home.html")
 
-@app.route("/ajout2", methods=['GET', 'POST'])
-def aff_ajoutq():
+@app.route("/ajout/<idq>", methods =("GET","POST" ,))
+def ajoutq(idq):
     form = QuestionForm()
+    if form.valeurpn.data == None:
+        form.valeurpn.data = 0
     if form.validate_on_submit():
-        add_question(form.titre.data, 1, form.Typeq.data)
-        return redirect(url_for('aff_home'))
+        add_question(form.titre.data, idq, form.Typeq.data, 0, form.points.data, "", form.valeurpn.data)
+        return redirect(url_for('ajoutr', idq=(get_questions(idq)[len(get_questions(idq))-1][0])))
     return render_template("test.html", form=form)
 
-
+@app.route("/ajout/<idq>/", methods =("GET","POST" ,))
+def ajoutr(idq):
+    form = ReponseForm()
+    if form.validate_on_submit():
+        add_answer(form.reponse.data, form.fraction.data, idq)
+        return redirect(url_for('questionnaire'))
+    return render_template("ajoutreponse.html", form=form)
 @app.route("/questionnaire", methods=["POST","GET"])
-def aff_questionnaire():
+def questionnaire():
     if request.method == "POST":
         idqq = request.form["idqq"]
         if idqq == '' or not idqq.isnumeric():
@@ -46,21 +74,33 @@ def aff_questionnaire():
     return render_template("questionnaire.html", idqq = idqq, questions = que, lenque = len(que))
 
 @app.route("/about")
-def aff_about():
+def about():
     return render_template("about.html")
 
 @app.route("/connexion")
-def aff_connexion():
+def connexion():
     return render_template("connexion.html")
 
 @app.route("/historique")
-def aff_historique():
+def historique():
     return render_template("historique.html")
 
-@app.route("/ajout")
-def aff_ajout_question():
-    return render_template("ajouter_question.html")
+@app.route('/importexp', methods=['GET', 'POST'])
+def upload_file():
+    data = get_liste_questionnaire()
+    if request.method == 'POST':
+        files = request.files.getlist('file')
+        for file in files:
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                return redirect(url_for('home',
+                                        filename=filename))
+    elif request.method == 'GET':
+        pass
+    return render_template('importexp.html', data=data)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
-

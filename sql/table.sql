@@ -33,6 +33,7 @@ CREATE TABLE TYPEQUESTION(
 
 CREATE TABLE QUESTION(
     idQuestion INT(9),
+    name VARCHAR(100),
     question VARCHAR(500),
     template VARCHAR(500),
     valeurPoint INT(2),
