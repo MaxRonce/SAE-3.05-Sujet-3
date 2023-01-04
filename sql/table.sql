@@ -72,5 +72,18 @@ ALTER TABLE REPONSEUSER     ADD FOREIGN KEY (idUser)            REFERENCES USERS
 ALTER TABLE REPONSEUSER     ADD FOREIGN KEY (idQuestion)        REFERENCES QUESTION(idQuestion);
 ALTER TABLE REPONSEQUESTION ADD FOREIGN KEY (idQuestion)        REFERENCES QUESTION(idQuestion);
 
+INSERT INTO USERS (iduser, prof) VALUES
+    (0,true),
+    (1,true),
+    (2,true),
+    (3,false),
+    (4,false)
+;
 
+INSERT INTO TYPEQUESTION (idType,nomType) VALUES
+    (1,'Reponse courte'),
+    (2,'Reponse libre'),
+    (3, 'truefalse'),
+    (4, 'multichoice')
+;
 
