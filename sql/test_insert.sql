@@ -1,9 +1,9 @@
-INSERT INTO USERS (iduser, prof) VALUES
-    (30,true),
-    (31,true),
-    (32,true),
-    (33,false),
-    (34,false)
+INSERT INTO USERS (iduser,mdpUser, prof) VALUES
+    (30,'60',true),
+    (31,'61',true),
+    (32,'62',true),
+    (33,'63',false),
+    (34,'64',false)
 ;
 
 
@@ -22,12 +22,12 @@ INSERT INTO TYPEQUESTION (idType,nomType) VALUES
 
 
 INSERT INTO QUESTION (idquestion, question, template, valeurPoint, pointNegatif, idquestionnaire, idType) VALUES
-    (20,'2+2',NONE,4,true,1,11),
-    (21,'le verbe être au present à la premiere personne du singulier',NONE,10,true,2,12),
-    (22,'que signifie : hello world',NONE,5,false,3,13),
-    (23,'35*156',NONE, 2, false, 1,11),
-    (24,'le verbe manger au present a la deuxieme personne du pluriel',NONE,10,true,2,12),
-    (25,'que signifie le mot : improve',NONE,2,true,3,12)
+    (20,'2+2',"NONE",4,true,1,11),
+    (21,'le verbe être au present à la premiere personne du singulier',"NONE",10,true,2,12),
+    (22,'que signifie : hello world',"NONE",5,false,3,13),
+    (23,'35*156',"NONE", 2, false, 1,11),
+    (24,'le verbe manger au present a la deuxieme personne du pluriel',"NONE",10,true,2,12),
+    (25,'que signifie le mot : improve',"NONE",2,true,3,12)
 ;
 
 

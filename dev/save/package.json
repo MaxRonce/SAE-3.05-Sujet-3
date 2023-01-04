@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "scss-reset": "^1.2.2"
-  },
-  "devDependencies": {
-    "scss-base": "^1.5.0"
-  }
-}

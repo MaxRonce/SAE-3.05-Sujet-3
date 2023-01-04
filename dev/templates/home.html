@@ -1,0 +1,70 @@
+{% extends "connexion.html" %}
+    {% block styleandtitle %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/swag.css')}}">
+    <meta charset="UTF-8">
+    <title>Kair'0</title>
+    {% endblock %}
+
+    {% block content %}
+    <div class="container">
+        <div class="title">
+            <h1>Choisir une action</h1>
+        </div>
+        <div class="Actions">
+            <!-- TODO créer des macros jinja card-->
+            <div class="card">
+                <div class="action1">
+                    <h2>Gérer mes questions</h2>
+                </div>
+                <div class="face face1">
+                    <ul>
+                        <li>Ajouter</li>
+                        <li>Supprimer</li>
+                        <li>Modifier</li>
+                    </ul>
+
+                </div>
+
+            </div>
+            <div class="card">
+                <div class="action2">
+                    <h2>Gérer mes questionnaires</h2>
+                </div>
+                <div class="face face2">
+                    <ul>
+                        <li>Ajouter</li>
+                        <li>Supprimer</li>
+                        <li>Modifier</li>
+                        <li>Publier un quizz</li>
+                    </ul>
+                </div>
+            </div>
+            <div class ="card">
+                <div class="action3">
+                    <h2>Créer une template</h2>
+                </div>
+                <div class="face face3">
+                    <ul>
+                        <li>Ajouter</li>
+                        <li>Supprimer</li>
+                        <li>Modifier</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <div class="action4">
+                    <h2>Importer Exporter</h2>
+                </div>
+                <div class="face face4">
+                    <ul>
+                        <li>Depuis Moodle</li>
+                        <li>Importer/exporter</li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endblock %}
