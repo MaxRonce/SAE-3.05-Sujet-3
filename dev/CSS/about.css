@@ -2,11 +2,13 @@ body {
   background: #1D3557;
   padding: 0;
   margin: 0;
+  z-index: 0;
 }
 
 #red_square {
   width: 95%;
   height: 200vh;
+  z-index: 1;
   margin-bottom: 100vh;
   background: #E63946;
   transform: rotate(2deg) translateY(-5vh) translateX(-5vw);
@@ -19,6 +21,38 @@ body {
   border-width: 0px 6px 6px 0px;
   border-style: dashed;
   border-color: #ffffff;
+}
+#red_square #red_square_dot #images {
+  position: absolute;
+  top: 75%;
+  left: 10%;
+}
+#red_square #red_square_dot #images img {
+  width: 20%;
+  height: 20%;
+}
+#red_square #red_square_dot #text {
+  position: absolute;
+  top: 87%;
+  left: 10%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+#red_square #red_square_dot #text p {
+  font-family: "Oswald", serif;
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin: 5rem;
+}
+#red_square #red_square_dot #equipe {
+  position: absolute;
+  top: 60%;
+  left: 10%;
+  font-family: "Merriweather", serif;
+  font-weight: normal;
+  font-size: 5rem;
+  color: #ffffff;
 }
 #red_square #red_square_dot #white_square {
   width: 95%;
@@ -34,6 +68,15 @@ body {
   border-width: 0px 6px 6px 0px;
   border-style: dashed;
   border-color: #152a48;
+  font-weight: bold;
+  font-family: Oswald, sans-serif;
+  font-size: 3rem;
+}
+#red_square #red_square_dot #white_square #white_square_dot #explication {
+  position: absolute;
+  top: 55%;
+  left: 10%;
+  color: #1D3557;
 }
 #red_square #red_square_dot #white_square #white_square_dot #connexion_button {
   width: 95%;
@@ -65,15 +108,21 @@ body {
   border-color: white;
 }
 #red_square #red_square_dot #white_square #white_square_dot #connexion_button #connexion_button_dot #title_square #title_square_dot p {
-  font-size: 2.5vw;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 8rem;
+  color: #fdf4ea;
   text-align: center;
   margin-top: 2.5%;
-  display: flex;
   width: 100%;
   height: 100%;
   justify-content: center;
   align-items: center;
+  font-family: "Merriweather", serif;
+}
+#red_square #red_square_dot #white_square #white_square_dot #connexion_button #connexion_button_dot #title_square #title_square_dot p #Title {
+  font-size: 10rem;
+  text-shadow: -4px 4px 0px #E63946;
 }
 
 /*# sourceMappingURL=about.css.map */
