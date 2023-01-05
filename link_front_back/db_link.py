@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 import pymysql
 pymysql.install_as_MySQLdb()
 
-login, passwd, serveur, bd = "antoninreydet", "root", "localhost", "KAIRO"
+login, passwd, serveur, bd = "root", "aled", "localhost", "KAIRO"
 engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
 
 ses = Session(engine)
@@ -27,6 +27,16 @@ def get_liste_questionnaire(idu: int = None):
     test = list()
     for rw in res:
         test.append({"idq":rw.idQuestionnaire, "nom":rw.nom, "info":rw.info, "idu":rw.idUser})
+    return test
+
+def get_liste_id_nom_questionnaire(idu: int = None):
+    if idu is None:
+        res = ses.query(Questionnaire).all()
+    else:
+        res = ses.query(Questionnaire).filter(Questionnaire.idUser == idu)
+    test = list()
+    for rw in res:
+        test.append((rw.idQuestionnaire,rw.nom))
     return test
 
 def get_questionnaire(idq):
