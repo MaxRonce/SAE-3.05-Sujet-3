@@ -27,7 +27,12 @@
             <ul >
                 {% for i in range(lenque)%}
                 <li class="quest">question {{i+1}}
-                    <div>{{questions[i]}}</div>
+                    <div class="question">
+                    <div>{{questions[i]['questiontext']}}</div>
+                    <a href="{{url_for('questionnaire', idquestion = i)}}">
+                    <button class="deleteq"> Supprimer</button>
+                    </a>
+                        </div>
                 </li>
                 {% endfor %}
             </ul>

@@ -15,9 +15,10 @@ INSERT INTO QUESTIONNAIRE (idQuestionnaire, nom, descr, idUser) VALUES
 
 
 INSERT INTO TYPEQUESTION (idType,nomType) VALUES
-    (1,'QCM'),
-    (2,'Reponse courte'),
-    (3,'Reponse libre')
+    (1,'Reponse courte'),
+    (2,'Reponse libre'),
+    (3, 'truefalse'),
+    (4, 'multichoice')
 ;
 
 

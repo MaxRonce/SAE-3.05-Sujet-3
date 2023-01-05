@@ -1,6 +1,4 @@
 #XML to pandas dataframe
-
-import pandas as pd
 import xml.etree.ElementTree as ET
 
 # parse the xml file in data/ folder
@@ -44,13 +42,14 @@ def get_cat_info(root):
 
 def get_question(question):
     question_dict = {}
+    question_dict['type'] = question.attrib['type']
     for child in question:
         if child.tag == 'name':
             question_dict['name'] = child[0].text
         elif child.tag == 'questiontext':
             question_dict['questiontext'] = question_text_cleaner(child[0].text)
         elif child.tag == 'generalfeedback':
-            question_dict['generalfeedback'] = child[0].text
+            question_dict['generalfeedback'] = question_text_cleaner(child[0].text)
         elif child.tag == 'defaultgrade':
             question_dict['defaultgrade'] = child.text
         elif child.tag == 'penalty':
@@ -109,8 +108,10 @@ def parse(path):
 if __name__ == '__main__':
     path = 'data/Multiple.xml'
     path2 = 'data/Vrai_Faux.xml'
+    path3 = 'data/Demp.xml'
     print(parse(path))
     print(parse(path2))
+    print(parse(path3))
 
 
 

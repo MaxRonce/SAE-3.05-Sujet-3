@@ -70,6 +70,18 @@ body {
   background-color: #E63946;
   color: #FFF5EB;
 }
+.container .deleteq {
+  background-color: #FFF5EB;
+  width: 7vw;
+  height: 4.5vh;
+  font-family: Oswald, serif;
+  border-radius: 5vh;
+}
+.container .deleteq:hover {
+  background-color: #E63946;
+  color: #FFF5EB;
+}
+
 .container .listequestion {
   color: #FFF5EB;
   width: 95%;

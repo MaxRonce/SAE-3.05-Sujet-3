@@ -1,9 +1,9 @@
-import XML_parser
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, send_file
 from flask_wtf import FlaskForm
 from wtforms import *
 from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap
+from db_link import get_liste_questionnaire, get_questions, add_question, add_answer, get_liste_id_nom_questionnaire,del_question
 
 import db_link
 from db_link import get_liste_questionnaire, get_questions, add_question, add_answer
@@ -46,7 +46,7 @@ def ajoutq(idq):
         form.valeurpn.data = 0
     if form.validate_on_submit():
         add_question(form.titre.data, idq, form.Typeq.data, 0, form.points.data, "", form.valeurpn.data)
-        return redirect(url_for('ajoutr', idq=(get_questions(idq)[len(get_questions(idq))-1][0])))
+        return redirect(url_for('ajoutr', idq=(get_questions(idq)[len(get_questions(idq))-1]['idq'])))
     return render_template("test.html", form=form)
 
 @app.route("/ajout/<idq>/", methods =("GET","POST" ,))
@@ -69,6 +69,11 @@ def questionnaire():
         que = []
     return render_template("questionnaire.html", idqq = idqq, questions = que, lenque = len(que))
 
+@app.route("/questionnaire/<idq>", methods=["POST","GET"])
+def question(idq):
+    del_question(idq)
+    return redirect(url_for('questionnaire'))
+
 @app.route("/about")
 def about():
     return render_template("about.html")
@@ -81,20 +86,6 @@ def connexion():
 def historique():
     return render_template("historique.html")
 
-@app.route('/importexp', methods=['GET', 'POST'])
-def upload_file():
-    data = get_liste_questionnaire()
-    if request.method == 'POST':
-        files = request.files.getlist('file')
-        for file in files:
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                return redirect(url_for('home',
-                                        filename=filename))
-    elif request.method == 'GET':
-        pass
-    return render_template('importexp.html', data=data)
 
 class uploadFileForm(FlaskForm):
     file = FileField('Fichier à importer')
@@ -118,7 +109,22 @@ def uploader_file():
             return "file uploaded successfully"
     return render_template('import.html', form=form)
 
+class DownloadForm(FlaskForm):
+    liste = SelectField("Questionnaire", choices=get_liste_id_nom_questionnaire())
+    submit = SubmitField('submit')
 
+@app.route('/export', methods=['GET', 'POST'])
+def downloader_file():
+    form = DownloadForm()
+    if not form.validate_on_submit():
+        return render_template("export.html", form=form)
+    return redirect(url_for("download_file", idQ=form.liste.data))
+
+@app.route('/downloadfile/<idQ>')
+def download_file(idQ):
+    # dict_xml = get_dict_from_DB(idQ)
+    # writter("test1.xml", "link_front_back/static/out/", dict_xml, True)
+    return send_file("static/out/test1.xml", as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True)

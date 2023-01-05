@@ -58,4 +58,4 @@ def writter(filename :str, path:str, data:dict, category:bool=True):
 
 
 if __name__ == "__main__":
-        writter('Demo.xml', 'out/', get_dict_from_DB(1), category=True)
+        writter('VF.xml', 'out/', get_dict_from_DB(2), category=True)
