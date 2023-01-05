@@ -64,10 +64,16 @@ def questionnaire():
             que = []
         else:
             que = get_questions(int(idqq))
+            listid = []
+            for i in range(len(que)):
+                listid.append(que[i]['idq'])
+
     else:
         idqq = ''
         que = []
-    return render_template("questionnaire.html", idqq = idqq, questions = que, lenque = len(que))
+        listid = []
+
+    return render_template("questionnaire.html", idqq = idqq, questions = que, lenque = len(que), listid = listid)
 
 @app.route("/questionnaire/<idq>", methods=["POST","GET"])
 def question(idq):
