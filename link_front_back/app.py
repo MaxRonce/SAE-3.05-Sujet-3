@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_wtf import FlaskForm
 from wtforms import *
 from wtforms.validators import DataRequired
@@ -9,12 +9,12 @@ import requests
 import os
 
 UPLOAD_FOLDER = 'static'
-ALLOWED_EXTENSIONS = set(['xml'])
+ALLOWED_EXTENSIONS = {'xml'}
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY']  = 'C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = 'static/uploaded_files'
 
 
 Bootstrap(app)
@@ -32,11 +32,6 @@ class ReponseForm(FlaskForm):
         reponse = StringField('Réponse', validators=[DataRequired()])
         fraction = IntegerField('Fraction', validators=[DataRequired()])
         submit = SubmitField('Submit')
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
 
 
 @app.route("/") # page de base du site
@@ -99,6 +94,28 @@ def upload_file():
     elif request.method == 'GET':
         pass
     return render_template('importexp.html', data=data)
+
+class uploadFileForm(FlaskForm):
+    file = FileField('Fichier à importer')
+    submit = SubmitField('Submit')
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/import', methods=['GET', 'POST'])
+def uploader_file():
+    form = uploadFileForm()
+    if form.validate_on_submit() and request.method == 'POST':
+        file = form.file.data
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+            return "file uploaded successfully"
+    return render_template('import.html', form=form)
 
 
 
