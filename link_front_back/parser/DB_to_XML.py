@@ -17,9 +17,9 @@ import db_link
 #   'hidden': '0',
 #   'answers': [{'fraction': '0', 'text': 'true', 'feedback': '\n        '}, {'fraction': '100', 'text': 'false', 'feedback': '\n        '}]},
 
-def main():
+def get_dict_from_DB(id):
     #get the selected questionnaire
-    questionnaires = db_link.get_questionnaire(1)
+    questionnaires = db_link.get_questionnaire(id)
     #for each questionnaire
     #get all the questions in the 1st questionnaire
     questions = db_link.get_questions(questionnaires[0]['idq'])
@@ -39,9 +39,9 @@ def main():
         question['answers'] = []
         for answer in answers:
             if question['idq'] == answer['idq']:
-                answer.pop('idq')
-                answer.pop('idr')
                 question['answers'].append(answer)
+                #print(question['answers'])
+
         question.pop('idq')
         question.pop('idt')
         question.pop('idQuestionnaire')
@@ -49,11 +49,11 @@ def main():
 
 
     full_question = {'category': questionnaires[0], 'questions': questions}
-    print(full_question)
+    #print(full_question)
     return full_question
 
 if __name__ == "__main__":
-    main()
+    get_dict_from_DB()
 
 
 

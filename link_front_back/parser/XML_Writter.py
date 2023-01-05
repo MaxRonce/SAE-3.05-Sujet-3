@@ -1,5 +1,5 @@
-from DB_to_XML import main
-def writter(filename :str, path:str, data:dict, category:bool=False):
+from DB_to_XML import get_dict_from_DB
+def writter(filename :str, path:str, data:dict, category:bool=True):
     """Create a file with the data in the dict"""
     #create the file
     with open(path + filename, 'w', encoding="UTF-8") as file:
@@ -10,10 +10,10 @@ def writter(filename :str, path:str, data:dict, category:bool=False):
         if category:
             file.writelines('\t<question type="category">\n')
             file.writelines('\t\t<category>\n')
-            file.writelines('\t\t\t<text>'+data['category']['nom']+'</text>\n')
+            file.writelines('\t\t\t<text>'+str(data['category']['nom'])+'</text>\n')
             file.writelines('\t\t</category>\n')
             file.writelines('\t<info format="html">\n')
-            file.writelines('\t\t<text>'+data['category']['info']+'</text>\n')
+            file.writelines('\t\t<text>'+str(data['category']['info'])+'</text>\n')
             file.writelines('\t</info>\n')
             file.writelines('\t<idnumber></idnumber>\n')
             file.writelines('\t</question>\n')
@@ -23,14 +23,14 @@ def writter(filename :str, path:str, data:dict, category:bool=False):
         for question in data['questions']:
             file.writelines('\t<question type="truefalse">\n')
             file.writelines('\t\t<name>\n')
-            file.writelines('\t\t\t<text>'+question['name']+'</text>\n')
+            file.writelines('\t\t\t<text>'+str(question['name'])+'</text>\n')
             file.writelines('\t\t</name>\n')
             file.writelines('\t\t<questiontext format="html">\n')
-            file.writelines('\t\t\t<text><![CDATA[<p dir="ltr" style="text-align: left;">'+question['questiontext']+'</p>]]></text>\n')
+            file.writelines('\t\t\t<text><![CDATA[<p dir="ltr" style="text-align: left;">'+str(question['questiontext'])+'</p>]]></text>\n')
             file.writelines('\t\t</questiontext>\n')
             file.writelines('\t\t<generalfeedback format="html">\n')
             if question['generalfeedback'] is not None:
-                file.writelines('\t\t\t<text><![CDATA[<p dir="ltr" style="text-align: left;">'+question['generalfeedback']+'</p>]]></text>\n')
+                file.writelines('\t\t\t<text><![CDATA[<p dir="ltr" style="text-align: left;">'+str(question['generalfeedback'])+'</p>]]></text>\n')
             else:
                 file.writelines('\t\t\t<text></text>\n')
             file.writelines('\t\t</generalfeedback>\n')
@@ -42,10 +42,10 @@ def writter(filename :str, path:str, data:dict, category:bool=False):
             #write the answers
             for answer in question['answers']:
                 file.writelines('\t\t<answer fraction="'+str(answer['fraction'])+'" format="moodle_auto_format">\n')
-                file.writelines('\t\t\t<text>'+answer['text']+'</text>\n')
+                file.writelines('\t\t\t<text>'+str(answer['text'])+'</text>\n')
                 file.writelines('\t\t\t<feedback format="html">\n')
                 if answer['feedback'] is not None:
-                    file.writelines('\t\t\t\t<text><![CDATA[<p dir="ltr" style="text-align: left;">'+answer['feedback']+'</p>]]></text>\n')
+                    file.writelines('\t\t\t\t<text><![CDATA[<p dir="ltr" style="text-align: left;">'+str(answer['feedback'])+'</p>]]></text>\n')
                 else:
                     file.writelines('\t\t\t\t<text></text>\n')
                 file.writelines('\t\t\t</feedback>\n')
@@ -58,4 +58,4 @@ def writter(filename :str, path:str, data:dict, category:bool=False):
 
 
 if __name__ == "__main__":
-        writter('test.xml', 'out/', main(), category=True)
+        writter('Demo.xml', 'out/', get_dict_from_DB(1), category=True)
