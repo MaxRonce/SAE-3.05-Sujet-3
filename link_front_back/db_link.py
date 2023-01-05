@@ -5,18 +5,18 @@ from sqlalchemy import create_engine
 import pymysql
 pymysql.install_as_MySQLdb()
 
-login, passwd, serveur, bd = "root", "ronceray", "localhost", "KAIRO"
+login, passwd, serveur, bd = "root", "aled", "localhost", "KAIRO"
 engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
 
 ses = Session(engine)
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 
-Type = Base.classes.typequestion
-User = Base.classes.users
-Questionnaire = Base.classes.questionnaire
-Question = Base.classes.question
-RepQuestion = Base.classes.reponsequestion
+Type = Base.classes.TYPEQUESTION
+User = Base.classes.USERS
+Questionnaire = Base.classes.QUESTIONNAIRE
+Question = Base.classes.QUESTION
+RepQuestion = Base.classes.REPONSEQUESTION
 
 q = {'category': {'name': '$module$/top/Défaut pour Test_maxime', 'info': 'La catégorie par défaut pour les questions partagées dans le contexte «\xa0Test_maxime\xa0».'}, 'questions': [{'type': 'truefalse', 'name': 'Question_1_Edited', 'questiontext': 'Vrai ou Faux ????????', 'generalfeedback': None, 'defaultgrade': '1.0000000', 'penalty': '1.0000000', 'hidden': '0', 'answers': [{'fraction': '0', 'text': 'true', 'feedback': '\n        '}, {'fraction': '100', 'text': 'false', 'feedback': '\n        '}]}, {'type': 'truefalse', 'name': 'Question_2_Edited', 'questiontext': 'Vrai ou Faux ????????', 'generalfeedback': None, 'defaultgrade': '1.0000000', 'penalty': '1.0000000', 'hidden': '0', 'answers': [{'fraction': '0', 'text': 'true', 'feedback': '\n        '}, {'fraction': '100', 'text': 'false', 'feedback': '\n        '}]}]}
 def get_liste_questionnaire(idu: int = None):
@@ -27,6 +27,16 @@ def get_liste_questionnaire(idu: int = None):
     test = list()
     for rw in res:
         test.append({"idq":rw.idQuestionnaire, "nom":rw.nom, "info":rw.info, "idu":rw.idUser})
+    return test
+
+def get_liste_id_nom_questionnaire(idu: int = None):
+    if idu is None:
+        res = ses.query(Questionnaire).all()
+    else:
+        res = ses.query(Questionnaire).filter(Questionnaire.idUser == idu)
+    test = list()
+    for rw in res:
+        test.append((rw.idQuestionnaire,rw.nom))
     return test
 
 def get_questionnaire(idq):
