@@ -1,11 +1,11 @@
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 
 import pymysql
 pymysql.install_as_MySQLdb()
 
-login, passwd, serveur, bd = "root", "aled", "localhost", "KAIRO"
+login, passwd, serveur, bd = "antoninreydet", "root", "localhost", "KAIRO"
 engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
 
 ses = Session(engine)
@@ -17,6 +17,8 @@ User = Base.classes.USERS
 Questionnaire = Base.classes.QUESTIONNAIRE
 Question = Base.classes.QUESTION
 RepQuestion = Base.classes.REPONSEQUESTION
+
+nbquestion =ses.query(func.max(Question.idQuestion)).scalar()
 
 q = {'category': {'name': '$module$/top/Défaut pour Test_maxime', 'info': 'La catégorie par défaut pour les questions partagées dans le contexte «\xa0Test_maxime\xa0».'}, 'questions': [{'type': 'truefalse', 'name': 'Question_1_Edited', 'questiontext': 'Vrai ou Faux ????????', 'generalfeedback': None, 'defaultgrade': '1.0000000', 'penalty': '1.0000000', 'hidden': '0', 'answers': [{'fraction': '0', 'text': 'true', 'feedback': '\n        '}, {'fraction': '100', 'text': 'false', 'feedback': '\n        '}]}, {'type': 'truefalse', 'name': 'Question_2_Edited', 'questiontext': 'Vrai ou Faux ????????', 'generalfeedback': None, 'defaultgrade': '1.0000000', 'penalty': '1.0000000', 'hidden': '0', 'answers': [{'fraction': '0', 'text': 'true', 'feedback': '\n        '}, {'fraction': '100', 'text': 'false', 'feedback': '\n        '}]}]}
 def get_liste_questionnaire(idu: int = None):
@@ -62,23 +64,23 @@ def get_anwser(idq):
 
 
 
-def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = str(ses.query(Question).filter().count()+1)):
+def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = ("quetstion "+ str(ses.query(func.max(Question.idQuestion)).scalar()+1))):
 
-    q = Question(idQuestion=(ses.query(Question).filter().count() + 1), name = name, question=question, template=template, valeurPoint=valeur,hidden = hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
+    q = Question(idQuestion=(ses.query(func.max(Question.idQuestion)).scalar()+1), name=name, question=question, template=template, valeurPoint=valeur, hidden=hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
     ses.add(q)
     ses.commit()
 
 def add_answer(answer, fraction, idQuestion, feedback = ''):
-    q = RepQuestion(idReponse=(ses.query(RepQuestion).filter().count() + 1), reponse=answer, fraction=fraction, feedback=feedback, idQuestion=idQuestion)
+    q = RepQuestion(idReponse=(ses.query(func.max(RepQuestion.idReponse)).scalar()+1), reponse=answer, fraction=fraction, feedback=feedback, idQuestion=idQuestion)
     ses.add(q)
     ses.commit()
 
 def add_questionnaire(questionnaire):
-    q = Questionnaire(idQuestionnaire=(ses.query(Questionnaire).filter().count() + 1), nom=questionnaire['category']['name'], info=questionnaire['category']['info'], idUser=1)
+    q = Questionnaire(idQuestionnaire=(ses.query(func.max(Questionnaire.idQuestionnaire)).scalar()+1), nom=questionnaire['category']['name'], info=questionnaire['category']['info'], idUser=1)
     ses.add(q)
     ses.commit()
     for question in questionnaire['questions']:
-        add_question(question['name'], question['questiontext'], q.idQuestionnaire, get_idtype(question['type']), question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'])
+        add_question( question['questiontext'], q.idQuestionnaire, get_idtype(question['type']), question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'], question['name'])
         for answer in question['answers']:
             add_answer(answer['text'], answer['fraction'], ses.query(Question).filter(Question.idQuestionnaire == q.idQuestionnaire).count(), answer['feedback'])
 
@@ -87,14 +89,19 @@ def get_idtype(nom:str)->int:
     return res[0].idType
 
 def del_question(idq):
+    for answers in ses.query(RepQuestion).filter(RepQuestion.idQuestion == idq):
+        ses.delete(answers)
+        ses.commit()
     res = ses.query(Question).filter(Question.idQuestion == idq)
     ses.delete(res[0])
     ses.commit()
+
 def main():
     #add_questionnaire(q)
     t = get_questions(2)
     print(t[0]['idq'])
-    del_question([2])
+    print(nbquestion)
+    del_question(3)
     #add_question("test", 1, 1)
     #add_answer("test", 100, 1)
     #print(get_liste_questionnaire())
@@ -102,3 +109,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
