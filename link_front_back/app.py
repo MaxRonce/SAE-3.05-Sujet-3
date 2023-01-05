@@ -22,7 +22,6 @@ app.config['UPLOAD_FOLDER'] = 'static/uploaded_files'
 Bootstrap(app)
 
 
-
 class QuestionForm(FlaskForm):
         titre = StringField('Titre', validators=[DataRequired()])
         Typeq = SelectField('Type de question', choices=[('1', 'QCM'),('2', 'Réponse courte'),('3', 'Réponse longue')], validators=[DataRequired()])
@@ -106,8 +105,6 @@ def allowed_file(filename):
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def to_raw(string):
-    return r"{}".format(string)
 @app.route('/import', methods=['GET', 'POST'])
 def uploader_file():
     form = uploadFileForm()
@@ -118,16 +115,7 @@ def uploader_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
-
-
-            #parse the file
-            #get the file path
-            file_path = to_raw(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
-            parsed_file = XML_parser.parse(file_path)
-            db_link.add_questionnaire(parsed_file)
-            return "File uploaded successfully and added to the database"
-
-
+            return "file uploaded successfully"
     return render_template('import.html', form=form)
 
 

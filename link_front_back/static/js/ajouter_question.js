@@ -6,28 +6,37 @@ function init()
 }
 function addListeners()
 {
-    document.getElementById("type").onchange = veriftype;
+    document.getElementById("is_template").onchange = veriftype;
 }
 
-function veriftype()
-{
-    var type = document.getElementById("type");
-    switch(type.options[type.selectedIndex].id)
-    {
-        case "QCM":
-            document.getElementById("QCMdiv").style.display = "block";
-            document.getElementById("RepCdiv").style.display = "none";
-            document.getElementById("RepLdiv").style.display = "none";
-            break;
-        case "RepC":
-            document.getElementById("RepCdiv").style.display = "Block";
-            document.getElementById("RepLdiv").style.display = "none";
-            document.getElementById("QCMdiv").style.display = "none";
-            break;
-        case "RepL" :
-            document.getElementById("RepLdiv").style.display = "Block";
-            document.getElementById("RepCdiv").style.display = "none";
-            document.getElementById("QCMdiv").style.display = "none";
+
+
+function toggleBoxVisibility() {
+
+if (document.getElementById("check").checked == true) {
+
+    document.getElementById("pointneg").style.display = "flex";
+
+    }
+else {
+
+    document.getElementById("pointneg").style.display = "none";
 
     }
 }
+
+
+function toggletemplateBoxVisibility() {
+
+if (document.getElementById("checkt").checked == true) {
+
+    document.getElementById("templatef").style.display = "flex";
+
+    }
+else {
+
+    document.getElementById("templatef").style.display = "none";
+
+    }
+}
+

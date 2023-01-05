@@ -1,4 +1,6 @@
 #XML to pandas dataframe
+
+import pandas as pd
 import xml.etree.ElementTree as ET
 
 # parse the xml file in data/ folder
@@ -42,7 +44,6 @@ def get_cat_info(root):
 
 def get_question(question):
     question_dict = {}
-    question_dict['type'] = question.attrib['type']
     for child in question:
         if child.tag == 'name':
             question_dict['name'] = child[0].text

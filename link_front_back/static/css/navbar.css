@@ -85,4 +85,8 @@ nav .first-item:hover .Kairo1 {
   text-shadow: -0.3vw 0.3vw 1px #E63946;
 }
 
+footer {
+    background: #1D3557;
+    height: 50px;
+}
 /*# sourceMappingURL=navbar.css.map */
