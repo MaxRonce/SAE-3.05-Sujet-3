@@ -52,7 +52,7 @@ def get_anwser(idq):
 
 
 
-def add_question(name, question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non'):
+def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = str(ses.query(Question).filter().count()+1)):
 
     q = Question(idQuestion=(ses.query(Question).filter().count() + 1), name = name, question=question, template=template, valeurPoint=valeur,hidden = hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
     ses.add(q)
@@ -75,10 +75,16 @@ def add_questionnaire(questionnaire):
 def get_idtype(nom:str)->int:
     res = ses.query(Type).filter(Type.nomType == nom)
     return res[0].idType
+
+def del_question(idq):
+    res = ses.query(Question).filter(Question.idQuestion == idq)
+    ses.delete(res[0])
+    ses.commit()
 def main():
     #add_questionnaire(q)
     t = get_questions(2)
-    print(t[0])
+    print(t[0]['idq'])
+    del_question([2])
     #add_question("test", 1, 1)
     #add_answer("test", 100, 1)
     #print(get_liste_questionnaire())
