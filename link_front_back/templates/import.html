@@ -1,17 +1,17 @@
 {% extends "base.html" %}
     {% block styleandtitle %}
     <title>Ajouter Question</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/ajouter_question.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
     {% endblock %}
 
 {% block content %}
 
     <body>
 <h1>Upload file</h1>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" class="ulform">
         {{ form.hidden_tag() }}
-        {{ form.file() }}
-        {{ form.submit() }}
+        {{ form.file(class_="choice") }}
+        {{ form.submit(id_="sbutton") }}
     </form>
     </body>
 {% endblock %}
