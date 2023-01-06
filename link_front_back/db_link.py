@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, func
 import pymysql
 pymysql.install_as_MySQLdb()
 
-login, passwd, serveur, bd = "antoninreydet", "root", "localhost", "KAIRO"
+login, passwd, serveur, bd = "root", "aled", "localhost", "KAIRO"
 engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
 
 ses = Session(engine)
@@ -62,21 +62,25 @@ def get_anwser(idq):
         test.append({"idr":rw.idReponse, "text":rw.reponse, "fraction":rw.fraction, "feedback":rw.feedback, "idq":rw.idQuestion})
     return test
 
+def query_max(table):
+    res = ses.query(func.max(table)).scalar()
+    if res is None:
+        return 0
+    return res
 
+def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = ("question "+ str(query_max(Question.idQuestion)+1))):
 
-def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = ("quetstion "+ str(ses.query(func.max(Question.idQuestion)).scalar()+1))):
-
-    q = Question(idQuestion=(ses.query(func.max(Question.idQuestion)).scalar()+1), name=name, question=question, template=template, valeurPoint=valeur, hidden=hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
+    q = Question(idQuestion=(+1), name=name, question=question, template=template, valeurPoint=valeur, hidden=hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
     ses.add(q)
     ses.commit()
 
 def add_answer(answer, fraction, idQuestion, feedback = ''):
-    q = RepQuestion(idReponse=(ses.query(func.max(RepQuestion.idReponse)).scalar()+1), reponse=answer, fraction=fraction, feedback=feedback, idQuestion=idQuestion)
+    q = RepQuestion(idReponse=query_max(RepQuestion.idReponse)+1, reponse=answer, fraction=fraction, feedback=feedback, idQuestion=idQuestion)
     ses.add(q)
     ses.commit()
 
 def add_questionnaire(questionnaire):
-    q = Questionnaire(idQuestionnaire=(ses.query(func.max(Questionnaire.idQuestionnaire)).scalar()+1), nom=questionnaire['category']['name'], info=questionnaire['category']['info'], idUser=1)
+    q = Questionnaire(idQuestionnaire=query_max(Questionnaire.idQuestionnaire)+1, nom=questionnaire['category']['name'], info=questionnaire['category']['info'], idUser=1)
     ses.add(q)
     ses.commit()
     for question in questionnaire['questions']:
