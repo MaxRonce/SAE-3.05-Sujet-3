@@ -70,7 +70,7 @@ def query_max(table):
 
 def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = ("question "+ str(query_max(Question.idQuestion)+1))):
 
-    q = Question(idQuestion=(+1), name=name, question=question, template=template, valeurPoint=valeur, hidden=hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
+    q = Question(idQuestion=(query_max(Question.idQuestion)+1), name=name, question=question, template=template, valeurPoint=valeur, hidden=hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
     ses.add(q)
     ses.commit()
     return q.idQuestion
@@ -85,7 +85,7 @@ def add_questionnaire(questionnaire):
     ses.add(q)
     ses.commit()
     for question in questionnaire['questions']:
-        idq = add_question( question['questiontext'], q.idQuestionnaire, get_idtype(question['type']), question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'], question['name'])
+        idq = add_question(question['questiontext'], q.idQuestionnaire, get_idtype(question['type']), question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'], question['name'])
         for answer in question['answers']:
             add_answer(answer['text'], answer['fraction'],idq, answer['feedback'])
 
@@ -103,9 +103,9 @@ def del_question(idq):
 
 def main():
     add_questionnaire(q)
-    t = get_questions(2)
-    print(t[0]['idq'])
-    del_question(3)
+    # = get_questions(2)
+    #print(t[0]['idq'])
+    #del_question(3)
     #add_question("test", 1, 1)
     #add_answer("test", 100, 1)
     #print(get_liste_questionnaire())

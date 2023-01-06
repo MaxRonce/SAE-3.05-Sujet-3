@@ -4,7 +4,7 @@ from wtforms import *
 from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap
 from db_link import get_liste_questionnaire, get_questions, add_question, add_answer, get_liste_id_nom_questionnaire,del_question
-
+import parser.XML_parser as XML_parser
 import db_link
 from db_link import get_liste_questionnaire, get_questions, add_question, add_answer
 from werkzeug.utils import secure_filename
@@ -101,7 +101,8 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
+def to_raw(string):
+    return r"{}".format(string)
 @app.route('/import', methods=['GET', 'POST'])
 def uploader_file():
     form = uploadFileForm()
@@ -112,7 +113,16 @@ def uploader_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
-            return "file uploaded successfully"
+
+
+            #parse the file
+            #get the file path
+            file_path = to_raw(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+            parsed_file = XML_parser.parse(file_path)
+            db_link.add_questionnaire(parsed_file)
+            return "File uploaded successfully and added to the database"
+
+
     return render_template('import.html', form=form)
 
 class DownloadForm(FlaskForm):
