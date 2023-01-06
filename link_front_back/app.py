@@ -4,10 +4,10 @@ from wtforms import *
 from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap
 
-from DB_to_XML import get_dict_from_DB
-from XML_Writter import writter
+from parser.DB_to_XML import get_dict_from_DB
+from parser.XML_Writter import *
 from db_link import get_liste_questionnaire, get_questions, add_question, add_answer, get_liste_id_nom_questionnaire,del_question
-import XML_parser
+import parser.XML_parser as XML_parser
 import db_link
 from db_link import get_liste_questionnaire, get_questions, add_question, add_answer
 from werkzeug.utils import secure_filename
