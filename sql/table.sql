@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS USERS;
 
 
 CREATE TABLE USERS(
-    idUser INT(9),
+    idUser VARCHAR(30),
+    mdpUser VARCHAR(30),
     prof boolean,
     PRIMARY KEY (idUser)
 );
