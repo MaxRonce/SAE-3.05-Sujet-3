@@ -13,58 +13,30 @@
         </div>
         <div class="Actions">
             <!-- TODO créer des macros jinja card-->
-            <div class="card">
-                <div class="action1">
-                    <h2>Gérer mes questions</h2>
-                </div>
-                <div class="face face1">
-                    <ul>
-                        <li>Ajouter</li>
-                        <li>Supprimer</li>
-                        <li>Modifier</li>
-                    </ul>
 
+            <a href="{{url_for('questionnaire')}}">
+                <div class="card">
+                <div class="action2" >
+                    <h2> Gérer mes questionnaires</h2>
                 </div>
 
+
             </div>
+            </a>
+            <a href="{{url_for('uploader_file')}}">
             <div class="card">
-                <div class="action2">
-                    <h2>Gérer mes questionnaires</h2>
-                </div>
-                <div class="face face2">
-                    <ul>
-                        <li>Ajouter</li>
-                        <li>Supprimer</li>
-                        <li>Modifier</li>
-                        <li>Publier un quizz</li>
-                    </ul>
-                </div>
-            </div>
-            <div class ="card">
                 <div class="action3">
-                    <h2>Créer une template</h2>
-                </div>
-                <div class="face face3">
-                    <ul>
-                        <li>Ajouter</li>
-                        <li>Supprimer</li>
-                        <li>Modifier</li>
-                    </ul>
+                    <h2>Importer</h2>
                 </div>
             </div>
+            <a href="{{url_for('downloader_file')}}">
             <div class="card">
                 <div class="action4">
-                    <h2>Importer Exporter</h2>
+                    <h2>Exporter</h2>
                 </div>
-                <div class="face face4">
-                    <ul>
-                        <li>Depuis Moodle</li>
-                        <li>Importer/exporter</li>
 
-                    </ul>
-                </div>
             </div>
-
+            </a>
         </div>
     </div>
     {% endblock %}

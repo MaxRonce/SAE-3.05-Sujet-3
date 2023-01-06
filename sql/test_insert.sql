@@ -15,9 +15,10 @@ INSERT INTO QUESTIONNAIRE (idQuestionnaire, nom, descr, idUser) VALUES
 
 
 INSERT INTO TYPEQUESTION (idType,nomType) VALUES
-    (11,'QCM'),
-    (12,'Reponse courte'),
-    (13,'Reponse libre')
+    (1,'Reponse courte'),
+    (2,'Reponse libre'),
+    (3, 'truefalse'),
+    (4, 'multichoice')
 ;
 
 
@@ -36,7 +37,7 @@ INSERT INTO REPONSEQUESTION (idReponse, reponse, valide, idQuestion) VALUES
     (41,'4',true,20),
     (42,'je suis',true,21),
     (43,'suis',true,21),
-    (44,'sommes',true,21),
+    (44,'sommes',false,21),
     (45,'hello le monde',false,22),
     (46,'bonjour monde',true,22),
     (47,'5460',true,23),

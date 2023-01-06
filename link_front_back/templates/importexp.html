@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+    {% block styleandtitle %}
+    <title>Ajouter Question</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/ajouter_question.css')}}">
+    {% endblock %}
+
+    {% block content %}
+
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <select id="domain_select" name="domain">
+     {% for x in data %}
+        <option value="{{x.idq}}">{{x.nom}}</option>
+     {% endfor %}
+    </select>
+
+    <input type="button" value="Download">
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file multiple>
+         <input type=submit value=Upload>
+    </form>
+
+{% endblock %}

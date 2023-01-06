@@ -1,6 +1,8 @@
-from flask_login    import LoginManager
-from flask          import Flask, session
-from flask_mysqldb  import MySQL
+from flask_login        import LoginManager
+from flask              import Flask, session
+from flask_mysqldb      import MySQL
+
+from flask_bootstrap    import Bootstrap
 
 app = Flask(__name__)
 login_manager = LoginManager(app)
@@ -13,6 +15,14 @@ app.config['MYSQL_DB'] = ''
 
 db = MySQL(app)
 db_lien = db.connection
+
+app.config['UPLOAD_FOLDER'] = 'static/uploaded_files'
+
+UPLOAD_FOLDER = 'static'
+ALLOWED_EXTENSIONS = {'xml'}
+
+Bootstrap(app)
+caca_de_louis
 
 if __name__ == "__main__":
     app.run()

@@ -24,11 +24,10 @@
     <header>
         <div class="navigation-bar">
             <nav>
-
                 <ul>
                     <li class="first-item">
-                        <a class="O">O</a>
-                        <a class="Kairo1">Kair'</a>
+                        <a href="{{url_for('home')}}" class="O">O</a>
+                        <a href="{{url_for('home')}}" class="Kairo1">Kair'</a>
                     </li>
 
                     {% if current_user.is_authenticated %}
@@ -38,7 +37,7 @@
                     <li class="mid-item"><a href="{{ url_for("profil") }}">{{ current_user.username}}</a></li>
                     {% else %}
                     <li class="mid-item"><a href="{{ url_for("about") }}">A propos</a></li>
-                    <li class="mid-item"><a class="myBtn" href="#">Se connecter</a></li>
+                    <li class="last-item"><a class="myBtn" href="#">Se connecter</a></li>
                     {% endif %}
                     </ul>
             </nav>
@@ -46,5 +45,9 @@
     </header>
     {% block connexion %}{% endblock %}
     {% block content %}{% endblock %}
+    <footer>
+
+    </footer>
+<script src="button.js"></script>
 </body>
 </html>

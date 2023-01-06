@@ -11,17 +11,28 @@
         <h3>Titre :</h3>
         <form action="" method="post">
         <input type="text" name="idqq" id="title" value="{{idqq}}">
-        <input type="submit" value="envoie valeur (id)"></form>
+        </form>
     </div>
+    <div id="buttons">
     <button id="delete" class="delete"> Supprimer</button>
+        <a href="{{url_for('ajoutq', idq = idqq)}}">
+            <button id="add" class="add"> Ajouter </button>
+        </a>
+
+     </div>
 
     <div class="listequestion">
         <h3>Questions contenues: </h3>
         <div class="questions">
             <ul >
-                {% for i in range(lenque)%}
+                {% for i in range(lenque) %}
                 <li class="quest">question {{i+1}}
-                    <div>{{questions[i]}}</div>
+                    <div class="question">
+                    <div>{{questions[i]['questiontext']}}</div>
+                    <a href="{{url_for('question', idq = questions[i]['idq'])}}">
+                    <button class="deleteq"> Supprimer</button>
+                    </a>
+                        </div>
                 </li>
                 {% endfor %}
             </ul>
