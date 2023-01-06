@@ -2,7 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField,  SubmitField, SelectField, IntegerField, FileField
 from wtforms.validators import DataRequired
 
-from .db_link import get_liste_id_nom_questionnaire
+from .db_link import get_liste_id_nom_questionnaire, get_user
+from .models import User
 
 class DownloadForm(FlaskForm):
     liste = SelectField("Questionnaire", choices=get_liste_id_nom_questionnaire())
@@ -33,6 +34,5 @@ class LoginForm(FlaskForm):
         user = get_user(self.username.data)
         if user is None:
             return None
-        from .models import User
         us = User(user.idUser, user.mdpUser)
         return us if self.password.data == us.password else None

@@ -1,5 +1,5 @@
 from .app import app, ALLOWED_EXTENSIONS
-from .db_link import get_questions, get_liste_questionnaire, get_user, add_question, add_answer, del_question, add_questionnaire
+from .db_link import get_questions, get_liste_questionnaire, add_question, add_answer, del_question, add_questionnaire
 from .models import User
 from .forms import *
 
