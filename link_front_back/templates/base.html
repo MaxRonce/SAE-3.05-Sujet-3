@@ -35,10 +35,10 @@
                     <li class="mid-item"><a href="{{ url_for("questionnaire") }}">Questionnaire</a>
                     <li class="mid-item"><a href="{{ url_for("ajout_question") }}">Questions</a>
                     <li class="mid-item"><a href="{{ url_for("about") }}">A propos</a></li>
-                    <li class="mid-item"><a href="{{ url_for("profil") }}">{{ current_user.username}}</a></li>
+                    <li class="last-item"><a href="{{ url_for("profil") }}">{{ current_user.username}}</a></li>
                     {% else %}
                     <li class="mid-item"><a href="{{ url_for("about") }}">A propos</a></li>
-                    <li class="last-item"><a class="myBtn" href="#">Se connecter</a></li>
+                    <li class="last-item"><a class="myBtn" href="#">Login</a></li>
                     {% endif %}
                     </ul>
             </nav>
