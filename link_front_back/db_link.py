@@ -102,7 +102,7 @@ def del_question(idq):
     ses.commit()
 
 def main():
-    add_questionnaire(q)
+    #add_questionnaire(q)
     # = get_questions(2)
     #print(t[0]['idq'])
     #del_question(3)
@@ -110,6 +110,7 @@ def main():
     #add_answer("test", 100, 1)
     #print(get_liste_questionnaire())
     #print(get_questions(1))
+    print(get_liste_id_nom_questionnaire())
 
 if __name__ == '__main__':
     main()
