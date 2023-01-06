@@ -1,5 +1,6 @@
-{% extends "base.html" %}
+{% extends "connexion.html" %}
     {% block styleandtitle %}
+    {{ super() }}
     <link rel="stylesheet" href="{{url_for('static', filename='css/swag.css')}}">
     <meta charset="UTF-8">
     <title>Kair'0</title>

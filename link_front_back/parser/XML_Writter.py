@@ -1,4 +1,4 @@
-from DB_to_XML import get_dict_from_DB
+from .DB_to_XML import get_dict_from_DB
 def writter(filename :str, path:str, data:dict, category:bool=True):
     """Create a file with the data in the dict"""
     #create the file

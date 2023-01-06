@@ -1,11 +1,9 @@
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
+from .app import login_manager
 
-import pymysql
-pymysql.install_as_MySQLdb()
-
-login, passwd, serveur, bd = "antoninreydet", "root", "localhost", "KAIRO"
+login, passwd, serveur, bd = "", "", "", "KAIRO"
 engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
 
 ses = Session(engine)
@@ -57,6 +55,10 @@ def get_questions(idqq: int):
     for rz in res2:
         test2.append({"idq":rz.idQuestion, 'type':(ses.query(Type).filter(Type.idType == rz.idType))[0].nomType, 'name' : rz.name ,"questiontext":rz.question, "template":rz.template, "defaultgrade":rz.valeurPoint, "hidden":rz.hidden, "penalty":rz.pointNegatif, "idQuestionnaire":rz.idQuestionnaire, "generalfeedback":rz.feedback, "idt":rz.idType})
     return test2
+
+def get_user(idu: str):
+    user = ses.query(User).filter(User.idUser == idu).first()
+    return user
 
 def get_anwser(idq):
     res = ses.query(RepQuestion).filter(RepQuestion.idQuestion == idq)

@@ -1,4 +1,4 @@
-import db_link
+import link_front_back.db_link as db_link
 
 # access to the DATABASE using the db_link.py file
 
@@ -55,15 +55,6 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
-
-
-
-
-
-
-import db_link
 
 # access to the DATABASE using the db_link.py file
 
