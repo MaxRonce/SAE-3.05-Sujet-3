@@ -3,8 +3,11 @@ from flask_wtf import FlaskForm
 from wtforms import *
 from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap
+
+from DB_to_XML import get_dict_from_DB
+from XML_Writter import writter
 from db_link import get_liste_questionnaire, get_questions, add_question, add_answer, get_liste_id_nom_questionnaire,del_question
-import parser.XML_parser as XML_parser
+import XML_parser
 import db_link
 from db_link import get_liste_questionnaire, get_questions, add_question, add_answer
 from werkzeug.utils import secure_filename
@@ -114,7 +117,6 @@ def uploader_file():
         if file and allowed_file(file.filename):
             file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
 
-
             #parse the file
             #get the file path
             file_path = to_raw(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
@@ -138,9 +140,11 @@ def downloader_file():
 
 @app.route('/downloadfile/<idQ>')
 def download_file(idQ):
-    # dict_xml = get_dict_from_DB(idQ)
-    # writter("test1.xml", "link_front_back/static/out/", dict_xml, True)
-    return send_file("static/out/test1.xml", as_attachment=True)
+    name = "Export" + idQ+ ".xml"
+    print(name)
+    writter(name, 'parser/out/', get_dict_from_DB(idQ), category=True)
+
+    return send_file("parser/out/"+name, as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True)

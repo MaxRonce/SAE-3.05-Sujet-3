@@ -58,6 +58,7 @@ def get_question(question):
             question_dict['hidden'] = child.text
         elif child.tag == 'answer':
             question_dict['answers'] = get_answers(question)
+        question_dict['template'] = "None"
     return question_dict
 
 def question_text_cleaner(text):
