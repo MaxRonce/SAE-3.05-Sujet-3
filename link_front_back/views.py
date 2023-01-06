@@ -1,13 +1,11 @@
 from .app import app, ALLOWED_EXTENSIONS
-from .db_link import get_questions, get_liste_questionnaire, get_user, add_question, add_answer, get_liste_id_nom_questionnaire, del_question
+from .db_link import get_questions, get_liste_questionnaire, get_user, add_question, add_answer, del_question, add_questionnaire
 from .models import User
-import link_front_back.db_link as db_link
+from .forms import *
 
 from flask import render_template, request, redirect, session,  url_for, flash, send_file
 from flask_login import login_user, current_user, logout_user, login_required
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField,  SubmitField, SelectField, IntegerField, FileField
-from wtforms.validators import DataRequired
+
 
 from link_front_back.parser.DB_to_XML import get_dict_from_DB
 from link_front_back.parser.XML_Writter import *
@@ -71,32 +69,6 @@ def historique():
 def ajout_question():
     return render_template("ajouter_question.html")
 
-
-class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Login')
-
-    def get_authenticated_user(self):
-        user = get_user(self.username.data)
-        if user is None:
-            return None
-        from .models import User
-        us = User(user.idUser, user.mdpUser)
-        return us if self.password.data == us.password else None
-
-class QuestionForm(FlaskForm):
-        titre = StringField('Titre', validators=[DataRequired()])
-        Typeq = SelectField('Type de question', choices=[('1', 'QCM'),('2', 'Réponse courte'),('3', 'Réponse longue')], validators=[DataRequired()])
-        points = IntegerField('Points', validators=[DataRequired()])
-        valeurpn = IntegerField('Valeur des points négatifs')
-        submit = SubmitField('Submit')
-
-class ReponseForm(FlaskForm):
-        reponse = StringField('Réponse', validators=[DataRequired()])
-        fraction = IntegerField('Fraction', validators=[DataRequired()])
-        submit = SubmitField('Submit')
-
 @app.route("/ajout/<idq>", methods =("GET","POST" ,))
 def ajoutq(idq):
     form = QuestionForm()
@@ -121,10 +93,6 @@ def question(idq):
     del_question(idq)
     return redirect(url_for('questionnaire'))
 
-class uploadFileForm(FlaskForm):
-    file = FileField('Fichier à importer')
-    submit = SubmitField('Submit')
-
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -146,15 +114,11 @@ def uploader_file():
             #get the file path
             file_path = to_raw(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
             parsed_file = XML_parser.parse(file_path)
-            db_link.add_questionnaire(parsed_file)
+            add_questionnaire(parsed_file)
             return "File uploaded successfully and added to the database"
 
 
     return render_template('import.html', form=form)
-
-class DownloadForm(FlaskForm):
-    liste = SelectField("Questionnaire", choices=get_liste_id_nom_questionnaire())
-    submit = SubmitField('submit')
 
 @app.route('/export', methods=['GET', 'POST'])
 def downloader_file():
