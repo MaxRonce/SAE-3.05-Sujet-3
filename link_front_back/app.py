@@ -22,7 +22,6 @@ UPLOAD_FOLDER = 'static'
 ALLOWED_EXTENSIONS = {'xml'}
 
 Bootstrap(app)
-caca_de_louis
 
 if __name__ == "__main__":
     app.run()

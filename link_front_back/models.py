@@ -1,6 +1,6 @@
 from .app import db, login_manager
 from flask_login import UserMixin
-import dev.db_link as db_link
+import link_front_back.db_link as db_link
 
 class User(UserMixin):
     def __init__(self, username: str, password: str):

@@ -1,3 +1,3 @@
 from .app import app
-import dev.views
-import dev.db_link
+import link_front_back.views
+import link_front_back.db_link

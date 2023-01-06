@@ -1,17 +1,17 @@
-from .app import app
+from .app import app, ALLOWED_EXTENSIONS
 from .db_link import get_questions, get_liste_questionnaire, get_user, add_question, add_answer, get_liste_id_nom_questionnaire, del_question
 from .models import User
-import db_link
+import link_front_back.db_link as db_link
 
 from flask import render_template, request, redirect, session,  url_for, flash, send_file
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField,  SubmitField
+from wtforms import StringField, PasswordField,  SubmitField, SelectField, IntegerField, FileField
 from wtforms.validators import DataRequired
 
-from parser.DB_to_XML import get_dict_from_DB
-from parser.XML_Writter import *
-import parser.XML_parser as XML_parser
+from link_front_back.parser.DB_to_XML import get_dict_from_DB
+from link_front_back.parser.XML_Writter import *
+import link_front_back.parser.XML_parser as XML_parser
 from werkzeug.utils import secure_filename
 
 import os
@@ -28,7 +28,7 @@ def home():
     return render_template("home.html", form=f)
 
 @app.route("/questionnaire", methods=["POST","GET"])
-@login_required()
+@login_required
 def questionnaire():
     if request.method == "POST":
         idqq = request.form["idqq"]

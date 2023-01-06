@@ -1,4 +1,4 @@
-import db_link
+import link_front_back.db_link
 
 # access to the DATABASE using the db_link.py file
 
@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
 
 
-import db_link
+import link_front_back.db_link
 
 # access to the DATABASE using the db_link.py file
 
