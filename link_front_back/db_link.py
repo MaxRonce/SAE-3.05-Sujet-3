@@ -63,10 +63,15 @@ def get_anwser(idq):
     return test
 
 
+if ses.query(func.max(Question.idQuestion)).scalar() is None:
+    idq = 1
+else:
+     idq = ses.query(func.max(Question.idQuestion)).scalar()+1
+def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = ("quetstion "+ str(idq))):
 
-def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = ("quetstion "+ str(ses.query(func.max(Question.idQuestion)).scalar()+1))):
 
-    q = Question(idQuestion=(ses.query(func.max(Question.idQuestion)).scalar()+1), name=name, question=question, template=template, valeurPoint=valeur, hidden=hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
+    q = Question(idQuestion=idq, name=name, question=question, template=template, valeurPoint=valeur, hidden=hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
+
     ses.add(q)
     ses.commit()
     return q.idQuestion
@@ -98,7 +103,7 @@ def del_question(idq):
     ses.commit()
 
 def main():
-    #add_questionnaire(q)
+    add_questionnaire(q)
     t = get_questions(2)
     print(t[0]['idq'])
     del_question(3)
