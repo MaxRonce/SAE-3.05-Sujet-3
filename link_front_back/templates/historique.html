@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+    {% block styleandtitle %}
+    <title>Accueil PROF</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/historique.css')}}">
+    {% endblock %}
+
+    {% block content %}
+<div class="history_container">
+
+    <div class="list_history">
+        <h1>Historique</h1>
+        <div class="containter_list_history">
+            <div class="list_history_item">
+                <!-- TODO faire une macro jinja pour quiz-->
+                <div class="quiz">
+                    <span class="quiz_date">00/00/0000</span>
+                    <span class="quiz_titre">Titre du Quiz</span>
+                    <span class="quiz_note">03/10</span>
+                    <button class="quiz1_button">Correction</button>
+                </div>
+                <div class="quiz">
+                    <span class="quiz_date">00/00/0000</span>
+                    <span class="quiz_titre">Titre du Quiz</span>
+                    <span class="quiz_note">01/10</span>
+                    <button class="quiz1_button">Correction</button>
+                </div>
+                <div class="quiz">
+                    <span class="quiz_date">00/00/0000</span>
+                    <span class="quiz_titre">Titre du Quiz</span>
+                    <span class="quiz_note">02/10</span>
+                    <button class="quiz1_button">Correction</button>
+                </div>
+                <div class="quiz">
+                    <span class="quiz_date">00/00/0000</span>
+                    <span class="quiz_titre">Titre du Quiz</span>
+                    <span class="quiz_note">10/10</span>
+                    <button class="quiz1_button">Correction</button>
+                </div>
+                <div class="quiz">
+                    <span class="quiz_date">00/00/0000</span>
+                    <span class="quiz_titre">Titre du Quiz</span>
+                    <span class="quiz_note">11/10</span>
+                    <button class="quiz1_button">Correction</button>
+                </div>
+            </div>
+            <h2>Moyenne : 8/10</h2>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+    {% block styleandtitle %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/swag.css')}}">
+    <meta charset="UTF-8">
+    <title>Kair'0</title>
+    {% endblock %}
+
+    {% block content %}
+    <div class="container">
+        <div class="title">
+            <h1>Choisir une action</h1>
+        </div>
+        <div class="Actions">
+            <!-- TODO créer des macros jinja card-->
+
+            <a href="{{url_for('questionnaire')}}">
+                <div class="card">
+                <div class="action2" >
+                    <h2> Gérer mes questionnaires</h2>
+                </div>
+
+
+            </div>
+            </a>
+            <a href="{{url_for('uploader_file')}}">
+            <div class="card">
+                <div class="action3">
+                    <h2>Importer</h2>
+                </div>
+            </div>
+            <a href="{{url_for('downloader_file')}}">
+            <div class="card">
+                <div class="action4">
+                    <h2>Exporter</h2>
+                </div>
+
+            </div>
+            </a>
+        </div>
+    </div>
+    {% endblock %}

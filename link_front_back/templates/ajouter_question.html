@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+    {% block styleandtitle %}
+    <title>Ajouter Question</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/ajouter_question.css')}}">
+    {% endblock %}
+
+    {% block content %}
+    <div class="Add_question_container">
+    <h1>Ajouter Question</h1>
+    <div id="Add_title">
+        <label for="title">Titre</label>
+        <input type="text" id="title" name="title" placeholder="Titre de la question">
+    </div>
+    <div class="container">
+        <div id="Domain">
+            <label for="domain">Domaine</label>
+            <select id="domain_select" name="domain">
+                <option value="domain1">Domaine 1</option>
+                <option value="domain2">Domaine 2</option>
+                <option value="domain3">Domaine 3</option>
+                <option value="domain4">Domaine 4</option>
+            </select>
+        </div>
+        <div id="Theme">
+            <label for="theme">Theme</label>
+            <select name="theme">
+                <option value="theme1">Theme 1</option>
+                <option value="theme2">Theme 2</option>
+                <option value="theme3">Theme 3</option>
+                <option value="theme4">Theme 4</option>
+            </select>
+        </div>
+    </div>
+    <div class="container">
+        <div id="nbrep">
+            <label for="nbrep">Nombre de réponses</label>
+            <input type="text" id="nbrep_input" name="nbrep_input" placeholder="N">
+
+        </div>
+        <div id="type_question">
+            <label for="type">Type de question</label>
+            <select id="type" name="type">
+                <option id="QCM">QCM</option>
+                <option id="RepC">Réponse courte</option>
+                <option id="RepL">Réponse Longue</option>
+            </select>
+        </div>
+    </div>
+    <div id="is_template">
+        <label class="checkbox">
+            <span>Template ?</span>
+            <input type="checkbox" />
+
+        </label>
+    </div>
+    <div id="DQCM">
+
+    </div>
+    <div id="DRepC">
+
+    </div>
+    <div id="DRepL">
+
+    </div>
+
+</div>
+<script src="{{url_for('static', filename='js/Ajouter_question.js')}}"></script>
+{% endblock %}
