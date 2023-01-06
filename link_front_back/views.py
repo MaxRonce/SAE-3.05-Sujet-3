@@ -167,6 +167,6 @@ def downloader_file():
 def download_file(idQ):
     name = "Export" + idQ+ ".xml"
     print(name)
-    writter(name, 'parser/out/', get_dict_from_DB(idQ), category=True)
+    writter(name, 'link_front_back/parser/out/', get_dict_from_DB(idQ), category=True)
 
     return send_file("parser/out/"+name, as_attachment=True)
