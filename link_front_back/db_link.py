@@ -62,27 +62,26 @@ def get_anwser(idq):
         test.append({"idr":rw.idReponse, "text":rw.reponse, "fraction":rw.fraction, "feedback":rw.feedback, "idq":rw.idQuestion})
     return test
 
+def query_max(table):
+    res = ses.query(func.max(table)).scalar()
+    if res is None:
+        return 0
+    return res
 
-if ses.query(func.max(Question.idQuestion)).scalar() is None:
-    idq = 1
-else:
-     idq = ses.query(func.max(Question.idQuestion)).scalar()+1
-def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = ("quetstion "+ str(idq))):
+def add_question(question, idQuestionnaire, idType, hidden = 0, valeur=1,feedback = '', pointneg=0,template = 'Non', name = ("question "+ str(query_max(Question.idQuestion)+1))):
 
-
-    q = Question(idQuestion=idq, name=name, question=question, template=template, valeurPoint=valeur, hidden=hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
-
+    q = Question(idQuestion=(+1), name=name, question=question, template=template, valeurPoint=valeur, hidden=hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire, feedback=feedback, idType=idType)
     ses.add(q)
     ses.commit()
     return q.idQuestion
 
 def add_answer(answer, fraction, idQuestion, feedback = ''):
-    q = RepQuestion(idReponse=(ses.query(func.max(RepQuestion.idReponse)).scalar()+1), reponse=answer, fraction=fraction, feedback=feedback, idQuestion=idQuestion)
+    q = RepQuestion(idReponse=query_max(RepQuestion.idReponse)+1, reponse=answer, fraction=fraction, feedback=feedback, idQuestion=idQuestion)
     ses.add(q)
     ses.commit()
 
 def add_questionnaire(questionnaire):
-    q = Questionnaire(idQuestionnaire=(ses.query(func.max(Questionnaire.idQuestionnaire)).scalar()+1), nom=questionnaire['category']['name'], info=questionnaire['category']['info'], idUser=1)
+    q = Questionnaire(idQuestionnaire=query_max(Questionnaire.idQuestionnaire)+1, nom=questionnaire['category']['name'], info=questionnaire['category']['info'], idUser=1)
     ses.add(q)
     ses.commit()
     for question in questionnaire['questions']:
