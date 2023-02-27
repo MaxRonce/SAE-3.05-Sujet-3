@@ -6,12 +6,13 @@
 
 {% block content %}
 
-    <body>
-<h1>Upload file</h1>
-    <form method="POST" enctype="multipart/form-data" class="ulform">
-        {{ form.hidden_tag() }}
-        {{ form.file(class_="choice") }}
-        {{ form.submit(id_="sbutton") }}
-    </form>
-    </body>
+  <form method="POST" enctype="multipart/form-data" class="ulform">
+    {{ form.hidden_tag() }}
+    <div class="file-upload choice">
+      <label for="file-input">Choose a file to upload</label>
+      {{ form.file(id="file-input") }}
+    </div>
+    {{ form.submit(id_="sbutton") }}
+  </form>
+
 {% endblock %}

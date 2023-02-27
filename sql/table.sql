@@ -65,7 +65,6 @@ CREATE TABLE REPONSEUSER(
     PRIMARY KEY (idQuestion, idUser)
 );
 
-
 ALTER TABLE QUESTION        ADD FOREIGN KEY (idQuestionnaire)   REFERENCES QUESTIONNAIRE(idQuestionnaire);
 ALTER TABLE QUESTION        ADD FOREIGN KEY (idType)            REFERENCES TYPEQUESTION(idType);
 ALTER TABLE QUESTIONNAIRE   ADD FOREIGN KEY (idUser)            REFERENCES USERS(idUser);
@@ -87,4 +86,13 @@ INSERT INTO TYPEQUESTION (idType,nomType) VALUES
     (3, 'truefalse'),
     (4, 'multichoice')
 ;
+
+
+INSERT INTO QUESTIONNAIRE (idQuestionnaire, nom, info, idUser) VALUES
+    (1,'Mathématiques','addition et soustraction',2),
+    (2,'Français','conjugaison',2),
+    (3,'Anglais','mot simple',1)
+;
+
+
 
