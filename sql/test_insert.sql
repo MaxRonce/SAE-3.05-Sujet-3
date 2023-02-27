@@ -1,3 +1,4 @@
+USE KAIRO;
 INSERT INTO USERS (iduser, prof) VALUES
     (0,true),
     (1,true),
@@ -7,11 +8,12 @@ INSERT INTO USERS (iduser, prof) VALUES
 ;
 
 
-INSERT INTO QUESTIONNAIRE (idQuestionnaire, nom, descr, idUser) VALUES
-    (1,'Mathématiques','addition et soustraction',30),
-    (2,'Français','conjugaison',32),
-    (3,'Anglais','mot simple',31)
+INSERT INTO QUESTIONNAIRE (idQuestionnaire, nom, info, idUser) VALUES
+    (1,'Mathématiques','addition et soustraction',2),
+    (2,'Français','conjugaison',2),
+    (3,'Anglais','mot simple',1)
 ;
+
 
 
 INSERT INTO TYPEQUESTION (idType,nomType) VALUES

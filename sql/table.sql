@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS USERS;
 
 
 CREATE TABLE USERS(
-    idUser VARCHAR(30),
+    idUser INT(9),
     mdpUser VARCHAR(30),
     prof boolean,
     PRIMARY KEY (idUser)
@@ -73,12 +73,12 @@ ALTER TABLE REPONSEUSER     ADD FOREIGN KEY (idUser)            REFERENCES USERS
 ALTER TABLE REPONSEUSER     ADD FOREIGN KEY (idQuestion)        REFERENCES QUESTION(idQuestion);
 ALTER TABLE REPONSEQUESTION ADD FOREIGN KEY (idQuestion)        REFERENCES QUESTION(idQuestion);
 
-INSERT INTO USERS (iduser, prof) VALUES
-    (0,true),
-    (1,true),
-    (2,true),
-    (3,false),
-    (4,false)
+INSERT INTO USERS (iduser,mdpUser, prof) VALUES
+    (0,'test',true),
+    (1,'test',true),
+    (2,'test',true),
+    (3,'test',false),
+    (4,'test',false)
 ;
 
 INSERT INTO TYPEQUESTION (idType,nomType) VALUES
