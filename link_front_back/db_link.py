@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 from .app import login_manager
 
-login, passwd, serveur, bd = "antoninreydet", "root", "localhost", "KAIRO"
+login, passwd, serveur, bd = "root", "aled", "localhost", "KAIRO"
 engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
 
 ses = Session(engine)
