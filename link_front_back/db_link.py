@@ -1,7 +1,7 @@
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func
-from .app import login_manager
+from sqlalchemy import create_engine, func, exc
+from .app import login_manager, db
 
 login, passwd, serveur, bd = "root", "ronceray", "localhost", "KAIRO"
 engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
@@ -91,12 +91,17 @@ def add_questionnaire(questionnaire):
         questionnaire['category']['name'] = "Default questionnaires"
         questionnaire['category']['info'] = "Default questionnaires"
     q = Questionnaire(idQuestionnaire=query_max(Questionnaire.idQuestionnaire)+1, nom=questionnaire['category']['name'], info=questionnaire['category']['info'], idUser=1)
-    ses.add(q)
-    ses.commit()
-    for question in questionnaire['questions']:
-        idq = add_question(question['questiontext'], q.idQuestionnaire, get_idtype(question['type']), question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'], question['template'], question['name'])
-        for answer in question['answers']:
-            add_answer(answer['text'], answer['fraction'],idq, answer['feedback'])
+    try:
+        ses.add(q)
+        ses.commit()
+        for question in questionnaire['questions']:
+            idq = add_question(question['questiontext'], q.idQuestionnaire, get_idtype(question['type']), question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'], question['template'], question['name'])
+            for answer in question['answers']:
+                add_answer(answer['text'], answer['fraction'],idq, answer['feedback'])
+    except exc.SQLAlchemyError as e:
+        ses.rollback()
+        raise ValueError(str(e.orig))
+
 
 def get_idtype(nom:str)->int:
     res = ses.query(Type).filter(Type.nomType == nom)

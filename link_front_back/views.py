@@ -1,4 +1,5 @@
-from .app import app, ALLOWED_EXTENSIONS
+from sqlalchemy import exc
+from .app import app, ALLOWED_EXTENSIONS, db
 from .db_link import get_questions, get_liste_questionnaire, add_question, add_answer, del_question, add_questionnaire
 from .models import User
 from .forms import *
@@ -119,17 +120,25 @@ def uploader_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'],
-                                   secure_filename(file.filename)))
-
-            # get the file path
-            file_path = to_raw(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'],
-                                            secure_filename(file.filename)))
-            parsed_file = XML_parser.parse(file_path)
-            add_questionnaire(parsed_file)
-            flash('File successfully uploaded')
+            try:
+                file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'],
+                                       secure_filename(file.filename)))
+                # get the file path
+                file_path = to_raw(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'],
+                                                secure_filename(file.filename)))
+                parsed_file = XML_parser.parse(file_path)
+                add_questionnaire(parsed_file)
+                flash('File successfully uploaded')
+            except ValueError as e:
+                flash('Error: ' + str(e))
+            except exc.SQLAlchemyError as e:
+                flash('Error while uploading file')
+                flash(str(e))
 
     return render_template('import.html', form=form)
+
+
+
 
 
 @app.route('/export', methods=['GET', 'POST'])
