@@ -1,5 +1,5 @@
 from .app import app, ALLOWED_EXTENSIONS
-from .db_link import get_questions, get_liste_questionnaire, add_question, add_answer, del_question, add_questionnaire
+from .db_link import *
 from .models import User
 from .forms import *
 
@@ -28,23 +28,20 @@ def home():
 @app.route("/questionnaire", methods=["POST","GET"])
 @login_required
 def questionnaire():
+
+    # récupérer la liste de tous les questionnaires disponibles
+    questionnaires = get_questionnaires()  # suppose que cette fonction récupère la liste des questionnaires depuis une source de données externe
+    selected_idqq = -1
     if request.method == "POST":
-        idqq = request.form["idqq"]
-        if idqq == '' or not idqq.isnumeric():
-            que = []
-        else:
-            que = get_questions(int(idqq))
-            listid = []
-            for i in range(len(que)):
-                listid.append(que[i]['idq'])
 
-    else:
-        idqq = ''
-        que = []
-        listid = []
-
-    return render_template("questionnaire.html", idqq = idqq, questions = que, lenque = len(que), listid = listid)
-
+        # récupérer l'ID du questionnaire sélectionné à partir de la liste déroulante
+        selected_idqq = request.form["idqq"]
+        if selected_idqq.isnumeric():
+            # rediriger vers la page questionnaire avec l'ID sélectionné
+            return render_template("questionnaire.html",idqq = selected_idqq, questionnaires=questionnaires,
+                                   questions=get_questions(selected_idqq))
+    # si la méthode est GET, afficher la liste déroulante de tous les questionnaires
+    return render_template("questionnaire.html", questionnaires=questionnaires, questions=get_questions(selected_idqq), idqq = selected_idqq)
 @app.route("/about")
 def about():
     return render_template("about.html")

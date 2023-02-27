@@ -106,6 +106,13 @@ def del_question(idq):
     ses.delete(res[0])
     ses.commit()
 
+def get_questionnaires():
+    res = ses.query(Questionnaire).all()
+    test = list()
+    for rw in res:
+        test.append({"idq":rw.idQuestionnaire, "nom":rw.nom, "info":rw.info, "idu":rw.idUser})
+    return test
+
 def main():
     add_questionnaire(p)
 
