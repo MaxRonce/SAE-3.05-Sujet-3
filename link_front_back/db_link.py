@@ -86,6 +86,10 @@ def add_answer(answer, fraction, idQuestion, feedback = ''):
     ses.commit()
 
 def add_questionnaire(questionnaire):
+    if not 'category' in questionnaire:
+        questionnaire['category'] = dict()
+        questionnaire['category']['name'] = "Default questionnaires"
+        questionnaire['category']['info'] = "Default questionnaires"
     q = Questionnaire(idQuestionnaire=query_max(Questionnaire.idQuestionnaire)+1, nom=questionnaire['category']['name'], info=questionnaire['category']['info'], idUser=1)
     ses.add(q)
     ses.commit()

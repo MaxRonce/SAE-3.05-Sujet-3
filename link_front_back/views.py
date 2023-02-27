@@ -127,7 +127,7 @@ def uploader_file():
                                             secure_filename(file.filename)))
             parsed_file = XML_parser.parse(file_path)
             add_questionnaire(parsed_file)
-            return "File uploaded successfully and added to the database"
+            flash('File successfully uploaded')
 
     return render_template('import.html', form=form)
 

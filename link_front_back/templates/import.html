@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
     {% endblock %}
 
-{% block content %}
 
+{% block content %}
   <form method="POST" enctype="multipart/form-data" class="ulform">
     {{ form.hidden_tag() }}
     <div class="file-upload choice">
@@ -14,5 +14,4 @@
     </div>
     {{ form.submit(id_="sbutton") }}
   </form>
-
 {% endblock %}
