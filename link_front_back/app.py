@@ -1,8 +1,8 @@
-from flask_login        import LoginManager
-from flask              import Flask, session
-from flask_mysqldb      import MySQL
+from flask_login import LoginManager
+from flask import Flask, session
+from flask_mysqldb import MySQL
 
-from flask_bootstrap    import Bootstrap
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 login_manager = LoginManager(app)
