@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired
 
 from .db_link import get_liste_id_nom_questionnaire, get_user
 from .models import User
+from hashlib import sha256
 
 
 class DownloadForm(FlaskForm):
@@ -41,4 +42,4 @@ class LoginForm(FlaskForm):
         if user is None:
             return None
         us = User(user.idUser, user.mdpUser)
-        return us if self.password.data == us.password else None
+        return us if sha256(self.password.data.encode('utf-8')).hexdigest() == us.password else None
