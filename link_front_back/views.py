@@ -50,6 +50,24 @@ def delete_question(idq):
     del_question(idq)
     return jsonify({"message": "Question deleted successfully."})
 
+
+@app.route("/questionnaires", methods=["POST", "GET"])
+@login_required
+def questionnaires():
+    return render_template("listquestionnaire.html", questionnaires = get_questionnaires())
+
+@app.route("/editquestion/<idq>", methods=["GET", "POST"])
+def edit_question(idq):
+    form = QuestionForm()
+    if form.validate_on_submit():
+        edit_question(idq, form.titre.data, form.Typeq.data, form.points.data, form.valeurpn.data)
+        return redirect(url_for('questionnaire'))
+    return render_template("editquestion.html", form=form,question= get_question(idq))
+
+@app.route("/questionnaires/<idq>", methods=["DELETE"])
+def delete_questionnaire(idq):
+    del_questionnaire(idq)
+    return jsonify({"message": "Questionnaire deleted successfully."})
 @app.route("/about")
 def about():
     return render_template("about.html")

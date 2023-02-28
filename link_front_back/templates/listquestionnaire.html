@@ -10,39 +10,28 @@
 <div class="container">
     <h1>Gestion des Questionnaires</h1>
 
-    <div class ="titreq">
-        <h3>Choix:</h3>
-
-        <form action="" method="post" idqq = {{ idqq }}>
-            <select name="idqq" id="idqq" onchange="this.form.submit()">
-                <option value="0">Choisir un questionnaire</option>
-                {% for questionnaire in questionnaires %}
-                        <option value="{{ questionnaire.idq }}">
-                         {{ questionnaire.nom }}
-                        </option>
-
-                {% endfor %}
-            </select>
-
-        </form>
-
-    </div>
     <div class="listequestion">
         <h3>Questionnaires : {{ nquest }}</h3>
         <div class="questions">
             <ul>
 
                 {% for questionnaire in questionnaires %}
-                <li class="quest">Question {{ questionnaire.idq }}
+                <li class="quest">Questionnaire {{ questionnaire.idq }}
                     <div class="question">
                         <div>{{ questionnaire.nom }}</div>
-                        <a class="deleteq" href="#" onclick="deleteQuestion({{ question.idq }})">
+                        <div class="buttonsq">
+                        <a class="deletequest" href="#" onclick="deleteQuestion()">
                             <button class="deleteq"> Supprimer</button>
                         </a>
+                        <a class="deleteq" href="#" onclick="deleteQuestion()">
+                            <button class="deleteq"> Editer</button>
+
+                        </a>
+                        </div>
 
 <script>
 function deleteQuestion(idq) {
-  fetch("{{ url_for('delete_question', idq=question.idq) }}", { method: 'DELETE' })
+  fetch("{{ url_for('delete_questionnaire', idq = questionnaire.idq) }}", { method: 'DELETE' })
     .then(response => response.json())
     .then(data => {
       alert(data.message);
@@ -57,7 +46,7 @@ function deleteQuestion(idq) {
             {% if idqq !=-1 %}
                 <li>
                 <a href="{{ url_for('ajoutq', idq=idqq) }}">
-                            <button class="addbtn"><i class="fa fa-plus"></i></button>
+                            <button><i class="fa fa-plus"></i></button>
                 </a>
             </li>
             {%  endif %}

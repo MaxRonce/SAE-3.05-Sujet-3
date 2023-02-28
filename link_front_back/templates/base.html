@@ -33,7 +33,7 @@
 
                     {% if current_user.is_authenticated %}
                     <li class="mid-item"><a href="{{ url_for("questionnaire") }}">Questionnaire</a>
-                    <li class="mid-item"><a href="{{ url_for("ajout_question") }}">Questions</a>
+                    <li class="mid-item"><a href="{{ url_for("questionnaires") }}">Questions</a>
                     <li class="mid-item"><a href="{{ url_for("about") }}">A propos</a></li>
                     <li class="last-item"><a href="{{ url_for("profil") }}">{{ current_user.username}}</a></li>
                     {% else %}

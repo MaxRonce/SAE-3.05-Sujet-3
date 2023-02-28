@@ -101,6 +101,13 @@ def del_question(idq):
     ses.delete(res[0])
     ses.commit()
 
+def del_questionnaire(idq):
+    for questions in ses.query(Question).filter(Question.idQuestionnaire == idq):
+        del_question(questions.idQuestion)
+    res = ses.query(Questionnaire).filter(Questionnaire.idQuestionnaire == idq)
+    ses.delete(res[0])
+    ses.commit()
+
 def get_questionnaires():
     res = ses.query(Questionnaire).all()
     test = list()
@@ -112,6 +119,12 @@ def get_questionnaire_name(idq:int)->str:
     res = ses.query(Questionnaire).filter(Questionnaire.idQuestionnaire == idq)
     return res[0].nom
 
+def get_question(idq):
+    res = ses.query(Question).filter(Question.idQuestion == idq)
+    test = list()
+    for rw in res:
+        test.append({"idq":rw.idQuestion, 'type':(ses.query(Type).filter(Type.idType == rw.idType))[0].nomType, 'name' : rw.name ,"questiontext":rw.question, "template":rw.template, "defaultgrade":rw.valeurPoint, "hidden":rw.hidden, "penalty":rw.pointNegatif, "idQuestionnaire":rw.idQuestionnaire, "generalfeedback":rw.feedback, "idt":rw.idType})
+    return test[0]
 def main():
     add_questionnaire(p)
 
