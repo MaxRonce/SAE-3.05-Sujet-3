@@ -12,7 +12,6 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #1D3557;
-  width: 96%;
   height: 90vh;
   border-radius: 5vh;
   margin: 4vh;
@@ -35,8 +34,15 @@ body {
 .container .Actions h1 {
   text-align: center;
   font-weight: bolder;
-  font-size: 2.2em;
+  font-size: 3.2em;
 }
+
+h2{
+  font-size: 1.5em;
+  font-weight: bolder;
+  margin: 0.5em;
+}
+
 .container .Actions li {
   font-size: 1.4em;
   font-weight: bolder;
@@ -73,6 +79,7 @@ body {
   border-radius: 5vh;
   color: #FFF5EB;
   display: flex;
+  text-align: center;
   flex-direction: column;
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
