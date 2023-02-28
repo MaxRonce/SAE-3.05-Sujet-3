@@ -1,20 +1,6 @@
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func, exc
-from .app import login_manager, db
+from sqlalchemy import func, exc
+from .bdsetup import *
 
-login, passwd, serveur, bd = "root", "ronceray", "localhost", "KAIRO"
-engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
-
-ses = Session(engine)
-Base = automap_base()
-Base.prepare(engine, reflect=True)
-
-Type = Base.classes.typequestion
-User = Base.classes.users
-Questionnaire = Base.classes.questionnaire
-Question = Base.classes.question
-RepQuestion = Base.classes.reponsequestion
 
 
 p= {'category': {'name': '$module$/top/Défaut pour Test_maxime', 'info': 'La catégorie par défaut pour les questions partagées dans le contexte «\xa0Test_maxime\xa0».'}, 'questions': [{'type': 'truefalse', 'name': 'Question_1_Edited', 'template': 'None', 'questiontext': 'Vrai ou Faux ????????', 'generalfeedback': None, 'defaultgrade': '1.0000000', 'penalty': '1.0000000', 'hidden': '0', 'answers': [{'fraction': '0', 'text': 'true', 'feedback': '\n        '}, {'fraction': '100', 'text': 'false', 'feedback': '\n        '}]}]}
@@ -114,6 +100,17 @@ def del_question(idq):
     res = ses.query(Question).filter(Question.idQuestion == idq)
     ses.delete(res[0])
     ses.commit()
+
+def get_questionnaires():
+    res = ses.query(Questionnaire).all()
+    test = list()
+    for rw in res:
+        test.append({"idq":rw.idQuestionnaire, "nom":rw.nom, "info":rw.info, "idu":rw.idUser})
+    return test
+
+def get_questionnaire_name(idq:int)->str:
+    res = ses.query(Questionnaire).filter(Questionnaire.idQuestionnaire == idq)
+    return res[0].nom
 
 def main():
     add_questionnaire(p)
