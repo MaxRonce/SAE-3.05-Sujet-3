@@ -34,21 +34,21 @@ INSERT INTO QUESTION (idquestion, question, template, valeurPoint, pointNegatif,
 ;
 
 
-INSERT INTO REPONSEQUESTION (idReponse, reponse, valide, idQuestion) VALUES
-    (40,'artichaud',false,20),
-    (41,'4',true,20),
-    (42,'je suis',true,21),
-    (43,'suis',true,21),
-    (44,'sommes',false,21),
-    (45,'hello le monde',false,22),
-    (46,'bonjour monde',true,22),
-    (47,'5460',true,23),
-    (48,'546',false,23),
-    (49,'vous mangez',true,24),
-    (50,'vous manger',false,24),
-    (51,'mangez',true,24),
-    (52,'impovisation',false,25),
-    (53,'améliorer',true,25)
+INSERT INTO REPONSEQUESTION (idReponse, reponse, idQuestion) VALUES
+    (40,'artichaud',20),
+    (41,'4',20),
+    (42,'je suis',21),
+    (43,'suis',21),
+    (44,'sommes',21),
+    (45,'hello le monde',22),
+    (46,'bonjour monde',22),
+    (47,'5460',23),
+    (48,'546',23),
+    (49,'vous mangez',24),
+    (50,'vous manger',24),
+    (51,'mangez',24),
+    (52,'impovisation',25),
+    (53,'améliorer',25)
 ;
 
 
