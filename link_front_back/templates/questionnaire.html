@@ -17,7 +17,10 @@
             <select name="idqq" id="idqq" onchange="this.form.submit()">
                 <option value="0">Choisir un questionnaire</option>
                 {% for questionnaire in questionnaires %}
-                        <option value="{{ questionnaire.idq }}">
+                        <option value="{{ questionnaire.idq }}"
+                        {% if idqq == questionnaire.idq %}
+                        selected
+                        {% endif %}>
                          {{ questionnaire.nom }}
                         </option>
 
@@ -28,7 +31,7 @@
 
     </div>
     <div class="listequestion">
-        <h3>Questions contenues : {{ nquest }}</h3>
+        <h3>Questions contenues :</h3>
         <div class="questions">
             <ul>
 
