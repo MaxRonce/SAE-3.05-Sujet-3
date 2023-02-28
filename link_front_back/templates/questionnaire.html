@@ -36,9 +36,19 @@
                 <li class="quest">Question {{ question.idq }}
                     <div class="question">
                         <div>{{ question.questiontext }}</div>
-                        <a href="{{ url_for('question', idq=question.idq) }}">
-                            <button class="deleteq">Supprimer</button>
-                        </a>
+                        <a href="#" onclick="deleteQuestion({{ question.idq }})">Supprimer</a>
+
+<script>
+function deleteQuestion(idq) {
+  fetch("{{ url_for('delete_question', idq=question.idq) }}", { method: 'DELETE' })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message);
+      location.reload();
+    });
+}
+</script>
+
                     </div>
                 </li>
                 {% endfor %}

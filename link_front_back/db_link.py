@@ -1,5 +1,5 @@
 from sqlalchemy import func, exc
-from setupdb import *
+from .setupdb import *
 
 
 

@@ -4,7 +4,7 @@ from .db_link import *
 from .models import User
 from .forms import *
 
-from flask import render_template, request, redirect, session, url_for, flash, send_file
+from flask import render_template, request, redirect, session, url_for, flash, send_file, jsonify
 from flask_login import login_user, current_user, logout_user, login_required
 
 from link_front_back.parser.DB_to_XML import get_dict_from_DB
@@ -39,10 +39,17 @@ def questionnaire():
         selected_idqq = request.form["idqq"]
         if selected_idqq.isnumeric():
             # rediriger vers la page questionnaire avec l'ID sélectionné
-            return render_template("questionnaire.html",sidqq = selected_idqq, questionnaires=questionnaires,
+            return render_template("questionnaire.html", idqq = selected_idqq, questionnaires=questionnaires,
                                    questions=get_questions(selected_idqq), nquest = get_questionnaire_name(selected_idqq))
+
     # si la méthode est GET, afficher la liste déroulante de tous les questionnaires
     return render_template("questionnaire.html", questionnaires=questionnaires, questions=get_questions(selected_idqq), idqq = selected_idqq)
+
+@app.route("/questionnaire/<idq>", methods=["DELETE"])
+def delete_question(idq):
+    del_question(idq)
+    return jsonify({"message": "Question deleted successfully."})
+
 @app.route("/about")
 def about():
     return render_template("about.html")
@@ -92,10 +99,10 @@ def ajoutr(idq):
     return render_template("ajoutreponse.html", form=form)
 
 
-@app.route("/questionnaire/<idq>", methods=["POST", "GET"])
+@app.route("/questionnaire/<idq>", methods=["DELETE"])
 def question(idq):
     del_question(idq)
-    return redirect(url_for('questionnaire'))
+    return jsonify({"message": "Question deleted successfully."})
 
 
 def allowed_file(filename):
