@@ -36,15 +36,15 @@
                 <li class="quest">Question {{ question.idq }}
                     <div class="question">
                         <div>{{ question.questiontext }}</div>
-                        <a href="{{ url_for('question', idq=question.idq) }}">
-                            <button class="deleteq">Supprimer</button>
+                        <a href="{{ url_for('delete_question', idq=question.idq) }}">
+                            <button class="deleteq" onclick="deleteQuestion()">Supprimer</button>
                         </a>
                     </div>
                 </li>
                 {% endfor %}
             {% if idqq !=-1 %}
                 <li>
-                <a href="{{ url_for('ajoutq', idq=idqq) }}">
+                <a href="{{ url_for('ajoutq', idq= sidqq) }}">
                             <button class="addbtn"><i class="fa fa-plus"></i></button>
                 </a>
             </li>
@@ -60,4 +60,15 @@
         {{ buttonarrow("questionnaire", "white_button_slider", "Quitter") }}
     </div>
 </div>
+
+<script>
+function deleteQuestion(idq) {
+  fetch(/questionnaire/${idq}, { method: 'DELETE' })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message);
+      location.reload();
+    });
+}
+</script>
 {% endblock %}

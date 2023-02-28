@@ -65,13 +65,6 @@ def logout():
 def historique():
     return render_template("historique.html")
 
-
-@app.route("/ajout")
-@login_required
-def ajout_question():
-    return render_template("ajouter_question.html")
-
-
 @app.route("/ajout/<idq>", methods=("GET", "POST",))
 def ajoutq(idq):
     form = QuestionForm()
@@ -83,7 +76,7 @@ def ajoutq(idq):
     return render_template("test.html", form=form)
 
 
-@app.route("/ajout/<idq>/", methods=("GET", "POST",))
+@app.route("/ajout/<idq>/add", methods=("GET", "POST",))
 def ajoutr(idq):
     form = ReponseForm()
     if form.validate_on_submit():
@@ -92,8 +85,8 @@ def ajoutr(idq):
     return render_template("ajoutreponse.html", form=form)
 
 
-@app.route("/questionnaire/<idq>", methods=["POST", "GET"])
-def question(idq):
+@app.route("/questionnaire/<idq>", methods=["DELETE"])
+def delete_question(idq):
     del_question(idq)
     return redirect(url_for('questionnaire'))
 
