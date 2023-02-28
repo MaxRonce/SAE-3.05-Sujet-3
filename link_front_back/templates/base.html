@@ -1,14 +1,14 @@
 <!-- macro bouton fléché-->
 <!-- TODO permettre d'ajouter les url_for dans la macro pour pouvoir cliquer sur le bouton-->
 {% macro buttonarrow(func, btype, text) %}
-    <div class="{{btype}}" href="{{url_for(func)}}">
+    <button class="{{btype}}" href="{{url_for(func)}}">
         <span class="background"></span>
         <span class="arrow">
             <span class="body"></span>
             <span class="tip"></span>
         </span>
         <span class="text">{{text}}</span>
-    </div>
+    </button>
 {% endmacro %}
 
 <!DOCTYPE html>

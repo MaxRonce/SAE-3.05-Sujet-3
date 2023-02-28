@@ -1,20 +1,20 @@
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func
-from .app import login_manager
+from sqlalchemy import create_engine, func, exc
+from .app import login_manager, db
 
-login, passwd, serveur, bd = "antoninreydet", "root", "localhost", "KAIRO"
+login, passwd, serveur, bd = "root", "ronceray", "localhost", "KAIRO"
 engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
 
 ses = Session(engine)
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 
-Type = Base.classes.TYPEQUESTION
-User = Base.classes.USERS
-Questionnaire = Base.classes.QUESTIONNAIRE
-Question = Base.classes.QUESTION
-RepQuestion = Base.classes.REPONSEQUESTION
+Type = Base.classes.typequestion
+User = Base.classes.users
+Questionnaire = Base.classes.questionnaire
+Question = Base.classes.question
+RepQuestion = Base.classes.reponsequestion
 
 
 p= {'category': {'name': '$module$/top/Défaut pour Test_maxime', 'info': 'La catégorie par défaut pour les questions partagées dans le contexte «\xa0Test_maxime\xa0».'}, 'questions': [{'type': 'truefalse', 'name': 'Question_1_Edited', 'template': 'None', 'questiontext': 'Vrai ou Faux ????????', 'generalfeedback': None, 'defaultgrade': '1.0000000', 'penalty': '1.0000000', 'hidden': '0', 'answers': [{'fraction': '0', 'text': 'true', 'feedback': '\n        '}, {'fraction': '100', 'text': 'false', 'feedback': '\n        '}]}]}
@@ -86,13 +86,22 @@ def add_answer(answer, fraction, idQuestion, feedback = ''):
     ses.commit()
 
 def add_questionnaire(questionnaire):
+    if not 'category' in questionnaire:
+        questionnaire['category'] = dict()
+        questionnaire['category']['name'] = "Default questionnaires"
+        questionnaire['category']['info'] = "Default questionnaires"
     q = Questionnaire(idQuestionnaire=query_max(Questionnaire.idQuestionnaire)+1, nom=questionnaire['category']['name'], info=questionnaire['category']['info'], idUser=1)
-    ses.add(q)
-    ses.commit()
-    for question in questionnaire['questions']:
-        idq = add_question(question['questiontext'], q.idQuestionnaire, get_idtype(question['type']), question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'], question['template'], question['name'])
-        for answer in question['answers']:
-            add_answer(answer['text'], answer['fraction'],idq, answer['feedback'])
+    try:
+        ses.add(q)
+        ses.commit()
+        for question in questionnaire['questions']:
+            idq = add_question(question['questiontext'], q.idQuestionnaire, get_idtype(question['type']), question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'], question['template'], question['name'])
+            for answer in question['answers']:
+                add_answer(answer['text'], answer['fraction'],idq, answer['feedback'])
+    except exc.SQLAlchemyError as e:
+        ses.rollback()
+        raise ValueError(str(e.orig))
+
 
 def get_idtype(nom:str)->int:
     res = ses.query(Type).filter(Type.nomType == nom)
