@@ -1,3 +1,4 @@
 __pycache__
 .idea
-/link_front_back/bdsetup.py
+/link_front_back/setupdb.py
+/link_front_back/static/uploaded_files/Vrai_Faux.xml
