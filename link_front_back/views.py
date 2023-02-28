@@ -39,7 +39,7 @@ def questionnaire():
         selected_idqq = request.form["idqq"]
         if selected_idqq.isnumeric():
             # rediriger vers la page questionnaire avec l'ID sélectionné
-            return render_template("questionnaire.html", idqq = selected_idqq, questionnaires=questionnaires,
+            return render_template("questionnaire.html", idqq = int(selected_idqq), questionnaires=questionnaires,
                                    questions=get_questions(selected_idqq), nquest = get_questionnaire_name(selected_idqq))
 
     # si la méthode est GET, afficher la liste déroulante de tous les questionnaires
