@@ -2,8 +2,6 @@
 import xml.etree.ElementTree as ET
 import re
 
-
-
 # parse the xml file in data/ folder
 # display the tree
 

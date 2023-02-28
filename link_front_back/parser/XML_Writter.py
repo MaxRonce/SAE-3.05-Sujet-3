@@ -1,4 +1,4 @@
-from .DB_to_XML import get_dict_from_DB
+
 def writter(filename :str, path:str, data:dict, category:bool=True):
     """Create a file with the data in the dict"""
     #create the file
@@ -21,7 +21,7 @@ def writter(filename :str, path:str, data:dict, category:bool=True):
 
         #write the questions
         for question in data['questions']:
-            file.writelines('\t<question type="truefalse">\n')
+            file.writelines(f'\t<question type="{question["type"]}">\n')
             file.writelines('\t\t<name>\n')
             file.writelines('\t\t\t<text>'+str(question['name'])+'</text>\n')
             file.writelines('\t\t</name>\n')
@@ -43,19 +43,22 @@ def writter(filename :str, path:str, data:dict, category:bool=True):
             for answer in question['answers']:
                 file.writelines('\t\t<answer fraction="'+str(answer['fraction'])+'" format="moodle_auto_format">\n')
                 file.writelines('\t\t\t<text>'+str(answer['text'])+'</text>\n')
-                file.writelines('\t\t\t<feedback format="html">\n')
+                file.writelines('\t\t\t<feedback format="html ">\n')
                 if answer['feedback'] is not None:
                     file.writelines('\t\t\t\t<text><![CDATA[<p dir="ltr" style="text-align: left;">'+str(answer['feedback'])+'</p>]]></text>\n')
                 else:
                     file.writelines('\t\t\t\t<text></text>\n')
                 file.writelines('\t\t\t</feedback>\n')
                 file.writelines('\t\t</answer>\n')
-
             file.writelines('\t</question>\n')
             file.writelines('\n')
         file.writelines('</quiz>\n')
 
 
 
+
+
+
 if __name__ == "__main__":
-        writter('DE.xml', 'out/', get_dict_from_DB(1), category=True)
+    from DB_to_XML import get_dict_from_DB
+    writter('Demp.xml', 'out/', get_dict_from_DB(6), category=True)

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+    {% block styleandtitle %}
+    <title>Modifier Question </title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/ajouter_question.css')}}">
+    {% endblock %}
+
+    {% block content %}
+<form role="form"  method="post">
+    {{ form.hidden_tag() }}
+    <div class="Add_question_container">
+    <h1>Modifier question {{ question.idq }}</h1>
+
+    <div id="Add_title">
+        <label for="title">Titre</label>
+        {{ form.titre(value=question.questiontext) }}
+    </div>
+    <div class="container">
+        <div id="nbrep">
+            <label for="nbrep">Points de la question</label>
+            {{ form.points}}
+        </div>
+        <div id="type_question">
+            <label for="type">Type de question</label>
+            {{ form.Typeq }}
+        </div>
+    </div>
+
+    <div id="istemplate">
+        <label class="checkbox">
+            <span>Template ?</span>
+            <input type="checkbox" id="checkt" onclick="toggletemplateBoxVisibility()" >
+
+        </label>
+    </div>
+
+    <div id="negq">
+    <div id="isneg">
+        <label class="checkbox">
+            <span>Point négatif ?</span>
+            <input type="checkbox" id="check" onclick="toggleBoxVisibility()">
+
+        </label>
+    </div>
+
+
+    <div id="pointneg">
+        <label for="pointneg">Valeur: </label>
+        <div id="valeurpn">
+        {{ form.valeurpn }}
+        </div>
+    </div>
+
+    </div>
+    <div id="templatef">
+        <h1>Template</h1>
+    </div>
+        {{ form.submit }}
+
+
+
+</div>
+
+
+</form>
+
+
+<script src="{{url_for('static', filename='js/Ajouter_question.js')}}"></script>
+{% endblock %}
