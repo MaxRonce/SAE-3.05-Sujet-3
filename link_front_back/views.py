@@ -99,12 +99,6 @@ def ajoutr(idq):
     return render_template("ajoutreponse.html", form=form)
 
 
-@app.route("/questionnaire/<idq>", methods=["DELETE"])
-def question(idq):
-    del_question(idq)
-    return jsonify({"message": "Question deleted successfully."})
-
-
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
