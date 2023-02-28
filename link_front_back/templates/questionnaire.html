@@ -11,13 +11,16 @@
     <h1>Questionnaire</h1>
 
     <div class ="titreq">
-        <h3>Choix:</h3>
+        <h3>Choix: {{ idqq }}</h3>
 
-        <form action="" method="post">
+        <form action="" method="post" idqq = {{ idqq }}>
             <select name="idqq" id="idqq" onchange="this.form.submit()">
                 <option value="0">Choisir un questionnaire</option>
                 {% for questionnaire in questionnaires %}
-                <option value="{{ questionnaire.idq }}">{{ questionnaire.nom }}</option>
+                        <option value="{{ questionnaire.idq }}">
+                         {{ questionnaire.nom }}
+                        </option>
+
                 {% endfor %}
             </select>
 
@@ -25,7 +28,7 @@
 
     </div>
     <div class="listequestion">
-        <h3>Questions contenues :</h3>
+        <h3>Questions contenues : {{ nquest }}</h3>
         <div class="questions">
             <ul>
 
