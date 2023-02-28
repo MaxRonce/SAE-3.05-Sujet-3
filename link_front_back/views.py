@@ -153,3 +153,12 @@ def download_file(idQ):
     writter(name, 'link_front_back/parser/out/', get_dict_from_DB(idQ), category=True)
 
     return send_file("parser/out/" + name, as_attachment=True)
+
+
+@app.route('/choose')
+def choose_qcm():
+    return render_template("chooseqcm.html",questionnaires=get_questionnaires())
+
+@app.route('/answer/<idq>')
+def answer_qcm(idq):
+    return render_template("answerqcm.html")

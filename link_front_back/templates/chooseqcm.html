@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block styleandtitle %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{url_for('static', filename='css/questionnaire.css')}}">
+<title>Choix questionnaire</title>
+{% endblock %}
+
+{% block content%}
+<div class="container">
+    <h1>Choisi ton questionnaire</h1>
+    <div class="listequestion">
+        <h3>Liste des questionnaires</h3>
+        <div class="questions">
+            <ul>
+                {% for questionnaire in questionnaires %}
+                <li class="quest">
+                    <p>Questionnaire {{ questionnaire.idq }} : {{ questionnaire.nom }}</p>
+                    <p>{{ questionnaire.info }}</p>
+                    <form action="{{ url_for("answer_qcm", idq="questionnaire.idq")}}" method="get">
+                    <input type="submit" value="Do the quizz">
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        </div>
+</div>
+{% endblock %}
