@@ -386,8 +386,6 @@ iframe {
 [type=submit],
 button,
 .btn {
-  background-color: #000000;
-  border: 1px solid black;
   color: #333;
   cursor: pointer;
   display: inline-block;
@@ -401,24 +399,18 @@ button,
 [type=button]:hover,
 [type=submit]:hover,
 button:hover,
-.btn:hover {
-  background-color: black;
-  border-color: black;
-}
+
 [type=reset]:active,
 [type=button]:active,
 [type=submit]:active,
 button:active,
-.btn:active {
-  background-color: black;
-  border-color: black;
-}
+
 [type=reset]:disabled,
 [type=button]:disabled,
 [type=submit]:disabled,
 button:disabled,
 .btn:disabled {
-  background-color: #1a1a1a;
+  border: none;
   color: #4d4d4d;
   cursor: default;
 }
@@ -426,16 +418,13 @@ button:disabled,
 [type=button]:focus,
 [type=submit]:focus,
 button:focus,
-.btn:focus {
-  border: 1px solid black;
-}
+
 [type=reset].accent,
 [type=button].accent,
 [type=submit].accent,
 button.accent,
 .btn.accent {
-  background-color: #86deb7;
-  border-color: #4ace93;
+  border: none;
 }
 [type=reset].accent:hover,
 [type=button].accent:hover,

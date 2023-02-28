@@ -1,22 +1,6 @@
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func
+from sqlalchemy import func, exc
+from .bdsetup import *
 
-import pymysql
-pymysql.install_as_MySQLdb()
-
-login, passwd, serveur, bd = "antoninreydet", "root", "localhost", "KAIRO"
-engine = create_engine('mysql+mysqldb://'+login+':'+passwd+'@'+serveur+'/'+bd)
-
-ses = Session(engine)
-Base = automap_base()
-Base.prepare(engine, reflect=True)
-
-Type = Base.classes.TYPEQUESTION
-User = Base.classes.USERS
-Questionnaire = Base.classes.QUESTIONNAIRE
-Question = Base.classes.QUESTION
-RepQuestion = Base.classes.REPONSEQUESTION
 
 
 p= {'category': {'name': '$module$/top/Défaut pour Test_maxime', 'info': 'La catégorie par défaut pour les questions partagées dans le contexte «\xa0Test_maxime\xa0».'}, 'questions': [{'type': 'truefalse', 'name': 'Question_1_Edited', 'template': 'None', 'questiontext': 'Vrai ou Faux ????????', 'generalfeedback': None, 'defaultgrade': '1.0000000', 'penalty': '1.0000000', 'hidden': '0', 'answers': [{'fraction': '0', 'text': 'true', 'feedback': '\n        '}, {'fraction': '100', 'text': 'false', 'feedback': '\n        '}]}]}
@@ -58,6 +42,10 @@ def get_questions(idqq: int):
         test2.append({"idq":rz.idQuestion, 'type':(ses.query(Type).filter(Type.idType == rz.idType))[0].nomType, 'name' : rz.name ,"questiontext":rz.question, "template":rz.template, "defaultgrade":rz.valeurPoint, "hidden":rz.hidden, "penalty":rz.pointNegatif, "idQuestionnaire":rz.idQuestionnaire, "generalfeedback":rz.feedback, "idt":rz.idType})
     return test2
 
+def get_user(idu: str):
+    user = ses.query(User).filter(User.idUser == idu).first()
+    return user
+
 def get_anwser(idq):
     res = ses.query(RepQuestion).filter(RepQuestion.idQuestion == idq)
     test = list()
@@ -84,13 +72,22 @@ def add_answer(answer, fraction, idQuestion, feedback = ''):
     ses.commit()
 
 def add_questionnaire(questionnaire):
+    if not 'category' in questionnaire:
+        questionnaire['category'] = dict()
+        questionnaire['category']['name'] = "Default questionnaires"
+        questionnaire['category']['info'] = "Default questionnaires"
     q = Questionnaire(idQuestionnaire=query_max(Questionnaire.idQuestionnaire)+1, nom=questionnaire['category']['name'], info=questionnaire['category']['info'], idUser=1)
-    ses.add(q)
-    ses.commit()
-    for question in questionnaire['questions']:
-        idq = add_question(question['questiontext'], q.idQuestionnaire, get_idtype(question['type']), question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'], question['template'], question['name'])
-        for answer in question['answers']:
-            add_answer(answer['text'], answer['fraction'],idq, answer['feedback'])
+    try:
+        ses.add(q)
+        ses.commit()
+        for question in questionnaire['questions']:
+            idq = add_question(question['questiontext'], q.idQuestionnaire, get_idtype(question['type']), question['hidden'], question['defaultgrade'], question['generalfeedback'], question['penalty'], question['template'], question['name'])
+            for answer in question['answers']:
+                add_answer(answer['text'], answer['fraction'],idq, answer['feedback'])
+    except exc.SQLAlchemyError as e:
+        ses.rollback()
+        raise ValueError(str(e.orig))
+
 
 def get_idtype(nom:str)->int:
     res = ses.query(Type).filter(Type.nomType == nom)
@@ -103,6 +100,17 @@ def del_question(idq):
     res = ses.query(Question).filter(Question.idQuestion == idq)
     ses.delete(res[0])
     ses.commit()
+
+def get_questionnaires():
+    res = ses.query(Questionnaire).all()
+    test = list()
+    for rw in res:
+        test.append({"idq":rw.idQuestionnaire, "nom":rw.nom, "info":rw.info, "idu":rw.idUser})
+    return test
+
+def get_questionnaire_name(idq:int)->str:
+    res = ses.query(Questionnaire).filter(Questionnaire.idQuestionnaire == idq)
+    return res[0].nom
 
 def main():
     add_questionnaire(p)

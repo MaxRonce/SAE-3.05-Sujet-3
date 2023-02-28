@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 8575870  -->
+  <question type="multichoice">
+    <name>
+      <text>question_multiple</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Intitulé question multiple ?<br></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>id</idnumber>
+    <single>false</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>iii</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text>Votre réponse est correcte.</text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text>Votre réponse est partiellement correcte.</text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text>Votre réponse est incorrecte.</text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="90" format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">rep 1<br></p>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p dir="ltr" style="text-align: left;">feedback<br></p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="10" format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">rep2<br></p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <hint format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">indice1<br></p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+  </question>
+
+<!-- question: 8575869  -->
+  <question type="shortanswer">
+    <name>
+      <text>question_courte1</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Intitulé de la question ?<br></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Feedback général<br></p>]]></text>
+    </generalfeedback>
+    <defaultgrade>2.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>111</idnumber>
+    <usecase>0</usecase>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>rep1</text>
+      <feedback format="html">
+        <text><![CDATA[<p dir="ltr" style="text-align: left;">feedback de la rep1<br></p>]]></text>
+      </feedback>
+    </answer>
+    <hint format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">indice 1<br></p>]]></text>
+    </hint>
+    <hint format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Indice 2<br></p>]]></text>
+    </hint>
+  </question>
+
+</quiz>

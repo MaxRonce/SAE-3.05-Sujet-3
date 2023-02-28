@@ -9,7 +9,7 @@ body {
   align-items: center;
   background-color: #1D3557;
   width: 96%;
-  height: 150vh;
+  height: auto;
   border-radius: 5vh;
   margin: 4vh;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
@@ -26,17 +26,20 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 50%;
-  height: 7vh;
-  transform: translateY(17vh);
+  width: 70%;
+  height: 5vh;
+  margin-top: 10vh;
 }
 .container .titreq h3 {
   color: #FFF5EB;
-  font-size: 4em;
+  font-size: 3em;
   font-family: Oswald, serif;
   font-weight: bolder;
+  margin-right: 2vw;
+  margin-bottom:1vh;
+
 }
-.container .titreq input[type=text] {
+.container .titreq inputx[type=text] {
   width: 150%;
   height: 3em;
   border-radius: 0.7em;
@@ -44,27 +47,15 @@ body {
   font-size: 1.5em;
   margin-left : 1em;
 }
-.container .delete {
-  background-color: #FFF5EB;
-  margin-top: 22vh;
-  width: 15vw;
-  height: 7.5vh;
-  font-family: Oswald, serif;
-  font-size: 2em;
-  border-radius: 5vh;
-}
-.container .delete:hover {
-  background-color: #E63946;
-  color: #FFF5EB;
-}
+
 .container .add {
   background-color: #FFF5EB;
-  margin-top: 22vh;
   width: 15vw;
   height: 7.5vh;
   font-family: Oswald, serif;
   font-size: 2em;
   border-radius: 5vh;
+  margin-left: 2vw;
 }
 .container .add:hover {
   background-color: #E63946;
@@ -86,10 +77,20 @@ body {
   color: #FFF5EB;
   width: 95%;
   height: 60vh;
-  margin-top: 5vh;
+  margin-top: 10vh;
 }
 .container .listequestion h3 {
   font-size: 2em;
+}
+.container .listequestion .addbtn{
+  background-color: #FFF5EB;
+  border-radius: 7vh;
+  margin-left: 1vw;
+  margin-top: 2vh;
+  font-size: 3em;
+  width: 3vw;
+  height: 3vw;
+
 }
 .container .listequestion .questions {
   margin-top: 5vh;
@@ -119,5 +120,6 @@ body {
   justify-content: space-evenly;
   width: 50%;
 }
+
 
 /*# sourceMappingURL=questionnaire.css.map */

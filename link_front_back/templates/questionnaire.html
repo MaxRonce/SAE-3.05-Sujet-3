@@ -1,48 +1,63 @@
 {% extends "base.html" %}
-    {% block styleandtitle %} 
-    <link rel="stylesheet" href="{{url_for('static', filename='css/questionnaire.css')}}">
-    <title>Questionnaire</title>
-    {% endblock %}
+
+{% block styleandtitle %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{url_for('static', filename='css/questionnaire.css')}}">
+<title>Questionnaire</title>
+{% endblock %}
 
 {% block content%}
 <div class="container">
-    <h1>Questionnaire</h1>
+    <h1>Gestion des Questionnaires</h1>
+
     <div class ="titreq">
-        <h3>Titre :</h3>
-        <form action="" method="post">
-        <input type="text" name="idqq" id="title" value="{{idqq}}">
+        <h3>Choix:</h3>
+
+        <form action="" method="post" idqq = {{ idqq }}>
+            <select name="idqq" id="idqq" onchange="this.form.submit()">
+                <option value="0">Choisir un questionnaire</option>
+                {% for questionnaire in questionnaires %}
+                        <option value="{{ questionnaire.idq }}">
+                         {{ questionnaire.nom }}
+                        </option>
+
+                {% endfor %}
+            </select>
+
         </form>
+
     </div>
-    <div id="buttons">
-    <button id="delete" class="delete"> Supprimer</button>
-        <a href="{{url_for('ajoutq', idq = idqq)}}">
-            <button id="add" class="add"> Ajouter </button>
-        </a>
-
-     </div>
-
     <div class="listequestion">
-        <h3>Questions contenues: </h3>
+        <h3>Questions contenues : {{ nquest }}</h3>
         <div class="questions">
-            <ul >
-                {% for i in range(lenque) %}
-                <li class="quest">question {{i+1}}
+            <ul>
+
+                {% for question in questions %}
+                <li class="quest">Question {{ question.idq }}
                     <div class="question">
-                    <div>{{questions[i]['questiontext']}}</div>
-                    <a href="{{url_for('question', idq = questions[i]['idq'])}}">
-                    <button class="deleteq"> Supprimer</button>
-                    </a>
-                        </div>
+                        <div>{{ question.questiontext }}</div>
+                        <a href="{{ url_for('question', idq=question.idq) }}">
+                            <button class="deleteq">Supprimer</button>
+                        </a>
+                    </div>
                 </li>
                 {% endfor %}
+            {% if idqq !=-1 %}
+                <li>
+                <a href="{{ url_for('ajoutq', idq=idqq) }}">
+                            <button class="addbtn"><i class="fa fa-plus"></i></button>
+                </a>
+            </li>
+            {%  endif %}
+
+
             </ul>
         </div>
-
-    </div>
+        </div>
     <div class="buttons">
-        {{buttonarrow("Sauver","white_button_slider")}}
-        {{buttonarrow("Valider","white_button_slider")}}
-        {{buttonarrow("Quitter","white_button_slider")}}
+        {{ buttonarrow("questionnaire", "white_button_slider", "Sauver") }}
+        {{ buttonarrow("questionnaire", "white_button_slider", "Valider") }}
+        {{ buttonarrow("questionnaire", "white_button_slider", "Quitter") }}
     </div>
 </div>
 {% endblock %}
