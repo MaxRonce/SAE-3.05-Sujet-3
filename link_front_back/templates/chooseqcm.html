@@ -17,8 +17,8 @@
                 <li class="quest">
                     <p>Questionnaire {{ questionnaire.idq }} : {{ questionnaire.nom }}</p>
                     <p>{{ questionnaire.info }}</p>
-                    <form action="{{ url_for("answer_qcm", idq="questionnaire.idq")}}" method="get">
-                    <input type="submit" value="Do the quizz">
+                    <form action="{{ url_for('answer_qcm', idq=questionnaire.idq) }}" method="post">
+                        <input type="submit" value="Do the quizz">
                     </form>
                 </li>
                 {% endfor %}

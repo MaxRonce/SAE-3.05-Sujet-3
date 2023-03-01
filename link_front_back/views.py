@@ -159,6 +159,9 @@ def download_file(idQ):
 def choose_qcm():
     return render_template("chooseqcm.html",questionnaires=get_questionnaires())
 
-@app.route('/answer/<idq>')
+@app.route('/answer/<idq>', methods=["GET", "POST"])
 def answer_qcm(idq):
-    return render_template("answerqcm.html")
+    qq = get_questions_and_answers(idq)
+    import json
+    print(json.dumps(qq, indent=4))
+    return render_template("answerqcm.html", questionnaire=qq)

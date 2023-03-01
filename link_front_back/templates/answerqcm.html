@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block styleandtitle %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{url_for('static', filename='css/questionnaire.css')}}">
+<title>Choix questionnaire</title>
+{% endblock %}
+
+{% block content%}
+<div class="container">
+    <h1>Bonne chance !</h1>
+    <div class="listequestion">
+        <h3>Questions :</h3>
+        <div class="questions">
+            <form action="" method="post"></form>
+            {% set i = namespace(value=0) %}
+            {% for question in questionnaire %}
+                {% set i.value = i.value + 1 %}
+                <li class="quest">
+                    <p>Question {{ i.value }} : </p>
+                    <p>{{ question.questiontext }}</p>
+                    {% if question.type == "truefalse" %}
+                        <p>Type question : vrai ou faux</p>
+                        <fieldset>
+                            <input type="radio" name="vraifaux" id="{{ answer.idr }}">
+                            <label for="vrai">{{ question.reponses[0].text }}</label>
+                            <input type="radio" name="vraifaux" id="{{ answer.idr }}">
+                            <label for="faux">{{ question.reponses[1].text }}</label>
+                        </fieldset>
+                    {% elif question.type == "multichoice" %}
+                        <fieldset>
+                            {% for answer in question.reponses %}
+                                <input type="checkbox" name="{{ answer.idr }}" id="{{ answer.idr }}">
+                                <label for="{{ answer.idr }}">{{ answer.text }}</label>
+                            {% endfor %}
+                        </fieldset>
+                    {% else %}
+                    <p>undefined question type</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            <input type="submit" value="submit">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

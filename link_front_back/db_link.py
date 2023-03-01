@@ -50,8 +50,30 @@ def get_anwser(idq):
     res = ses.query(RepQuestion).filter(RepQuestion.idQuestion == idq)
     test = list()
     for rw in res:
-        test.append({"idr":rw.idReponse, "text":rw.reponse, "fraction":rw.fraction, "feedback":rw.feedback, "idq":rw.idQuestion})
+        test.append({"idr":rw.idReponse,
+                     "text":rw.reponse,
+                     "fraction":rw.fraction,
+                     "feedback":rw.feedback,
+                     "idq":rw.idQuestion})
     return test
+
+def get_questions_and_answers(idqq):
+    res2 = ses.query(Question).filter(Question.idQuestionnaire == idqq)
+    test2 = list()
+    for rz in res2:
+        test2.append({"idq":rz.idQuestion,
+                      'type':(ses.query(Type).filter(Type.idType == rz.idType))[0].nomType,
+                      'name' : rz.name,
+                      "questiontext":rz.question,
+                      "template":rz.template,
+                      "defaultgrade":rz.valeurPoint,
+                      "hidden":rz.hidden,
+                      "penalty":rz.pointNegatif,
+                      "idQuestionnaire":rz.idQuestionnaire,
+                      "generalfeedback":rz.feedback,
+                      "idt":rz.idType,
+                      "reponses":get_anwser(rz.idQuestion)})
+    return test2
 
 def query_max(table):
     res = ses.query(func.max(table)).scalar()
@@ -111,6 +133,13 @@ def get_questionnaires():
 def get_questionnaire_name(idq:int)->str:
     res = ses.query(Questionnaire).filter(Questionnaire.idQuestionnaire == idq)
     return res[0].nom
+
+def add_rep_user(idu, idq, reponse):
+    ru = RepUser(idUser=idu, idQuestion=idq, reponse=reponse)
+    ses.add(ru)
+    ses.commit()
+
+    
 
 def main():
     add_questionnaire(p)
