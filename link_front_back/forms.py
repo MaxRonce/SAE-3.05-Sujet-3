@@ -1,4 +1,3 @@
-import self as self
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, IntegerField, FileField
 from wtforms.validators import DataRequired
