@@ -134,6 +134,7 @@ def to_raw(string):
 
 
 @app.route('/import', methods=['GET', 'POST'])
+@login_required
 def uploader_file():
     form = uploadFileForm()
     if form.validate_on_submit() and request.method == 'POST':
@@ -164,6 +165,7 @@ def uploader_file():
 
 
 @app.route('/export', methods=['GET', 'POST'])
+@login_required
 def downloader_file():
     form = DownloadForm()
     if not form.validate_on_submit():
