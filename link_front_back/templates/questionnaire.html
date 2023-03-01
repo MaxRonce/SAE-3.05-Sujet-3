@@ -17,7 +17,10 @@
             <select name="idqq" id="idqq" onchange="this.form.submit()">
                 <option value="0">Choisir un questionnaire</option>
                 {% for questionnaire in questionnaires %}
-                        <option value="{{ questionnaire.idq }}">
+                        <option value="{{ questionnaire.idq }}"
+                        {% if idqq == questionnaire.idq %}
+                        selected
+                        {% endif %}>
                          {{ questionnaire.nom }}
                         </option>
 
@@ -28,7 +31,7 @@
 
     </div>
     <div class="listequestion">
-        <h3>Questions contenues : {{ nquest }}</h3>
+        <h3>Questions contenues :</h3>
         <div class="questions">
             <ul>
 
@@ -36,21 +39,31 @@
                 <li class="quest">Question {{ question.idq }}
                     <div class="question">
                         <div>{{ question.questiontext }}</div>
-                        <a href="{{ url_for('question', idq=question.idq) }}">
-                            <button class="deleteq">Supprimer</button>
+                        <a class="deleteq" href="#" onclick="deleteQuestion({{ question.idq }})">
+                            <button class="deleteq"> Supprimer</button>
                         </a>
+
+                <script>
+                function deleteQuestion(idq) {
+                  fetch("{{ url_for('delete_question', idq=question.idq) }}", { method: 'DELETE' })
+                    .then(response => response.json())
+                    .then(data => {
+                      alert(data.message);
+                      location.reload();
+                    });
+                }
+                </script>
+
                     </div>
                 </li>
                 {% endfor %}
             {% if idqq !=-1 %}
                 <li>
-                <a href="{{ url_for('ajoutq', idq=idqq) }}">
-                            <button class="addbtn"><i class="fa fa-plus"></i></button>
-                </a>
-            </li>
+                    <a href="{{ url_for('ajoutq', idq=idqq) }}">
+                        <button class="addbtn"><i class="fa fa-plus"></i></button>
+                    </a>
+                </li>
             {%  endif %}
-
-
             </ul>
         </div>
         </div>

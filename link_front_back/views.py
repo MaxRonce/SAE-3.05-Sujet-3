@@ -4,7 +4,7 @@ from .db_link import *
 from .models import User
 from .forms import *
 
-from flask import render_template, request, redirect, session, url_for, flash, send_file
+from flask import render_template, request, redirect, session, url_for, flash, send_file, jsonify
 from flask_login import login_user, current_user, logout_user, login_required
 
 from link_front_back.parser.DB_to_XML import get_dict_from_DB
@@ -39,10 +39,35 @@ def questionnaire():
         selected_idqq = request.form["idqq"]
         if selected_idqq.isnumeric():
             # rediriger vers la page questionnaire avec l'ID sélectionné
-            return render_template("questionnaire.html",sidqq = selected_idqq, questionnaires=questionnaires,
+            return render_template("questionnaire.html", idqq = int(selected_idqq), questionnaires=questionnaires,
                                    questions=get_questions(selected_idqq), nquest = get_questionnaire_name(selected_idqq))
+
     # si la méthode est GET, afficher la liste déroulante de tous les questionnaires
     return render_template("questionnaire.html", questionnaires=questionnaires, questions=get_questions(selected_idqq), idqq = selected_idqq)
+
+@app.route("/questionnaire/<idq>", methods=["DELETE"])
+def delete_question(idq):
+    del_question(idq)
+    return jsonify({"message": "Question deleted successfully."})
+
+
+@app.route("/questionnaires", methods=["POST", "GET"])
+@login_required
+def questionnaires():
+    return render_template("listquestionnaire.html", questionnaires = get_questionnaires())
+
+@app.route("/editquestion/<idq>", methods=["GET", "POST"])
+def edit_question(idq):
+    form = QuestionForm()
+    if form.validate_on_submit():
+        edit_question(idq, form.titre.data, form.Typeq.data, form.points.data, form.valeurpn.data)
+        return redirect(url_for('questionnaire'))
+    return render_template("editquestion.html", form=form,question= get_question(idq))
+
+@app.route("/questionnaires/<idq>", methods=["DELETE"])
+def delete_questionnaire(idq):
+    del_questionnaire(idq)
+    return jsonify({"message": "Questionnaire deleted successfully."})
 @app.route("/about")
 def about():
     return render_template("about.html")
@@ -90,12 +115,6 @@ def ajoutr(idq):
         add_answer(form.reponse.data, form.fraction.data, idq)
         return redirect(url_for('questionnaire'))
     return render_template("ajoutreponse.html", form=form)
-
-
-@app.route("/questionnaire/<idq>", methods=["POST", "GET"])
-def question(idq):
-    del_question(idq)
-    return redirect(url_for('questionnaire'))
 
 
 def allowed_file(filename):
