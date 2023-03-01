@@ -1,6 +1,6 @@
 {% extends "base.html" %}
     {% block styleandtitle %}
-    <title>Ajouter Question</title>
+    <title>Ajouter Question </title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/ajouter_question.css')}}">
     {% endblock %}
 
@@ -10,18 +10,71 @@
     <div class="Add_question_container">
     <h1>Ajouter Réponse</h1>
 
+
+    {% if questiontype == 1 %} <!-- question courte -->
     <div id="Add_title">
         <label for="title">Réponse: </label>
-        {{ form.reponse }}
+        {{ form.reponse1 }}
     </div>
         <div id="nbrep">
             <label for="nbrep">Fraction</label>
-            {{ form.fraction }}
+            {{ form.fraction1 }}
         </div>
 
-        {{ form.submit }}
+        {% endif %}
+
+    {% if questiontype == 2 %} <!-- Reponse libre -->
+    <div id="Add_title">
+        <label for="title">Réponse: </label>
+        {{ form.reponse1 }}
+    </div>
+        <div id="nbrep">
+            <label for="nbrep">Fraction</label>
+            {{ form.fraction1 }}
+        </div>
+
+        {% endif %}
+
+     {% if idt == 3 %} <!-- Vrai / Faux -->
+
+    <div id="Add_title">
+        <label for="title">Réponse: </label>
+        {{ form.example }}
+    </div>
+        <div id="nbrep">
+            <label for="nbrep">Fraction</label>
+            {{ form.fraction1 }}
+        </div>
+
+        {% endif %}
+
+     {% if idt == 4 %} <!-- QCM -->
+    <div id="Add_title">
+        <label for="title">Réponse: </label>
+        {{ form.reponse1 }}
+        {{ form.fraction1 }}
+    </div>
+         <div id="Add_title">
+        <label for="title">Réponse: </label>
+        {{ form.reponse2 }}
+         {{ form.fraction2 }}
+    </div>
+         <div id="Add_title">
+        <label for="title">Réponse: </label>
+        {{ form.reponse3 }}
+         {{ form.fraction3 }}
+    </div>
+         <div id="Add_title">
+        <label for="title">Réponse: </label>
+        {{ form.reponse4 }}
+         {{ form.fraction4 }}
+    </div>
 
 
+        {% endif %}
+
+
+    {{ form.submit() }}
 
 </div>
 

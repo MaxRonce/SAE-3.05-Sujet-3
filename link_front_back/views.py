@@ -112,9 +112,28 @@ def ajoutq(idq):
 def ajoutr(idq):
     form = ReponseForm()
     if form.validate_on_submit():
+        match get_question(idq)['idt']:
+            case 1:
+                add_answer(form.reponse1.data, form.fraction1.data, idq)
+                return redirect(url_for('questionnaire'))
+            case 2:
+                add_answer(form.reponse1.data, form.fraction1.data, idq)
+                return redirect(url_for('questionnaire'))
+            case 3:
+                add_answer(form.example.data, form.fraction1.data, idq)
+            case 4:
+                for i in range(4):
+                    m = "reponse" + str(i + 1)
+                    n = "fraction" + str(i + 1)
+                    op = getattr(form, m)
+                    od = getattr(form, n)
+                    add_answer(op.data, od.data, idq)
+                    print(op.data)
+                return redirect(url_for('questionnaire'))
+
         add_answer(form.reponse.data, form.fraction.data, idq)
         return redirect(url_for('questionnaire'))
-    return render_template("ajoutreponse.html", form=form)
+    return render_template("ajoutreponse.html", form=form, idt = get_question(idq)['idt'])
 
 
 def allowed_file(filename):

@@ -23,7 +23,7 @@
                         <a class="deletequest" href="#" onclick="deleteQuestion()">
                             <button class="deleteq"> Supprimer</button>
                         </a>
-                        <a class="deleteq" href="#" onclick="deleteQuestion()">
+                        <a class="deleteq" href="{{ url_for('questionnaire', idquest=idqq) }}">
                             <button class="deleteq"> Editer</button>
 
                         </a>
