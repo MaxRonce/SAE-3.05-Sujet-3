@@ -23,27 +23,33 @@ def home():
             login_user(user)
             print(current_user)
             return redirect(url_for("home"))
-    return render_template("home.html", form=f)
+    return render_template("home.html", form=f, login="HIDE")
 
 
 @app.route("/questionnaire", methods=["POST", "GET"])
 @login_required
 def questionnaire():
 
-    # récupérer la liste de tous les questionnaires disponibles
-    questionnaires = get_questionnaires()  # suppose que cette fonction récupère la liste des questionnaires depuis une source de données externe
+    # User is authenticated, proceed with the questionnaire logic
+    questionnaires = get_questionnaires()
     selected_idqq = -1
     if request.method == "POST":
+        selected_idqq = request.form.get("idqq")
+        if selected_idqq and selected_idqq.isnumeric():
+            return render_template("questionnaire.html", idqq=int(selected_idqq), questionnaires=questionnaires,
+                                   questions=get_questions(selected_idqq), nquest=get_questionnaire_name(selected_idqq))
+    return render_template("questionnaire.html", questionnaires=questionnaires, questions=get_questions(selected_idqq), idqq=selected_idqq)
 
-        # récupérer l'ID du questionnaire sélectionné à partir de la liste déroulante
-        selected_idqq = request.form["idqq"]
-        if selected_idqq.isnumeric():
-            # rediriger vers la page questionnaire avec l'ID sélectionné
-            return render_template("questionnaire.html", idqq = int(selected_idqq), questionnaires=questionnaires,
-                                   questions=get_questions(selected_idqq), nquest = get_questionnaire_name(selected_idqq))
-
-    # si la méthode est GET, afficher la liste déroulante de tous les questionnaires
-    return render_template("questionnaire.html", questionnaires=questionnaires, questions=get_questions(selected_idqq), idqq = selected_idqq)
+@app.errorhandler(401)
+def unauthorized(e):
+    f = LoginForm()
+    if f.validate_on_submit():
+        user = f.get_authenticated_user()
+        if user:
+            login_user(user)
+            print(current_user)
+            return redirect(url_for("home"))
+    return render_template("home.html", form=f, login="SHOW")
 
 @app.route("/questionnaire/<idq>", methods=["DELETE"])
 def delete_question(idq):
@@ -55,6 +61,7 @@ def delete_question(idq):
 @login_required
 def questionnaires():
     return render_template("listquestionnaire.html", questionnaires = get_questionnaires())
+
 
 @app.route("/editquestion/<idq>", methods=["GET", "POST"])
 def edit_question(idq):
