@@ -1,6 +1,6 @@
 from sqlalchemy import func, exc
 from .setupdb import *
-
+from flask_login import current_user
 
 
 p= {'category': {'name': '$module$/top/Défaut pour Test_maxime', 'info': 'La catégorie par défaut pour les questions partagées dans le contexte «\xa0Test_maxime\xa0».'}, 'questions': [{'type': 'truefalse', 'name': 'Question_1_Edited', 'template': 'None', 'questiontext': 'Vrai ou Faux ????????', 'generalfeedback': None, 'defaultgrade': '1.0000000', 'penalty': '1.0000000', 'hidden': '0', 'answers': [{'fraction': '0', 'text': 'true', 'feedback': '\n        '}, {'fraction': '100', 'text': 'false', 'feedback': '\n        '}]}]}

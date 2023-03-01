@@ -130,7 +130,7 @@ def ajoutr(idq):
                     add_answer(op.data, od.data, idq)
                     print(op.data)
                 return redirect(url_for('questionnaire'))
-
+        return redirect(url_for('questionnaire'))
         add_answer(form.reponse.data, form.fraction.data, idq)
         return redirect(url_for('questionnaire'))
     return render_template("ajoutreponse.html", form=form, idt = get_question(idq)['idt'])
