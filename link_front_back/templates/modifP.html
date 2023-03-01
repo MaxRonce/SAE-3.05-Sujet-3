@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+{% block styleandtitle %}
+{{ super () }}
+<link rel="stylesheet" href="{{url_for('static', filename='css/connexion.css')}}">
+{% endblock %}
+
+{% block connexion %}
+<!-- The Modal -->
+<div id="myModal" class="modal">
+<!-- Modal content -->
+<div class="modal-content">
+    <div class="modal-header">
+        <span class="close">&times;</span>
+        <h1>Modification</h1>
+        
+        <form method="post" class="connexion" role="form">
+            {{ form.csrf_token }}
+            <h3>Username</h3>
+            {{ current_user.username}}
+            <h3>Password</h3>
+            {{ forms.password(class_="box", placeholder="New Password") }}
+            <button class="button_slider">
+                <span class="background"></span>
+                <span class="arrow">
+                    <span class="body"></span>
+                    <span class="tip"></span>
+                </span>
+                <span class="text">valider</span>
+            </button>
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -180,3 +180,15 @@ def download_file(idQ):
     writter(name, 'link_front_back/parser/out/', get_dict_from_DB(idQ), category=True)
 
     return send_file("parser/out/" + name, as_attachment=True)
+
+@app.route("/profil", methods=["POST", "GET"])
+@login_required
+def modifP():
+    form = LoginForm()
+    return render_template('modifP.html')
+
+@app.route("/profil", methods=["POST", "GET"])
+@login_required
+def modifU():
+    form = LoginForm()
+    return render_template('modifU.html')

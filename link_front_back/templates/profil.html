@@ -1,3 +1,48 @@
-<form action="{{ url_for("logout") }}" method="post">
-    <input type="submit" value="logout">
+
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='connexion.css')}}">
+{% endblock %}
+{% block content %}
+
+<h1 class="title">
+    Bonjour, {{current_user.username}}!
+  </h1>
+<div class="Questionnaire">
+    <h3>Username :</h3>
+                {{ current_user.username }}
+                <form action="{{ url_for("modifU") }}" method="post">
+                    <input type="submit" value="Modifier">
+                </form>
+    <h3>Password :</h3>
+                {{ current_user.password }}
+    <ul>
+        {% for x in questionnaire %}
+    <a href="{{url_for('detail', id=x.id)}}">
+        
+    </a>
+    {% endfor %}
+    </ul>
+</div>
+   <div class ="form-group">
+        <div class="button">
+            <form action="{{ url_for("modifP") }}" method="post">
+                <input type="submit" value="Modifier">
+            </form>
+            <form action="{{ url_for("home") }}" method="post">
+                <input type="submit" value="Valider">
+            </form>
+            <form action="{{ url_for("logout") }}" method="post">
+                <input type="submit" value="Logout">
+            </form> 
+        </div>
+    {% with message = get_flashed_messages() %}
+    {% if message %}
+    <div class="alert alert-danger" role="alert">
+        {{ message[0] }}
+    </div>
+    {% endif %}
+    {% endwith %}
 </form>
+{% endblock %}
