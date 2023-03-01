@@ -1,3 +1,4 @@
+import self as self
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, IntegerField, FileField
 from wtforms.validators import DataRequired
@@ -8,7 +9,11 @@ from hashlib import sha256
 
 
 class DownloadForm(FlaskForm):
-    liste = SelectField("Questionnaire", choices=get_liste_id_nom_questionnaire())
+    def __init__(self, idu):
+        super().__init__()
+        self.liste.choices = get_liste_id_nom_questionnaire(idu)
+
+    liste = SelectField("Questionnaire")
     submit = SubmitField('submit')
 
 
@@ -30,8 +35,6 @@ class ReponseForm(FlaskForm):
     reponse = StringField('Réponse', validators=[DataRequired()])
     fraction = IntegerField('Fraction', validators=[DataRequired()])
     submit = SubmitField('Submit')
-
-
 
 
 class LoginForm(FlaskForm):

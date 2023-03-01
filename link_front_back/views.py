@@ -161,13 +161,10 @@ def uploader_file():
     return render_template('import.html', form=form)
 
 
-
-
-
 @app.route('/export', methods=['GET', 'POST'])
 @login_required
 def downloader_file():
-    form = DownloadForm()
+    form = DownloadForm(idu=current_user.username)
     if not form.validate_on_submit():
         return render_template("export.html", form=form)
     return redirect(url_for("download_file", idQ=form.liste.data))
