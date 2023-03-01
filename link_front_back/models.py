@@ -22,3 +22,5 @@ def load_user(username):
     u = db_link.ses.query(db_link.User).filter(db_link.User.idUser == username).one()
     us = User(u.idUser, u.mdpUser)
     return us
+
+

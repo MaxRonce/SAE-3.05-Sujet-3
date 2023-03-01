@@ -11,3 +11,4 @@ def hashP():
         u.mdpUser = sha256(u.mdpUser.encode()).hexdigest()
     db_link.ses.commit()
     print("Done")
+

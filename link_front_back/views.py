@@ -171,3 +171,11 @@ def download_file(idQ):
     writter(name, 'link_front_back/parser/out/', get_dict_from_DB(idQ), category=True)
 
     return send_file("parser/out/" + name, as_attachment=True)
+
+
+@app.route("/profil", methods=["POST", "GET"])
+@login_required
+def modifpassword():
+    form = LoginForm()
+    return render_template('profil.html')
+    
