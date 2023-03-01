@@ -47,4 +47,6 @@ class LoginForm(FlaskForm):
         if user is None:
             return None
         us = User(user.idUser, user.mdpUser)
-        return us if sha256(self.password.data.encode('utf-8')).hexdigest() == us.password else None
+        salted_input = self.username.data + self.password.data
+        salted_input = sha256(salted_input.encode('utf-8')).hexdigest()
+        return us if salted_input == us.password else None
