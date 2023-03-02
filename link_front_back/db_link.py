@@ -1,6 +1,7 @@
 from sqlalchemy import func, exc
 from .setupdb import *
 from flask_login import current_user
+from flask_login import current_user
 
 p = {'category': {'name': '$module$/top/Défaut pour Test_maxime',
                   'info': 'La catégorie par défaut pour les questions partagées dans le contexte «\xa0Test_maxime\xa0».'},
