@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, IntegerField, FileField
 from wtforms.validators import DataRequired
 
-from .db_link import get_liste_id_nom_questionnaire, get_user
+from .db_link import get_liste_id_nom_questionnaire, get_user, add_user
 from .models import User
 from hashlib import sha256
 
@@ -49,3 +49,15 @@ class LoginForm(FlaskForm):
         salted_input = self.username.data + self.password.data
         salted_input = sha256(salted_input.encode('utf-8')).hexdigest()
         return us if salted_input == us.password else None
+
+
+class RegisterForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Register')
+
+    def new_user(self):
+        salted_input = self.username.data + self.password.data
+        salted_input = sha256(salted_input.encode('utf-8')).hexdigest()
+        add_user(self.username.data, salted_input)
+        return True

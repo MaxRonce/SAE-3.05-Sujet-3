@@ -17,13 +17,20 @@ import os
 @app.route("/", methods=["POST", "GET"])  # page de base du site
 def home():
     f = LoginForm()
+    rf = RegisterForm()
     if f.validate_on_submit():
         user = f.get_authenticated_user()
         if user:
             login_user(user)
             print(current_user)
             return redirect(url_for("home"))
-    return render_template("home.html", form=f, login="HIDE")
+    if rf.validate_on_submit():
+        try:
+            rf.new_user()
+            flash("User registered successfully.")
+        except exc.IntegrityError:
+            flash("User already exists.")
+    return render_template("home.html", form=f, form2=rf, login="HIDE", register="SHOW")
 
 
 @app.route("/questionnaire", methods=["POST", "GET"])
@@ -43,13 +50,20 @@ def questionnaire():
 @app.errorhandler(401)
 def unauthorized(e):
     f = LoginForm()
+    rf = RegisterForm()
     if f.validate_on_submit():
         user = f.get_authenticated_user()
         if user:
             login_user(user)
             print(current_user)
             return redirect(url_for("home"))
-    return render_template("home.html", form=f, login="SHOW")
+    if rf.validate_on_submit():
+        try:
+            rf.new_user()
+            flash("User registered successfully.")
+        except exc.IntegrityError:
+            flash("User already exists.")
+    return render_template("home.html", form=f, form2=rf, login="SHOW", register="HIDE")
 
 @app.route("/questionnaire/<idq>", methods=["DELETE"])
 def delete_question(idq):
