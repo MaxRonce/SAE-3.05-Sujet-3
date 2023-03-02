@@ -159,6 +159,9 @@ def get_question(idq):
                      "idQuestionnaire": rw.idQuestionnaire, "generalfeedback": rw.feedback, "idt": rw.idType})
     return test[0]
 
+def get_type_from_id(idt):
+    res = ses.query(Type).filter(Type.idType == idt)
+    return res[0].nomType
 
 def main():
     add_questionnaire(p)
