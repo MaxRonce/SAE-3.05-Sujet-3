@@ -115,13 +115,43 @@ def ajoutq(idq):
     return render_template("test.html", form=form)
 
 
-@app.route("/ajout/<idq>/", methods=("GET", "POST",))
+@app.route("/ajout/<idq>/", methods=("POST", "GET"))
 def ajoutr(idq):
-    form = ReponseForm()
+    form = None
+    match get_question(idq)['idt']:
+        case 1:
+            form = ReponseCourteForm()
+        case 2:
+            form = TrueFalseForm()
+        case 3:
+            form = QCMform()
     if form.validate_on_submit():
-        add_answer(form.reponse.data, form.fraction.data, idq)
+        print(get_question(idq)['idt'])
+        match get_question(idq)['idt']:
+            case 1:
+                add_answer(form.reponse1.data, form.fraction1.data, idq)
+                return redirect(url_for('questionnaire'))
+            case 2:
+                option = request.form['options']
+                print(option)
+                add_answer(option, 100, idq)
+                if option == "true":
+                    add_answer("false", 0, idq)
+                else:
+                    add_answer("true", 0, idq)
+                return redirect(url_for('questionnaire'))
+            case 3:
+                for i in range(4):
+                    m = "reponse" + str(i + 1)
+                    n = "fraction" + str(i + 1)
+                    op = getattr(form, m)
+                    od = getattr(form, n)
+                    add_answer(op.data, od.data, idq)
+                    print(op.data)
+                return redirect(url_for('questionnaire'))
         return redirect(url_for('questionnaire'))
-    return render_template("ajoutreponse.html", form=form)
+    print(form.errors)
+    return render_template("ajoutreponse.html", form=form, idt = get_question(idq)['idt'])
 
 
 def allowed_file(filename):

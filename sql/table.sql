@@ -82,9 +82,8 @@ INSERT INTO USERS (iduser,mdpUser, prof) VALUES
 
 INSERT INTO TYPEQUESTION (idType,nomType) VALUES
     (1,'Reponse courte'),
-    (2,'Reponse libre'),
-    (3, 'truefalse'),
-    (4, 'multichoice')
+    (2, 'truefalse'),
+    (3, 'multichoice')
 ;
 
 
