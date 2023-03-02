@@ -108,10 +108,11 @@ def ajoutq(idq):
     return render_template("test.html", form=form)
 
 
-@app.route("/ajout/<idq>/", methods=("GET", "POST",))
+@app.route("/ajout/<idq>/", methods=("POST", "GET"))
 def ajoutr(idq):
     form = ReponseForm()
     if form.validate_on_submit():
+        print(get_question(idq)['idt'])
         match get_question(idq)['idt']:
             case 1:
                 add_answer(form.reponse1.data, form.fraction1.data, idq)
