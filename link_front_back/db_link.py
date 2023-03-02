@@ -115,6 +115,13 @@ def get_questionnaires():
         test.append({"idq":rw.idQuestionnaire, "nom":rw.nom, "info":rw.info, "idu":rw.idUser})
     return test
 
+def get_questionnaires_idUser(idUser):
+    res = ses.query(Questionnaire).filter(Questionnaire.idUser == idUser)
+    test = list()
+    for rw in res:
+        test.append({"idq":rw.idQuestionnaire, "nom":rw.nom, "info":rw.info, "idu":rw.idUser})
+    return test
+
 def get_questionnaire_name(idq:int)->str:
     res = ses.query(Questionnaire).filter(Questionnaire.idQuestionnaire == idq)
     return res[0].nom

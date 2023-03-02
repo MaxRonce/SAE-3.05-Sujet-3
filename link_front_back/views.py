@@ -80,10 +80,11 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/profil")
+@app.route("/profil/<idUser>", methods=["GET", "POST"])
 @login_required
-def profil():
-    return render_template("profil.html")
+def profil(idUser):
+    questionnaire = get_questionnaires_idUser(idUser)
+    return render_template("profil.html", questionnaire)
 
 
 @app.route("/logout", methods=["post"])
@@ -188,4 +189,3 @@ def modifP():
     if form.validate_on_submit():
         user = form.get_authenticated_user()
     return render_template('modifP.html')
-

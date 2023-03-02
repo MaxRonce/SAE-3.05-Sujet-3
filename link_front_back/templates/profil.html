@@ -23,7 +23,7 @@
                     </form>
         <ul>
             {% for x in questionnaire %}
-        <a href="{{url_for('detail', id=x.id)}}">
+        <p>{{x['idq']}}</p>
             
         </a>
         {% endfor %}
