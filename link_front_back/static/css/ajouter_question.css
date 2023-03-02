@@ -154,7 +154,23 @@ body {
   display : none;
 
 }
-.dashedline {
 
+.answerqcm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1vh;
+}
+.fraction {
+
+}
+.submitb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 1vh;
 }
 /*# sourceMappingURL=Ajouter_question.css.map */

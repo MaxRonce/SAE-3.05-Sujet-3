@@ -13,11 +13,11 @@
 
 
     {% if idt == 1 %} <!-- question courte -->
-    <div id="Add_title">
+    <div>
         <label for="title">Réponse: </label>
         {{ form.reponse1 }}
     </div>
-        <div id="nbrep">
+        <div>
             <label for="nbrep">Fraction</label>
             {{ form.fraction1 }}
         </div>
@@ -25,45 +25,40 @@
         {% endif %}
      {% if idt == 2 %} <!-- Vrai / Faux -->
 
-    <div id="Add_title">
+    <div class="answer">
         <label for="title">Réponse: </label>
         <input type="radio" name="options" id="option1" value="true"> Vrai </input><br>
         <input type="radio" name="options" id="option2" value="false"> Faux </input><br>
     </div>
-        <div id="nbrep">
-            <label for="nbrep">Fraction</label>
-            {{ form.fraction1 }}
-        </div>
-
         {% endif %}
 
      {% if idt == 3 %} <!-- QCM -->
-    <div id="Add_title">
-        <label for="title">Réponse: </label>
+    <div class="answerqcm">
+        <label for="title">Réponse 1: </label>
         {{ form.reponse1 }}
-        {{ form.fraction1 }}
+        {{ form.fraction1(class="fraction") }}
     </div>
-         <div id="Add_title">
-        <label for="title">Réponse: </label>
+         <div class="answerqcm">
+        <label for="title">Réponse 2: </label>
         {{ form.reponse2 }}
-         {{ form.fraction2 }}
+         {{ form.fraction2(class="fraction") }}
     </div>
-         <div id="Add_title">
-        <label for="title">Réponse: </label>
+         <div class="answerqcm">
+        <label for="title">Réponse 3: </label>
         {{ form.reponse3 }}
-         {{ form.fraction3 }}
+         {{ form.fraction3(class="fraction") }}
     </div>
-         <div id="Add_title">
-        <label for="title">Réponse: </label>
+         <div class="answerqcm">
+        <label for="title">Réponse 4: </label>
         {{ form.reponse4 }}
-         {{ form.fraction4 }}
+         {{ form.fraction4(class="fraction") }}
     </div>
 
 
         {% endif %}
 
 
-    {{ form.submit() }}
+    {{ form.submit(class="submitb") }}
 
 </div>
 
