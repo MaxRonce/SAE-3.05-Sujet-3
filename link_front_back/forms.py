@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, IntegerField, FileField, SelectMultipleField, widgets
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, regexp
 
 from .db_link import get_liste_id_nom_questionnaire, get_user
 from .models import User
@@ -22,23 +22,30 @@ class uploadFileForm(FlaskForm):
 
 class QuestionForm(FlaskForm):
     titre = StringField('Titre', validators=[DataRequired()])
-    Typeq = SelectField('Type de question', choices=[('4', 'QCM'), ('1', 'Réponse courte'), ('2', 'Réponse longue'),('3','Vrai/Faux')],
+    Typeq = SelectField('Type de question', choices=[ ('1', 'Réponse courte'),('2','Vrai/Faux'),('3', 'QCM')],
                         validators=[DataRequired()])
     points = IntegerField('Points', validators=[DataRequired()])
     valeurpn = IntegerField('Valeur des points négatifs')
     submit = SubmitField('Submit')
 
-
-class ReponseForm(FlaskForm):
+class QCMform(FlaskForm):
     reponse1 = StringField('Réponse', validators=[DataRequired()])
-    reponse2 = StringField('Réponse', validators=[DataRequired()])
-    reponse3 = StringField('Réponse', validators=[DataRequired()])
-    reponse4 = StringField('Réponse', validators=[DataRequired()])
-    fraction1 = IntegerField('Fraction', validators=[DataRequired()])
-    fraction2 = IntegerField('Fraction', validators=[DataRequired()])
-    fraction3 = IntegerField('Fraction', validators=[DataRequired()])
-    fraction4 = IntegerField('Fraction', validators=[DataRequired()])
+    reponse2 = StringField('Réponse')
+    reponse3 = StringField('Réponse')
+    reponse4 = StringField('Réponse')
+    fraction1 = StringField('Fraction', validators=[DataRequired()])
+    fraction2 = StringField('Fraction')
+    fraction3 = StringField('Fraction')
+    fraction4 = StringField('Fraction')
+    submit = SubmitField('Submit')
+
+class TrueFalseForm(FlaskForm):
     true_false = MultiCheckboxField('Label', choices=[('1', 'True'), ('2', 'False')])
+    submit = SubmitField('Submit')
+
+class ReponseCourteForm(FlaskForm):
+    reponse1 = StringField('Réponse', validators=[DataRequired()])
+    fraction1 = StringField('Fraction', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 

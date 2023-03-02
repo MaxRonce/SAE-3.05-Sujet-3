@@ -1,17 +1,18 @@
 {% extends "base.html" %}
     {% block styleandtitle %}
-    <title>Ajouter Question </title>
+    <title>Ajouter Réponse </title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/ajouter_question.css')}}">
     {% endblock %}
 
     {% block content %}
-<form role="form"  method="post">
+<form role="form"  method="post" >
     {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
     <div class="Add_question_container">
     <h1>Ajouter Réponse</h1>
 
 
-    {% if questiontype == 1 %} <!-- question courte -->
+    {% if idt == 1 %} <!-- question courte -->
     <div id="Add_title">
         <label for="title">Réponse: </label>
         {{ form.reponse1 }}
@@ -22,11 +23,12 @@
         </div>
 
         {% endif %}
+     {% if idt == 2 %} <!-- Vrai / Faux -->
 
-    {% if questiontype == 2 %} <!-- Reponse libre -->
     <div id="Add_title">
         <label for="title">Réponse: </label>
-        {{ form.reponse1 }}
+        <input type="radio" name="options" id="option1" value="true"> Vrai </input><br>
+        <input type="radio" name="options" id="option2" value="false"> Faux </input><br>
     </div>
         <div id="nbrep">
             <label for="nbrep">Fraction</label>
@@ -35,20 +37,7 @@
 
         {% endif %}
 
-     {% if idt == 3 %} <!-- Vrai / Faux -->
-
-    <div id="Add_title">
-        <label for="title">Réponse: </label>
-        {{ form.example }}
-    </div>
-        <div id="nbrep">
-            <label for="nbrep">Fraction</label>
-            {{ form.fraction1 }}
-        </div>
-
-        {% endif %}
-
-     {% if idt == 4 %} <!-- QCM -->
+     {% if idt == 3 %} <!-- QCM -->
     <div id="Add_title">
         <label for="title">Réponse: </label>
         {{ form.reponse1 }}

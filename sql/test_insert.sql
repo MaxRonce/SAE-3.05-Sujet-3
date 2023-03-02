@@ -26,11 +26,11 @@ INSERT INTO TYPEQUESTION (idType,nomType) VALUES
 INSERT INTO QUESTION (idquestion, question, template, valeurPoint, pointNegatif, idquestionnaire, idType) VALUES
 
     (20,'2+2',false,4,true,1,1),
-    (21,'le verbe être au present à la premiere personne du singulier',false,10,true,2,2),
-    (22,'que signifie : hello world',false,5,false,3,3),
+    (21,'le verbe être au present à la premiere personne du singulier',false,10,true,2,1),
+    (22,'que signifie : hello world',false,5,false,3,2),
     (23,'35*156',false, 2, false, 1,1),
-    (24,'le verbe manger au present a la deuxieme personne du pluriel',false,10,true,2,2),
-    (25,'que signifie le mot : improve',false,2,true,3,2)
+    (24,'le verbe manger au present a la deuxieme personne du pluriel',false,10,true,2,1),
+    (25,'que signifie le mot : improve',false,2,true,3,1)
 ;
 
 
