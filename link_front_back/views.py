@@ -185,10 +185,7 @@ def download_file(idQ):
 @login_required
 def modifP():
     form = LoginForm()
+    if form.validate_on_submit():
+        user = form.get_authenticated_user()
     return render_template('modifP.html')
 
-@app.route("/profil", methods=["POST", "GET"])
-@login_required
-def modifU():
-    form = LoginForm()
-    return render_template('modifU.html')
