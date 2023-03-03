@@ -1,27 +1,37 @@
 let modal = document.getElementById("myModal");
+let modal2 = document.getElementById("registerModal");
 
 // Get the button that opens the modal
-let btn = document.getElementById("myBtn");
-
+let boutons = document.getElementsByClassName("myBtn");
 // Get the <span> element that closes the modal
-let span1 = document.getElementsByClassName("close")[0];
+let span1 = document.getElementsByClassName("close");
 
-let login = document.getElementById("button_slider");
-
-// When the user clicks the button, open the modal
-btn.onclick = function() {
+function openModal() {
+    modal2.style.display = "none";
     modal.style.display = "block";
 }
 
-// When the user clicks on <span> (x), close the modal
-span1.onclick = function() {
+function openModal2() {
     modal.style.display = "none";
+    modal2.style.display = "block";
 }
 
-login.onclick = function () {
-    window.location.href = "https://stackoverflow.com";
 
+
+// When the user clicks the button, open the modal
+for (let index = 0; index < boutons.length; index++) {
+    const bouton = boutons[index];
+    bouton.onclick = openModal;
 }
+
+// When the user clicks on <span> (x), close the modal
+for (let index = 0; index < span1.length; index++) {
+    const span = span1[index];
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+}
+
 window.onclick = function(event) {
     if (event.target === modal) {
         modal.style.display = "none";

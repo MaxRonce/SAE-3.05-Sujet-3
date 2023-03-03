@@ -1,40 +1,68 @@
 {% extends "base.html" %}
     {% block styleandtitle %}
+    {{ super () }}
     <link rel="stylesheet" href="{{url_for('static', filename='css/connexion.css')}}">
-    <title>Title</title>
     {% endblock %}
 
-    {% block content %}
-<!-- Trigger/Open The Modal -->
-<button id="myBtn">Open Modal</button>
-
+{% block connexion %}
 <!-- The Modal -->
 <div id="myModal" class="modal">
-
     <!-- Modal content -->
     <div class="modal-content">
         <div class="modal-header">
             <span class="close">&times;</span>
             <h1>Connexion</h1>
         </div>
-
-
         <div class="modal-body">
-            <div class="connexion">
-            <h3>Username</h3>
-            <input type="text" name="username" placeholder=" Username" class="box">
-            <h3>Password</h3>
-            <input type="password" name="password" placeholder=" Password" class="box">
-
-                {{buttonarrow("Login", "button_slider")}}
-                <a href="#forgotpassword" class="forgot-pass">Forgot your password ?</a>
-
+            <form method="post" class="connexion" role="form">
+                {{ form.csrf_token }}
+                <h3>Username</h3>
+                {{ form.username(class_="box", placeholder="Username") }}
+                <h3>Password</h3>
+                {{ form.password(class_="box", placeholder="Password") }}
+                <button class="button_slider">
+                    <span class="background"></span>
+                    <span class="arrow">
+                        <span class="body"></span>
+                        <span class="tip"></span>
+                    </span>
+                    <span class="text">Login</span>
+                </button>
+                <a onclick="openModal2()" class="forgot-pass" >Register ?</a>
                 <p> For security reasons, please log out and exit your web browser when you are done accessing services that require authentication!</p>
-            </div>
+            </form>
         </div>
-
+        </div>
     </div>
 
-</div>
+
+    <div id="registerModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h1>Register</h1>
+        </div>
+        <div class="modal-body">
+            <form method="post" class="register" role="form">
+                {{ form2.csrf_token }}
+                <h3>Username</h3>
+                {{ form2.username(class_="box", placeholder="Username") }}
+                <h3>Password</h3>
+                {{ form2.password(class_="box", placeholder="Password") }}
+                <button class="button_slider">
+                    <span class="background"></span>
+                    <span class="arrow">
+                        <span class="body"></span>
+                        <span class="tip"></span>
+                    </span>
+                    <span class="text">Register</span>
+                </button>
+                <a onclick="openModal()" class="forgot-pass">Login ?</a>
+                <p> For security reasons, please log out and exit your web browser when you are done accessing services that require authentication!</p>
+           </form>
+            </div>
+        </div>
+    </div>
 <script src="static/js/connexion.js"></script>
 {% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block styleandtitle %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{url_for('static', filename='css/questionnaire.css')}}">
+<title>Questionnaire</title>
+{% endblock %}
+
+{% block content%}
+<div class="container">
+    <h1>Gestion des Questionnaires</h1>
+
+    <div class="listequestion">
+        <h3>Questionnaires : {{ nquest }}</h3>
+        <div class="questions">
+            <ul>
+
+                {% for questionnaire in questionnaires %}
+                <li class="quest">Questionnaire {{ questionnaire.idq }}
+                    <div class="question">
+                        <div>{{ questionnaire.nom }}</div>
+                        <div class="buttonsq">
+                        <a class="deletequest" href="#" onclick="deleteQuestion()">
+                            <button class="deleteq"> Supprimer</button>
+                        </a>
+                        <a class="deleteq" href="{{ url_for('questionnaire', idquest=idqq) }}">
+                            <button class="deleteq"> Editer</button>
+
+                        </a>
+                        </div>
+
+<script>
+function deleteQuestion(idq) {
+  fetch("{{ url_for('delete_questionnaire', idq = questionnaire.idq) }}", { method: 'DELETE' })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message);
+      location.reload();
+    });
+}
+</script>
+
+                    </div>
+                </li>
+                {% endfor %}
+            {% if idqq !=-1 %}
+                <li>
+                <a href="{{ url_for('ajoutq', idq=idqq) }}">
+                            <button><i class="fa fa-plus"></i></button>
+                </a>
+            </li>
+            {%  endif %}
+
+
+            </ul>
+        </div>
+        </div>
+    <div class="buttons">
+        {{ buttonarrow("questionnaire", "white_button_slider", "Sauver") }}
+        {{ buttonarrow("questionnaire", "white_button_slider", "Valider") }}
+        {{ buttonarrow("questionnaire", "white_button_slider", "Quitter") }}
+    </div>
+</div>
+{% endblock %}

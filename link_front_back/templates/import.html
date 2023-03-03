@@ -1,17 +1,27 @@
 {% extends "base.html" %}
-    {% block styleandtitle %}
-    <title>Ajouter Question</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
-    {% endblock %}
+
+{% block styleandtitle %}
+  <title>Ajouter Question</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
+{% endblock %}
 
 {% block content %}
+  <form method="POST" enctype="multipart/form-data" class="ulform">
+    {{ form.hidden_tag() }}
+    <div class="file-upload choice">
+      <label for="file-input">Choose a file to upload</label>
+      {{ form.file(id="file-input") }}
+    </div>
+    {{ form.submit(id_="sbutton") }}
+  </form>
 
-    <body>
-<h1>Upload file</h1>
-    <form method="POST" enctype="multipart/form-data" class="ulform">
-        {{ form.hidden_tag() }}
-        {{ form.file(class_="choice") }}
-        {{ form.submit(id_="sbutton") }}
-    </form>
-    </body>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
 {% endblock %}
