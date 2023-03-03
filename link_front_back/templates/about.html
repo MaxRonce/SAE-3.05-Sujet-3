@@ -8,12 +8,33 @@
 <body>
 <div id="red_square">
     <div id="red_square_dot">
+        <div id="white_square">
+            <div id="white_square_dot">
+                <p id="explication">Kair’O est une application de gestion de
+                    questionnaires développés par des étudiants
+                    de l’IUT d’Orléans</p>
+
+                <div id="connexion_button" >
+                    <a href={{ url_for("home", login="SHOW") }}>
+                    <div id="connexion_button_dot">
+                        <div id="title_square">
+                            <div id="title_square_dot">
+                                <p> <span id="TextKairo">Qu'est ce que </span> <span id="Title">Kair'O ?</span> </p>
+                            </div>
+                        </div>
+                        <div id="connexion_button_text">
+                            <p id="connexion_button_text_dot">Connexion</p>
+                        </div>
+                    </div></a>
+                </div>
+            </div>
+        </div>
         <p id="equipe">L'équipe</p>
         <div id="images">
-            <img src="img/LouisS.png" alt="LouisS" id="Louis" >
-            <img src="img/MaximeS.png" alt="MaximeS" id="Maxime" >
-            <img src="img/LouiseS.png" alt="LouiseS" id="Louise" >
-            <img src="img/AntoS.png" alt="AntoS" id="Anto" >
+            <img src="../static/images/LouisS.png" alt="LouisS" id="Louis" >
+            <img src="../static/images/MaximeS.png" alt="MaximeS" id="Maxime" >
+            <img src="../static/images/LouiseS.png" alt="LouiseS" id="Louise" >
+            <img src="../static/images/AntoS.png" alt="AntoS" id="Anto" >
         </div>
         <div id="text">
             <p id="LouisT">Louis</p>
@@ -21,25 +42,19 @@
             <p id="LouiseT">Louise</p>
             <p id="AntoT">Antonin</p>
         </div>
-        <div id="white_square">
-            <div id="white_square_dot">
-                <p id="explication">Kair’O est une application de gestion de
-                    questionnaires développés par des étudiants
-                    de l’IUT d’Orléans</p>
-
-                <div id="connexion_button">
-                    <div id="connexion_button_dot">
-                        <div id="title_square">
-                            <div id="title_square_dot">
-                                <p> <span id="TextKairo">Qu'est ce que </span> <span id="Title">Kair'O ?</span> </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
+<div id="HowtoUse">
+<p>
+    <h1>Comment ça fonctionne ?</h1>
+<ul>
+    <li>Créez vous un compte/connectez vous</li>
+    <li>Importez un questionnaire au format .XML depuis Celene ou créez en un</li>
+    <li>Exportez le vers Celene depuis la page export</li>
+    <li>Vous pouvez également y répondre depuis notre plateforme</li>
+</ul>
+</div>
+</p>
 
 </body>
 </html>

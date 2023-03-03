@@ -47,8 +47,28 @@
     {% block connexion %}{% endblock %}
     {% block content %}{% endblock %}
     <footer>
+    <div class="container_foot">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>About Us</h4>
+                <p>Kair'O is a web application developed by students from the University Institute of Technology of Orleans, France. Our goal is to provide an easy-to-use tool for managing questionnaires.</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-center">&copy; 2023 Kair'O. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
 
-    </footer>
 <script src="button.js"></script>
 </body>
 </html>
