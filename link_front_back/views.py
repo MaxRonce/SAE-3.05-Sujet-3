@@ -17,20 +17,27 @@ import os
 @app.route("/", methods=["POST", "GET"])  # page de base du site
 def home():
     f = LoginForm()
+    rf = RegisterForm()
     if f.validate_on_submit():
         user = f.get_authenticated_user()
         if user:
             login_user(user)
             return redirect(url_for("home"))
-    return render_template("home.html", form=f, login="HIDE")
-
+    if rf.validate_on_submit():
+        try:
+            rf.new_user()
+            flash("User registered successfully.")
+        except exc.IntegrityError:
+            flash("User already exists.")
+    return render_template("home.html", form=f, form2=rf, login="HIDE", register="HIDE")
 
 @app.route("/questionnaire", methods=["POST", "GET"])
 @login_required
 def questionnaire():
 
     # User is authenticated, proceed with the questionnaire logic
-    questionnaires = get_questionnaires()
+    idu = current_user.username
+    questionnaires = get_liste_questionnaires(idu)
     selected_idqq = -1
     if request.method == "POST":
         selected_idqq = request.form.get("idqq")
@@ -42,13 +49,20 @@ def questionnaire():
 @app.errorhandler(401)
 def unauthorized(e):
     f = LoginForm()
+    rf = RegisterForm()
     if f.validate_on_submit():
         user = f.get_authenticated_user()
         if user:
             login_user(user)
             print(current_user)
             return redirect(url_for("home"))
-    return render_template("home.html", form=f, login="SHOW")
+    if rf.validate_on_submit():
+        try:
+            rf.new_user()
+            flash("User registered successfully.")
+        except exc.IntegrityError:
+            flash("User already exists.")
+    return render_template("home.html", form=f, form2=rf, login="SHOW", register="HIDE")
 
 @app.route("/questionnaire/<idq>", methods=["DELETE"])
 def delete_question(idq):
@@ -59,16 +73,10 @@ def delete_question(idq):
 @app.route("/questionnaires", methods=["POST", "GET"])
 @login_required
 def questionnaires():
-    return render_template("listquestionnaire.html", questionnaires = get_questionnaires())
+    idu = current_user.username
+    return render_template("listquestionnaire.html", questionnaires = get_liste_questionnaires(idu))
 
 
-@app.route("/editquestion/<idq>", methods=["GET", "POST"])
-def edit_question(idq):
-    form = QuestionForm()
-    if form.validate_on_submit():
-        edit_question(idq, form.titre.data, form.Typeq.data, form.points.data, form.valeurpn.data)
-        return redirect(url_for('questionnaire'))
-    return render_template("editquestion.html", form=form,question= get_question(idq))
 
 @app.route("/questionnaires/<idq>", methods=["DELETE"])
 def delete_questionnaire(idq):
@@ -112,15 +120,59 @@ def ajoutq(idq):
         add_question(form.titre.data, idq, form.Typeq.data, 0, form.points.data, "", form.valeurpn.data)
         return redirect(url_for('ajoutr', idq=(get_questions(idq)[len(get_questions(idq)) - 1]['idq'])))
     return render_template("test.html", form=form)
-
-
-@app.route("/ajout/<idq>/", methods=("GET", "POST",))
-def ajoutr(idq):
-    form = ReponseForm()
+@app.route("/editquestion/<idq>", methods=["GET", "POST"])
+def edit_question(idq):
+    form = EquestionForm()
+    form.Typeq.default = get_question(idq)['idt']
+    form.process(request.form)
+    if form.validate():
+        print("valid")
+    if form.is_submitted():
+        print("submitted")
+    print(form.errors)
     if form.validate_on_submit():
-        add_answer(form.reponse.data, form.fraction.data, idq)
+        modifq(form.titre.data, idq, form.Typeq.data, 0, form.points.data, "",form.valeurpn.data)
         return redirect(url_for('questionnaire'))
-    return render_template("ajoutreponse.html", form=form)
+    return render_template("editquestion.html", form=form, question = get_question(idq))
+
+
+@app.route("/ajout/<idq>/", methods=("POST", "GET"))
+def ajoutr(idq):
+    form = None
+    match get_question(idq)['idt']:
+        case 1:
+            form = ReponseCourteForm()
+        case 2:
+            form = TrueFalseForm()
+        case 3:
+            form = QCMform()
+    if form.validate_on_submit():
+        print(get_question(idq)['idt'])
+        match get_question(idq)['idt']:
+            case 1:
+                add_answer(form.reponse1.data, form.fraction1.data, idq)
+                return redirect(url_for('questionnaire'))
+            case 2:
+                option = request.form['options']
+                print(option)
+                add_answer(option, 100, idq)
+                if option == "true":
+                    add_answer("false", 0, idq)
+                else:
+                    add_answer("true", 0, idq)
+                return redirect(url_for('questionnaire'))
+            case 3:
+                for i in range(4):
+                    m = "reponse" + str(i + 1)
+                    n = "fraction" + str(i + 1)
+                    op = getattr(form, m)
+                    od = getattr(form, n)
+                    add_answer(op.data, od.data, idq)
+                    print(op.data)
+                return redirect(url_for('questionnaire'))
+        return redirect(url_for('questionnaire'))
+    print(form.errors)
+    return render_template("ajoutreponse.html", form=form, idt = get_question(idq)['idt'])
 
 
 def allowed_file(filename):

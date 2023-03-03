@@ -12,8 +12,9 @@ function addListeners()
 
 
 function toggleBoxVisibility() {
+    console.log("toggleBoxVisibility")
 
-if (document.getElementById("check").checked == true) {
+if (document.getElementById("check").checked === true) {
 
     document.getElementById("pointneg").style.display = "flex";
 

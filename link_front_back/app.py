@@ -4,7 +4,12 @@ from flask_mysqldb import MySQL
 
 
 app = Flask(__name__)
+
+
+
+
 login_manager = LoginManager(app)
+
 
 app.config['SECRET_KEY'] = b'4004789735821215b5f69ce64a39ed41874ed260b8da7b4720e70d047db6447a'
 app.config['MYSQL_HOST'] = ''
