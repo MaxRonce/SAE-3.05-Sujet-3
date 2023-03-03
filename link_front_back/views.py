@@ -135,7 +135,13 @@ def edit_question(idq):
         return redirect(url_for('questionnaire'))
     return render_template("editquestion.html", form=form, question = get_question(idq))
 
-
+@app.route("/addquestionnaire", methods=["GET", "POST"])
+def add_questionnairepage():
+    form = QuestionnaireForm()
+    if form.validate_on_submit():
+        add_questionnaire2(form.nom.data, form.info.data, current_user.username)
+        return redirect(url_for('questionnaire'))
+    return render_template("addquestionnaire.html", form=form)
 @app.route("/ajout/<idq>/", methods=("POST", "GET"))
 def ajoutr(idq):
     form = None
