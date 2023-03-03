@@ -40,4 +40,22 @@ valeurs initiales données aléatoirement</br>
 
 
 ### Manuel d'installation :
-- Installer Node.js
+- Installer MySQL 8.0.26 https://dev.mysql.com/downloads/mysql/
+- Installer Python 3.9.7 https://www.python.org/downloads/release/python-397/
+
+#### REQUIREMENTS
+- click==8.1.3</br>
+- Flask==2.2.2</br>
+- Flask-Login==0.6.2</br>
+- Flask-MySQLdb==1.0.1</br>
+- Flask-SQLAlchemy==3.0.2</br>
+- Flask-WTF==1.0.1</br>
+- greenlet==2.0.1</br>
+- itsdangerous==2.1.2</br>
+- Jinja2==3.1.2</br>
+- MarkupSafe==2.1.1</br>
+- mysqlclient==2.1.1</br>
+- python-dotenv==0.21.0</br>
+- SQLAlchemy==1.4.45</br>
+- Werkzeug==2.2.2</br>
+- WTForms==3.0.1</br>
