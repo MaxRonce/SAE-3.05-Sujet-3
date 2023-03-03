@@ -224,7 +224,8 @@ body {
   }
 
   .container .bout .valider{
-    background-color: #FFF5EB;
+    background-color:#FFFFFF;
+    box-shadow: 10px 5px 1px #E63946;
     width: 7vw;
     height: 4.5vh;
     font-family: Oswald, serif;
@@ -238,7 +239,8 @@ body {
   }
 
   .container .bout .logout{
-    background-color: #FFF5EB;
+    background-color:#FFFFFF;
+    box-shadow: 10px 5px 1px #E63946;
     width: 7vw;
     height: 4.5vh;
     font-family: Oswald, serif;
