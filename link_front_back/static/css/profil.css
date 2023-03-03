@@ -205,6 +205,7 @@ body {
     z-index: 1;
     transform: translateY(100px);
     
+    
   }
 
   .container .Actions .action4 {
@@ -231,10 +232,10 @@ body {
     font-family: Oswald, serif;
     border-radius: 5vh;
     display: flex;
-    flex-direction: row;
+    flex-direction:column;
     margin-bottom: 5px;
     justify-content: center;
-    margin-top: 7vh;
+    margin-top: 15vh;
 
   }
 
@@ -246,7 +247,7 @@ body {
     font-family: Oswald, serif;
     border-radius: 5vh;
     display: flex;
-    flex-direction: row;
+    flex-direction:column;
     margin-bottom: 5px;
     justify-content: center;
     margin-top: 2vh;
