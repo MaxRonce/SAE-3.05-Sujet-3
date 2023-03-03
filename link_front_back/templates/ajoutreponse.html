@@ -1,27 +1,64 @@
 {% extends "base.html" %}
     {% block styleandtitle %}
-    <title>Ajouter Question</title>
+    <title>Ajouter Réponse </title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/ajouter_question.css')}}">
     {% endblock %}
 
     {% block content %}
-<form role="form"  method="post">
+<form role="form"  method="post" >
     {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
     <div class="Add_question_container">
     <h1>Ajouter Réponse</h1>
 
-    <div id="Add_title">
+
+    {% if idt == 1 %} <!-- question courte -->
+    <div>
         <label for="title">Réponse: </label>
-        {{ form.reponse }}
+        {{ form.reponse1 }}
     </div>
-        <div id="nbrep">
+        <div>
             <label for="nbrep">Fraction</label>
-            {{ form.fraction }}
+            {{ form.fraction1 }}
         </div>
 
-        {{ form.submit }}
+        {% endif %}
+     {% if idt == 2 %} <!-- Vrai / Faux -->
+
+    <div class="answer">
+        <label for="title">Réponse: </label>
+        <input type="radio" name="options" id="option1" value="true"> Vrai </input><br>
+        <input type="radio" name="options" id="option2" value="false"> Faux </input><br>
+    </div>
+        {% endif %}
+
+     {% if idt == 3 %} <!-- QCM -->
+    <div class="answerqcm">
+        <label for="title">Réponse 1: </label>
+        {{ form.reponse1 }}
+        {{ form.fraction1(class="fraction") }}
+    </div>
+         <div class="answerqcm">
+        <label for="title">Réponse 2: </label>
+        {{ form.reponse2 }}
+         {{ form.fraction2(class="fraction") }}
+    </div>
+         <div class="answerqcm">
+        <label for="title">Réponse 3: </label>
+        {{ form.reponse3 }}
+         {{ form.fraction3(class="fraction") }}
+    </div>
+         <div class="answerqcm">
+        <label for="title">Réponse 4: </label>
+        {{ form.reponse4 }}
+         {{ form.fraction4(class="fraction") }}
+    </div>
 
 
+        {% endif %}
+
+
+    {{ form.submit(class="submitb") }}
 
 </div>
 

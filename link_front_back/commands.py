@@ -8,16 +8,9 @@ from .app import app, db
 def hashP():
     users = db_link.ses.query(db_link.User).all()
     for u in users:
-        u.mdpUser = sha256(u.mdpUser.encode()).hexdigest()
-    db_link.ses.commit()
-    print("Done")
-
-
-@app.cli.command()
-def resetP():
-    users = db_link.ses.query(db_link.User).all()
-    for u in users:
-        salted_password = str(u.idUser) + "test"
+        salted_password = str(u.idUser) + u.mdpUser
         u.mdpUser = sha256(salted_password.encode()).hexdigest()
     db_link.ses.commit()
     print("Done")
+
+

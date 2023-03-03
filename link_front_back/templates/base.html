@@ -20,7 +20,7 @@
     <!-- for page specific stylesheets and page title MANDATORY-->
     {% block styleandtitle %}{% endblock %}
 </head>
-<body>
+<body onload="toggleBoxVisibility()">
     <header>
         <div class="navigation-bar">
             <nav>
@@ -32,8 +32,9 @@
                     </li>
 
                     {% if current_user.is_authenticated %}
-                    <li class="mid-item"><a href="{{ url_for("questionnaire") }}">Questionnaire</a>
-                    <li class="mid-item"><a href="{{ url_for("questionnaires") }}">Questions</a>
+                    <li class="mid-item"><a href="{{ url_for("questionnaire") }}">questions</a></li>
+                    <li class="mid-item"><a href="{{ url_for("questionnaires") }}">questionnaires</a></li>
+                    <li class="mid-item"><a href="{{ url_for("choose_qcm") }}">Participer</a></li>
                     <li class="mid-item"><a href="{{ url_for("about") }}">A propos</a></li>
                     <li class="last-item"><a href="{{ url_for("profil", idUser=current_user.username) }}">{{ current_user.username}}</a></li>
                     {% else %}
@@ -47,8 +48,29 @@
     {% block connexion %}{% endblock %}
     {% block content %}{% endblock %}
     <footer>
+    <div class="container_foot">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>About Us</h4>
+                <p>Kair'O is a web application developed by students from the University Institute of Technology of Orleans, France. Our goal is to provide an easy-to-use tool for managing questionnaires.</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-center">&copy; 2023 Kair'O. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
 
-    </footer>
 <script src="button.js"></script>
+<script src="{{url_for('static', filename='js/ajouter_question.js')}}"></script>
 </body>
 </html>

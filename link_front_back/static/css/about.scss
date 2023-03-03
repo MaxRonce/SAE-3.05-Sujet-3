@@ -1,0 +1,227 @@
+html, body{
+  background: #1D3557;
+  padding: 0;
+  margin: 0;
+  z-index: 0;
+  max-width: 100%;
+    overflow-x: hidden;
+
+}
+a{
+    text-decoration: none;
+}
+
+#red_square{
+  width: 95%;
+  height: 200vh;
+  background: #E63946;
+
+  transform: rotate(2deg) translateY(-7vh) translateX(-5vw);
+  border-radius: 0 0 5% 0;
+
+  #red_square_dot{
+    width: 98%;
+    height: 98%;
+    border-radius: 0 0 5% 0;
+
+    border-width: 0px 6px 6px 0px;
+    border-style: dashed;
+    border-color: #ffffff;
+
+    #images{
+      position: absolute;
+      top : 75%;
+      left: 10%;
+
+      img{
+        width: 20%;
+        height: 20%;
+
+      }
+
+    }
+    #text{
+      position:absolute;
+      top: 87%;
+      left: 10%;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      p{
+        font-family: "Oswald", serif;
+        font-size: 3vw;
+        color: #ffffff;
+        margin: 4.2vw;
+        margin-top: 70px;
+      }
+    }
+
+    #equipe{
+      position: absolute;
+        top: 60%;
+        left: 10%;
+      font-family: 'Merriweather', serif;
+      font-weight : normal;
+        font-size: 6vw;
+      color: #ffffff;
+    }
+
+    #white_square{
+      width: 95%;
+      height: 60%;
+      background: #fdf4ea;
+      transform: rotate(-1deg);
+      border-radius: 0 0 5% 0;
+
+
+      #white_square_dot{
+        width: 97%;
+        height: 97%;
+        border-radius: 0 0 5% 0;
+
+        border-width: 0px 6px 6px 0px;
+        border-style: dashed;
+        border-color: #152a48;
+        font-weight: bold;
+
+        font-family: Oswald, sans-serif;
+        font-size: 4vw;
+
+        #explication{
+          position: absolute;
+            top: 55%;
+            left: 10%;
+          color: #1D3557;
+        }
+
+        #connexion_button{
+          width: 95%;
+          height: 20%;
+          background: #457B9D;
+          border-radius: 2vw ;
+
+
+          #connexion_button_dot{
+
+            width: 98%;
+            height: 87%;
+            border-radius: 0 0 2vw 0;
+
+            border-width: 0px 6px 6px 0px;
+            border-style: dashed;
+            border-color: #fdf4ea;
+
+            #title_square{
+              width: 80%;
+              height: 280%;
+              background: #1D3557;
+              border-radius:0 0 2vw 0 ;
+              transform: rotate(4deg) translateY(-5.27%);
+
+              #title_square_dot{
+                width: 97%;
+                height: 93%;
+                border-radius: 0 0 2vw 0;
+
+
+                border-width: 0px 6px 6px 0px;
+                border-style: dashed;
+                border-color: white;
+
+                p{
+                  display: flex;
+                  flex-direction: column;
+                  font-size:8vw;
+                  color: #fdf4ea;
+                  text-align: center;
+                  margin-top: 2.5%;
+                  width: 100%;
+                  height: 100%;
+                  justify-content: center;
+                  align-items: center;
+                  font-family: 'Merriweather', serif;
+
+                  #Title{
+                    text-shadow: -4px 4px 0px #E63946;
+                  }
+
+                }
+
+
+              }
+            }
+
+
+
+
+          }
+
+        }
+
+
+      }
+
+    }
+
+
+
+  }
+
+
+
+
+
+
+
+}
+
+#red_square {
+  position: relative;
+  z-index: 2;
+}
+
+#white_square {
+  position: relative;
+  z-index: 1;
+}
+
+#red_square_dot {
+  position: relative;
+  z-index: 3;
+}
+
+#white_square_dot {
+  position: relative;
+  z-index: 2;
+}
+
+#equipe {
+  position: relative;
+  z-index: 3;
+}
+#title_square{
+  position: relative;
+  z-index: 4;
+}
+
+#HowtoUse {
+  color: white;
+  font-family: Oswald, sans-serif;
+  margin-left: 5vw;
+  margin-bottom: 20vh;
+}
+
+#connexion_button_dot:hover {
+  background: #739ebb;
+}
+
+#connexion_button_text {
+  color: white;
+  font-family: Oswald, sans-serif;
+  font-size: 2.5vw;
+  margin-left: 5vw;
+  margin-top: 2vh;
+  transform: translateX(60vw) translateY(-52.5vh);
+}
+
+

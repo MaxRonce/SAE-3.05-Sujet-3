@@ -26,7 +26,6 @@
 
                 {% endfor %}
             </select>
-
         </form>
 
     </div>
@@ -42,6 +41,9 @@
                         <a class="deleteq" href="#" onclick="deleteQuestion({{ question.idq }})">
                             <button class="deleteq"> Supprimer</button>
                         </a>
+                       <a class="deletq" href="{{ url_for('edit_question', idq=question.idq) }}">
+                            <button class="deleteq"> Modifier</button>
+                       </a>
 
                 <script>
                 function deleteQuestion(idq) {
@@ -53,6 +55,7 @@
                     });
                 }
                 </script>
+
 
                     </div>
                 </li>
