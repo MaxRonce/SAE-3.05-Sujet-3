@@ -4,10 +4,6 @@ from flask_mysqldb import MySQL
 
 
 app = Flask(__name__)
-
-
-
-
 login_manager = LoginManager(app)
 
 
@@ -18,11 +14,9 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = ''
 
 db = MySQL(app)
-db_lien = db.connection
 
 app.config['UPLOAD_FOLDER'] = 'static/uploaded_files'
 
-UPLOAD_FOLDER = 'static'
 ALLOWED_EXTENSIONS = {'xml'}
 
 

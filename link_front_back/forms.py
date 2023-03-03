@@ -33,7 +33,7 @@ class QuestionForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class EquestionForm(FlaskForm):
-    WTF_CSRF_ENABLED = False    
+    WTF_CSRF_ENABLED = False
 
     titre = StringField('Titre')
     Typeq = SelectField('Type de question', choices=[('1','Réponse courte'),('2','Vrai/Faux'),('3', 'QCM')],
