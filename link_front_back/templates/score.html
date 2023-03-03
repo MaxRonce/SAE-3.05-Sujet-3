@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block styleandtitle %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{url_for('static', filename='css/questionnaire.css')}}">
+<title>Score</title>
+{% endblock %}
+
+{% block content%}
+<div class="container">
+    <h1>Bien joué !</h1>
+
+    <div class="titreq">
+        <h3>Ton score est de :</h3>
+        <h3>{{ score }}</h3>
+    </div>
+
+    <form action="{{ url_for("home")}}">
+        <button class="white_button_slider">
+            <span class="background"></span>
+            <span class="arrow">
+                <span class="body"></span>
+                <span class="tip"></span>
+            </span>
+            <span class="text">Retour</span>
+        </button>
+    </form>
+</div>
+{% endblock %}
