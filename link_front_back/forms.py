@@ -26,9 +26,19 @@ class uploadFileForm(FlaskForm):
 
 class QuestionForm(FlaskForm):
     titre = StringField('Titre', validators=[DataRequired()])
-    Typeq = SelectField('Type de question', choices=[ ('1', 'Réponse courte'),('2','Vrai/Faux'),('3', 'QCM')],
+    Typeq = SelectField('Type de question', choices=[('1','Réponse courte'),('2','Vrai/Faux'),('3', 'QCM')],
                         validators=[DataRequired()])
     points = IntegerField('Points', validators=[DataRequired()])
+    valeurpn = IntegerField('Valeur des points négatifs')
+    submit = SubmitField('Submit')
+
+class EquestionForm(FlaskForm):
+    WTF_CSRF_ENABLED = False
+
+    titre = StringField('Titre')
+    Typeq = SelectField('Type de question', choices=[('1','Réponse courte'),('2','Vrai/Faux'),('3', 'QCM')],
+                        validators=[DataRequired()])
+    points = IntegerField('Points')
     valeurpn = IntegerField('Valeur des points négatifs')
     submit = SubmitField('Submit')
 
@@ -57,6 +67,103 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def get_authenticated_user(self):
         user = get_user(self.username.data)

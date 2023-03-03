@@ -20,7 +20,7 @@
     <!-- for page specific stylesheets and page title MANDATORY-->
     {% block styleandtitle %}{% endblock %}
 </head>
-<body>
+<body onload="toggleBoxVisibility()">
     <header>
         <div class="navigation-bar">
             <nav>
@@ -50,5 +50,6 @@
 
     </footer>
 <script src="button.js"></script>
+<script src="{{url_for('static', filename='js/ajouter_question.js')}}"></script>
 </body>
 </html>

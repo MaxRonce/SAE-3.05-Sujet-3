@@ -5,8 +5,10 @@
     {% endblock %}
 
     {% block content %}
+
 <form role="form"  method="post">
     {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
     <div class="Add_question_container">
     <h1>Modifier question {{ question.idq }}</h1>
 
@@ -17,7 +19,7 @@
     <div class="container">
         <div id="nbrep">
             <label for="nbrep">Points de la question</label>
-            {{ form.points}}
+            {{ form.points(value=question.defaultgrade) }}
         </div>
         <div id="type_question">
             <label for="type">Type de question</label>
@@ -28,7 +30,11 @@
     <div id="istemplate">
         <label class="checkbox">
             <span>Template ?</span>
-            <input type="checkbox" id="checkt" onclick="toggletemplateBoxVisibility()" >
+            {% if question.template == 0 %}
+            <input type="checkbox" id="checkt" onclick="toggletemplateBoxVisibility()">
+            {% else %}
+            <input type="checkbox" id="checkt" onclick="toggletemplateBoxVisibility()" checked>
+            {% endif %}
 
         </label>
     </div>
@@ -37,16 +43,22 @@
     <div id="isneg">
         <label class="checkbox">
             <span>Point négatif ?</span>
+            {% if question.penalty == 0 %}
             <input type="checkbox" id="check" onclick="toggleBoxVisibility()">
+            {% else %}
+            <input type="checkbox" id="check" onclick="toggleBoxVisibility()" checked
+            >
+
+            {% endif %}
+
 
         </label>
     </div>
 
-
     <div id="pointneg">
         <label for="pointneg">Valeur: </label>
         <div id="valeurpn">
-        {{ form.valeurpn }}
+        {{ form.valeurpn(value=question.penalty) }}
         </div>
     </div>
 
@@ -62,7 +74,7 @@
 
 
 </form>
+<script src="{{url_for('static', filename='js/ajouter_question.js')}}"></script>
 
 
-<script src="{{url_for('static', filename='js/Ajouter_question.js')}}"></script>
 {% endblock %}

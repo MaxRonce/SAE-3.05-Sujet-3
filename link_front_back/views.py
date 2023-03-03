@@ -30,15 +30,15 @@ def home():
             flash("User registered successfully.")
         except exc.IntegrityError:
             flash("User already exists.")
-    return render_template("home.html", form=f, form2=rf, login="HIDE", register="SHOW")
-
+    return render_template("home.html", form=f, form2=rf, login="HIDE", register="HIDE")
 
 @app.route("/questionnaire", methods=["POST", "GET"])
 @login_required
 def questionnaire():
 
     # User is authenticated, proceed with the questionnaire logic
-    questionnaires = get_questionnaires()
+    idu = current_user.username
+    questionnaires = get_liste_questionnaires(idu)
     selected_idqq = -1
     if request.method == "POST":
         selected_idqq = request.form.get("idqq")
@@ -74,16 +74,10 @@ def delete_question(idq):
 @app.route("/questionnaires", methods=["POST", "GET"])
 @login_required
 def questionnaires():
-    return render_template("listquestionnaire.html", questionnaires = get_questionnaires())
+    idu = current_user.username
+    return render_template("listquestionnaire.html", questionnaires = get_liste_questionnaires(idu))
 
 
-@app.route("/editquestion/<idq>", methods=["GET", "POST"])
-def edit_question(idq):
-    form = QuestionForm()
-    if form.validate_on_submit():
-        edit_question(idq, form.titre.data, form.Typeq.data, form.points.data, form.valeurpn.data)
-        return redirect(url_for('questionnaire'))
-    return render_template("editquestion.html", form=form,question= get_question(idq))
 
 @app.route("/questionnaires/<idq>", methods=["DELETE"])
 def delete_questionnaire(idq):
@@ -127,6 +121,20 @@ def ajoutq(idq):
         add_question(form.titre.data, idq, form.Typeq.data, 0, form.points.data, "", form.valeurpn.data)
         return redirect(url_for('ajoutr', idq=(get_questions(idq)[len(get_questions(idq)) - 1]['idq'])))
     return render_template("test.html", form=form)
+@app.route("/editquestion/<idq>", methods=["GET", "POST"])
+def edit_question(idq):
+    form = EquestionForm()
+    form.Typeq.default = get_question(idq)['idt']
+    form.process(request.form)
+    if form.validate():
+        print("valid")
+    if form.is_submitted():
+        print("submitted")
+    print(form.errors)
+    if form.validate_on_submit():
+        modifq(form.titre.data, idq, form.Typeq.data, 0, form.points.data, "",form.valeurpn.data)
+        return redirect(url_for('questionnaire'))
+    return render_template("editquestion.html", form=form, question = get_question(idq))
 
 
 @app.route("/ajout/<idq>/", methods=("POST", "GET"))
