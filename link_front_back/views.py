@@ -257,3 +257,10 @@ def sendanswers():
 def score(idqq, num_essai):
 
     return render_template("score.html", score=calcul_score_quizz(current_user.get_id(), idqq, num_essai))
+
+
+@app.route("/profil", methods=["POST", "GET"])
+@login_required
+def modifpassword():
+    form = LoginForm()
+    return render_template('profil.html')

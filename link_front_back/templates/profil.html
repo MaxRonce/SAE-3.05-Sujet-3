@@ -1,3 +1,43 @@
-<form action="{{ url_for("logout") }}" method="post">
-    <input type="submit" value="logout">
+
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='navbar.css')}}">
+{% endblock %}
+{% block content %}
+
+<h1 class="title">
+    Bonjour, {{ current_user.username}}!
+  </h1>
+<div class="Questionnaire">
+    <h3>Username :</h3>
+                {{ form.username(class_="box", current_user.username) }}
+    <h3>Password :</h3>
+                {{ form.password(class_="box", current_user.password) }}
+    <ul>
+        {% for x in questionnaire %}
+    <a href="{{url_for('detail', id=x.id)}}">
+        
+    </a>
+    {% endfor %}
+    </ul>
+</div>
+   <div class ="form-group">
+        <form action="{{ url_for("logout") }}" method="post">
+            <input type="submit" value="Logout">
+        </form> 
+        <form action="{{ url_for("modifpassword") }}" method="post">
+            <input type="submit" value="Modifier">
+        </form> 
+        <h3>Password</h3>
+                {{ form.password(class_="box", placeholder="Password") }}       
+    </div>
+    {% with message = get_flashed_messages() %}
+    {% if message %}
+    <div class="alert alert-danger" role="alert">
+        {{ message[0] }}
+    </div>
+    {% endif %}
+    {% endwith %}
 </form>
+{% endblock %}
