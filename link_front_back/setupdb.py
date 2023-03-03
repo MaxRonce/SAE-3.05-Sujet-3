@@ -2,7 +2,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
-login, passwd, serveur, bd = "antoninreydet", "root", "localhost", "kairo"
+login, passwd, serveur, bd = "root", "aled", "localhost", "KAIRO"
 engine = create_engine('mysql+mysqldb://' + login + ':' + passwd + '@' + serveur + '/' + bd)
 
 ses = Session(engine)
