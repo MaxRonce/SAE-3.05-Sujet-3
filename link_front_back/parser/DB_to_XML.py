@@ -34,7 +34,7 @@ def get_dict_from_DB(id):
         question['answers'] = []
 
         # get all answers for the current question
-        answers = db_link.get_anwser(question['idq'])
+        answers = db_link.get_answers(question['idq'])
 
         for answer in answers:
             question['answers'].append({

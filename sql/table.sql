@@ -61,8 +61,9 @@ CREATE TABLE REPONSEQUESTION(
 CREATE TABLE REPONSEUSER(
     idUser INT(9),
     idQuestion INT(9),
+    essaiNumero INT(9),
     reponse VARCHAR(500),
-    PRIMARY KEY (idQuestion, idUser)
+    PRIMARY KEY (idQuestion, idUser, essaiNumero)
 );
 
 ALTER TABLE QUESTION        ADD FOREIGN KEY (idQuestionnaire)   REFERENCES QUESTIONNAIRE(idQuestionnaire);
@@ -95,13 +96,13 @@ INSERT INTO QUESTIONNAIRE (idQuestionnaire, nom, info, idUser) VALUES
 ;
 
 
-CREATE TRIGGER trg_check_duplicate_questionnaire BEFORE INSERT ON QUESTIONNAIRE
-FOR EACH ROW
-BEGIN
-    DECLARE count INT;
-    SELECT COUNT(*) INTO count FROM QUESTIONNAIRE WHERE nom = NEW.nom;
-    IF count > 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'A questionnaire with the same name already exists';
-    END IF;
-END;
+-- CREATE TRIGGER trg_check_duplicate_questionnaire BEFORE INSERT ON QUESTIONNAIRE
+-- FOR EACH ROW
+-- BEGIN
+--     DECLARE count INT;
+--     SELECT COUNT(*) INTO count FROM QUESTIONNAIRE WHERE nom = NEW.nom;
+--     IF count > 0 THEN
+--         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'A questionnaire with the same name already exists';
+--     END IF;
+-- END;
 

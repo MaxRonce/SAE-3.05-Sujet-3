@@ -21,7 +21,6 @@ def home():
         user = f.get_authenticated_user()
         if user:
             login_user(user)
-            print(current_user)
             return redirect(url_for("home"))
     return render_template("home.html", form=f)
 
@@ -149,7 +148,6 @@ def downloader_file():
 @app.route('/downloadfile/<idQ>')
 def download_file(idQ):
     name = "Export" + idQ + ".xml"
-    print(name)
     writter(name, 'link_front_back/parser/out/', get_dict_from_DB(idQ), category=True)
 
     return send_file("parser/out/" + name, as_attachment=True)
@@ -159,9 +157,27 @@ def download_file(idQ):
 def choose_qcm():
     return render_template("chooseqcm.html",questionnaires=get_questionnaires())
 
-@app.route('/answer/<idq>', methods=["GET", "POST"])
-def answer_qcm(idq):
-    qq = get_questions_and_answers(idq)
-    import json
-    print(json.dumps(qq, indent=4))
-    return render_template("answerqcm.html", questionnaire=qq)
+@app.route('/answer/<idqq>', methods=["GET", "POST"])
+def answer_qcm(idqq):
+    qq = get_questions_and_answers(idqq)
+    return render_template("answerqcm.html", questionnaire=qq, idqq=idqq)
+
+@app.route('/sendanswers', methods=["POST"])
+def sendanswers():
+    idqq = request.form.get("idqq")
+    liste = get_liste_id_type_question_in_questionnaire(idqq)
+    numEssai = get_essai(current_user.get_id(), idqq) + 1
+    for qid, typ in liste:
+        if typ == "multichoice":
+            rep = request.form.getlist(str(qid)) # pour liste de valeurs (genre checkbox)
+            rep = " ".join(rep)
+        else:
+            rep = request.form.get(str(qid)) # pour valeur simple
+        add_rep_user(current_user.get_id(), qid, numEssai, rep)
+
+    return redirect(url_for("score", idqq=idqq, num_essai=numEssai))
+
+@app.route("/score/<idqq>/<num_essai>")
+def score(idqq, num_essai):
+
+    return render_template("score.html", score=calcul_score_quizz(current_user.get_id(), idqq, num_essai))

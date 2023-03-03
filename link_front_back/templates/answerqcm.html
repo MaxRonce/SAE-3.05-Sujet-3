@@ -12,7 +12,8 @@
     <div class="listequestion">
         <h3>Questions :</h3>
         <div class="questions">
-            <form action="" method="post"></form>
+            <form action="{{ url_for('sendanswers')}}" method="post">
+            <input type="hidden" name="idqq" value="{{ idqq }}">
             {% set i = namespace(value=0) %}
             {% for question in questionnaire %}
                 {% set i.value = i.value + 1 %}
@@ -22,15 +23,15 @@
                     {% if question.type == "truefalse" %}
                         <p>Type question : vrai ou faux</p>
                         <fieldset>
-                            <input type="radio" name="vraifaux" id="{{ answer.idr }}">
-                            <label for="vrai">{{ question.reponses[0].text }}</label>
-                            <input type="radio" name="vraifaux" id="{{ answer.idr }}">
-                            <label for="faux">{{ question.reponses[1].text }}</label>
+                            <input type="radio" name="{{ question.idq }}" id="{{ question.reponses[0].idr }}" value="{{ question.reponses[0].idr }}">
+                            <label for="{{ question.reponses[0].idr }}">{{ question.reponses[0].text }}</label>
+                            <input type="radio" name="{{ question.idq }}" id="{{ question.reponses[1].idr }}" value="{{ question.reponses[1].idr }}">
+                            <label for="{{ question.reponses[0].idr }}">{{ question.reponses[1].text }}</label>
                         </fieldset>
                     {% elif question.type == "multichoice" %}
                         <fieldset>
                             {% for answer in question.reponses %}
-                                <input type="checkbox" name="{{ answer.idr }}" id="{{ answer.idr }}">
+                                <input type="checkbox" name="{{ question.idq }}" id="{{ answer.idr }}" value="{{ answer.idr }}">
                                 <label for="{{ answer.idr }}">{{ answer.text }}</label>
                             {% endfor %}
                         </fieldset>

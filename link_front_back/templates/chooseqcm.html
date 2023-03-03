@@ -17,7 +17,7 @@
                 <li class="quest">
                     <p>Questionnaire {{ questionnaire.idq }} : {{ questionnaire.nom }}</p>
                     <p>{{ questionnaire.info }}</p>
-                    <form action="{{ url_for('answer_qcm', idq=questionnaire.idq) }}" method="post">
+                    <form action="{{ url_for('answer_qcm', idqq=questionnaire.idq) }}" method="post">
                         <input type="submit" value="Do the quizz">
                     </form>
                 </li>

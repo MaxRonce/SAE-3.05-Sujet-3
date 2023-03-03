@@ -1,4 +1,4 @@
-from sqlalchemy import func, exc
+from sqlalchemy import func, exc, desc
 from .setupdb import *
 
 
@@ -46,7 +46,7 @@ def get_user(idu: str):
     user = ses.query(User).filter(User.idUser == idu).first()
     return user
 
-def get_anwser(idq):
+def get_answers(idq):
     res = ses.query(RepQuestion).filter(RepQuestion.idQuestion == idq)
     test = list()
     for rw in res:
@@ -72,7 +72,7 @@ def get_questions_and_answers(idqq):
                       "idQuestionnaire":rz.idQuestionnaire,
                       "generalfeedback":rz.feedback,
                       "idt":rz.idType,
-                      "reponses":get_anwser(rz.idQuestion)})
+                      "reponses":get_answers(rz.idQuestion)})
     return test2
 
 def query_max(table):
@@ -134,12 +134,71 @@ def get_questionnaire_name(idq:int)->str:
     res = ses.query(Questionnaire).filter(Questionnaire.idQuestionnaire == idq)
     return res[0].nom
 
-def add_rep_user(idu, idq, reponse):
-    ru = RepUser(idUser=idu, idQuestion=idq, reponse=reponse)
+def add_rep_user(idu, idq, num_essai, reponse):
+    ru = RepUser(idUser=idu, idQuestion=idq, essaiNumero=num_essai, reponse=reponse)
     ses.add(ru)
     ses.commit()
 
-    
+def get_rep_user(idu, idq, num_essai):
+    res = ses.query(RepUser).filter(RepUser.idQuestion == idq, RepUser.idUser == idu, RepUser.essaiNumero == num_essai).first()
+    return res.reponse
+
+def calcul_score_quizz(idu, idqq, num_essai):
+    score = 0
+    total = 0
+    questions = get_questions_and_answers(idqq)
+    for question in questions:
+        idq = question['idq']
+        reponse = get_rep_user(idu, idq, num_essai)
+        total += question['defaultgrade']
+        score = test_match_case(question, reponse, score)
+    return str(score) +"/"+ str(total)
+
+def test_match_case(question, reponse, score):
+    match (question['type']):
+        case "multichoice":
+            id_reponses = set(reponse.split())
+            id_v_rep = set()
+            for rep in question['reponses']:
+                if rep['fraction'] != 0:
+                    id_v_rep.add(str(rep['idr']))
+            if id_reponses == id_v_rep:
+                score += question['defaultgrade']
+            else:
+                score -= question['penalty']
+            return score
+        case "truefalse":
+            id_reponse = reponse
+            for rep in question['reponses']:
+                if rep['fraction'] == 100:
+                    if id_reponse == str(question['reponses'][0]['idr']):
+                        score += question['defaultgrade']
+                    else:
+                        score -= question['penalty']
+            return score
+        case "Reponse courte":
+            if reponse == question['reponses'][0]:
+                score += question['defaultgrade']
+            else:
+                score -= question['penalty']
+    return score
+
+def get_essai(idu, idqq):
+    res = ses.query(RepUser, Question).filter(
+        RepUser.idUser == idu, Question.idQuestionnaire == idqq).order_by(
+        desc(RepUser.essaiNumero)).first()
+    if res is None:
+        return 0
+    for row in res:
+        return 0 if row.essaiNumero is None else row.essaiNumero
+
+
+def get_liste_id_type_question_in_questionnaire(idqq: int):
+    res = ses.query(Question).filter(Question.idQuestionnaire == idqq)
+    liste = list()
+    for row in res:
+        liste.append((row.idQuestion, (ses.query(Type).filter(Type.idType == row.idType))[0].nomType))
+    return liste
 
 def main():
     add_questionnaire(p)

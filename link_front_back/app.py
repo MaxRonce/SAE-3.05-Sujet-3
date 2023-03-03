@@ -2,7 +2,6 @@ from flask_login import LoginManager
 from flask import Flask
 from flask_mysqldb import MySQL
 
-from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 login_manager = LoginManager(app)
@@ -21,7 +20,6 @@ app.config['UPLOAD_FOLDER'] = 'static/uploaded_files'
 UPLOAD_FOLDER = 'static'
 ALLOWED_EXTENSIONS = {'xml'}
 
-Bootstrap(app)
 
 if __name__ == "__main__":
     app.run()
