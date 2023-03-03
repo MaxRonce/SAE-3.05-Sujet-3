@@ -2,7 +2,7 @@ body {
   background-color: #457B9D;
 }
 
-.modal {
+.modal  {
   background-color: #FFF5EB;
   box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.5);
   display: none;
@@ -56,6 +56,35 @@ body {
   font-weight: lighter;
 }
 
+.modal .register {
+  display: flex;
+  flex-direction: column;
+  color: #1D3557;
+  font-family: "Merriweather", serif;
+  font-weight: bold;
+  margin-left: 2vw;
+  margin-top: 2vh;
+}
+.modal .register h3 {
+  font-family: Oswald, sans-serif;
+  font-size: 3.5vh;
+  padding: 1vh;
+}
+.modal .register .forgot-pass {
+  text-decoration: none;
+  font-family: Oswald, serif;
+  font-size: 2vh;
+  margin-top: 2vh;
+  color: #000000;
+  /*! width: 17vh; */
+}
+.modal .register p {
+  font-family: Oswald, serif;
+  font-size: 1vw;
+  margin-top: 2vh;
+  color: #000000;
+  font-weight: lighter;
+}
 .close {
   color: #aaa;
   float: right;

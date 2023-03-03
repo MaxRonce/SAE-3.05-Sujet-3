@@ -1,11 +1,17 @@
 from flask_login import LoginManager
 from flask import Flask
 from flask_mysqldb import MySQL
-
+from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap
 
+
 app = Flask(__name__)
+
+
+
+
 login_manager = LoginManager(app)
+
 
 app.config['SECRET_KEY'] = b'4004789735821215b5f69ce64a39ed41874ed260b8da7b4720e70d047db6447a'
 app.config['MYSQL_HOST'] = ''

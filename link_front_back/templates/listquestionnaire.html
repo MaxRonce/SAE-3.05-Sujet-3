@@ -11,7 +11,7 @@
     <h1>Gestion des Questionnaires</h1>
 
     <div class="listequestion">
-        <h3>Questionnaires : {{ nquest }}</h3>
+        <h3> Mes questionnaires :</h3>
         <div class="questions">
             <ul>
 
@@ -23,7 +23,7 @@
                         <a class="deletequest" href="#" onclick="deleteQuestion()">
                             <button class="deleteq"> Supprimer</button>
                         </a>
-                        <a class="deleteq" href="{{ url_for('questionnaire', idquest=idqq) }}">
+                        <a class="deleteq" href="{{ url_for('questionnaire', idq=questionnaire.idq) }}">
                             <button class="deleteq"> Editer</button>
 
                         </a>

@@ -29,6 +29,7 @@ for (let index = 0; index < span1.length; index++) {
     const span = span1[index];
     span.onclick = function() {
         modal.style.display = "none";
+        modal2.style.display = "none";
     }
 }
 

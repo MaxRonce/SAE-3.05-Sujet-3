@@ -40,6 +40,12 @@ def get_liste_id_nom_questionnaire(idu):
         test.append((rw.idQuestionnaire, rw.nom))
     return test
 
+def get_liste_questionnaires(idu):
+    res = ses.query(Questionnaire).filter(Questionnaire.idUser == idu)
+    test = list()
+    for rw in res:
+        test.append({"idq": rw.idQuestionnaire, "nom": rw.nom, "info": rw.info, "idu": rw.idUser})
+    return test
 
 def get_questionnaire_name(idq: int) -> str:
     res = ses.query(Questionnaire).filter(Questionnaire.idQuestionnaire == idq)
@@ -69,6 +75,13 @@ def get_user(idu: str):
     user = ses.query(User).filter(User.idUser == idu).first()
     return user
 
+def get_liste_type_question():
+    res = ses.query(Type).all()
+    test = list()
+    for rw in res:
+        test.append({"idt": rw.idType, "nom": rw.nomType})
+    return test
+
 
 def get_anwser(idq):
     res = ses.query(RepQuestion).filter(RepQuestion.idQuestion == idq)
@@ -86,7 +99,7 @@ def query_max(table):
     return res
 
 
-def add_question(question, idQuestionnaire, idType, hidden=0, valeur=1, feedback='', pointneg=0, template='Non',
+def add_question(question, idQuestionnaire, idType, hidden=0, valeur=1, feedback='', pointneg=0, template=0,
                  name=("question " + str(query_max(Question.idQuestion) + 1))):
     q = Question(idQuestion=(query_max(Question.idQuestion) + 1), name=name, question=question, template=template,
                  valeurPoint=valeur, hidden=hidden, pointNegatif=pointneg, idQuestionnaire=idQuestionnaire,
@@ -134,8 +147,8 @@ def del_question(idq):
     for answers in ses.query(RepQuestion).filter(RepQuestion.idQuestion == idq):
         ses.delete(answers)
         ses.commit()
-    res = ses.query(Question).filter(Question.idQuestion == idq)
-    ses.delete(res[0])
+    res = ses.query(Question).filter(Question.idQuestion == idq).one()
+    ses.delete(res)
     ses.commit()
 
 
@@ -165,7 +178,7 @@ def get_question(idq):
     test = list()
     for rw in res:
         test.append({"idq": rw.idQuestion, 'type': (ses.query(Type).filter(Type.idType == rw.idType))[0].nomType,
-                     'name': rw.name, "questiontext": rw.question, "template": rw.template,
+                     'name': rw.name, "questiontext": rw.question, "template": int(rw.template),
                      "defaultgrade": rw.valeurPoint, "hidden": rw.hidden, "penalty": rw.pointNegatif,
                      "idQuestionnaire": rw.idQuestionnaire, "generalfeedback": rw.feedback, "idt": rw.idType})
     return test[0]
@@ -175,7 +188,16 @@ def get_type_from_id(idt):
     res = ses.query(Type).filter(Type.idType == idt)
     return res[0].nomType
 
-
+def modifq(question, idq, idType, hidden=0, valeur=1, feedback='', pointneg=0, template=0):
+    q1 = ses.query(Question).filter(Question.idQuestion == idq).one()
+    q1.question = question
+    q1.idType = idType
+    q1.hidden = hidden
+    q1.valeurPoint = valeur
+    q1.feedback = feedback
+    q1.pointNegatif = pointneg
+    q1.template = template
+    ses.commit()
 def main():
     add_questionnaire(p)
 

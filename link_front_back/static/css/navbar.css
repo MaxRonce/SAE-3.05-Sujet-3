@@ -85,8 +85,26 @@ nav .first-item:hover .Kairo1 {
   text-shadow: -0.3vw 0.3vw 1px #E63946;
 }
 
+/* Footer styling */
 footer {
-    background: #1D3557;
-    height: 50px;
+  background-color: #1D3557;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  font-size: 1rem;
 }
-/*# sourceMappingURL=navbar.css.map */
+
+footer__text {
+  margin: 0;
+  font-weight: bold;
+}
+
+footer__links {
+  display: flex;
+  align-items: center;
+}
+
+
+
