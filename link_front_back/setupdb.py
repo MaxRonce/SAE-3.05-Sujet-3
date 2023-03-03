@@ -14,3 +14,5 @@ User = Base.classes.users
 Questionnaire = Base.classes.questionnaire
 Question = Base.classes.question
 RepQuestion = Base.classes.reponsequestion
+RepUser = Base.classes.reponseuser
+

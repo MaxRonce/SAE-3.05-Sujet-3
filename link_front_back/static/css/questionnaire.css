@@ -127,4 +127,34 @@ body {
   
 }
 
+.texte {
+  color: #FFF5EB;
+  font-family: Oswald, serif;
+  font-size: 2em;
+}
+
+#theredbtn {
+    background-color: #FFF5EB;
+    width: 7.2vw;
+    height: 7.5vh;
+    margin: 2vh;
+    justify-content:center;
+    cursor: pointer;
+    border-radius: 5vh;
+}
+#theredbtn:hover {
+  background-color: #E63946;
+  color: #FFF5EB;
+  transition: 0.2s;
+}
+#theredbtn .btnaa {
+  color: black;
+  font-family: Oswald, serif;
+  font-size: 2em;
+  margin-top: 0.3vh;
+}
+.addquest {
+  margin-left: 2vw;
+}
+
 /*# sourceMappingURL=questionnaire.css.map */

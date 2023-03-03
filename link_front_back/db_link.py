@@ -1,4 +1,4 @@
-from sqlalchemy import func, exc
+from sqlalchemy import func, exc, desc
 from .setupdb import *
 from flask_login import current_user
 from flask_login import current_user
@@ -82,15 +82,34 @@ def get_liste_type_question():
         test.append({"idt": rw.idType, "nom": rw.nomType})
     return test
 
-
-def get_anwser(idq):
+def get_answers(idq):
     res = ses.query(RepQuestion).filter(RepQuestion.idQuestion == idq)
     test = list()
     for rw in res:
-        test.append({"idr": rw.idReponse, "text": rw.reponse, "fraction": rw.fraction, "feedback": rw.feedback,
-                     "idq": rw.idQuestion})
+        test.append({"idr":rw.idReponse,
+                     "text":rw.reponse,
+                     "fraction":rw.fraction,
+                     "feedback":rw.feedback,
+                     "idq":rw.idQuestion})
     return test
 
+def get_questions_and_answers(idqq):
+    res2 = ses.query(Question).filter(Question.idQuestionnaire == idqq)
+    test2 = list()
+    for rz in res2:
+        test2.append({"idq":rz.idQuestion,
+                      'type':(ses.query(Type).filter(Type.idType == rz.idType))[0].nomType,
+                      'name' : rz.name,
+                      "questiontext":rz.question,
+                      "template":rz.template,
+                      "defaultgrade":rz.valeurPoint,
+                      "hidden":rz.hidden,
+                      "penalty":rz.pointNegatif,
+                      "idQuestionnaire":rz.idQuestionnaire,
+                      "generalfeedback":rz.feedback,
+                      "idt":rz.idType,
+                      "reponses":get_answers(rz.idQuestion)})
+    return test2
 
 def query_max(table):
     res = ses.query(func.max(table)).scalar()
@@ -198,6 +217,77 @@ def modifq(question, idq, idType, hidden=0, valeur=1, feedback='', pointneg=0, t
     q1.pointNegatif = pointneg
     q1.template = template
     ses.commit()
+def add_rep_user(idu, idq, num_essai, reponse):
+    ru = RepUser(idUser=idu, idQuestion=idq, essaiNumero=num_essai, reponse=reponse)
+    ses.add(ru)
+    ses.commit()
+
+def get_rep_user(idu, idq, num_essai):
+    res = ses.query(RepUser).filter(RepUser.idQuestion == idq, RepUser.idUser == idu, RepUser.essaiNumero == num_essai).first()
+    return res.reponse
+
+def calcul_score_quizz(idu, idqq, num_essai):
+    score = 0
+    total = 0
+    questions = get_questions_and_answers(idqq)
+    for question in questions:
+        idq = question['idq']
+        reponse = get_rep_user(idu, idq, num_essai)
+        total += question['defaultgrade']
+        score = test_match_case(question, reponse, score)
+    return str(score) +"/"+ str(total)
+
+def test_match_case(question, reponse, score):
+    match (question['type']):
+        case "multichoice":
+            id_reponses = set(reponse.split())
+            id_v_rep = set()
+            for rep in question['reponses']:
+                if rep['fraction'] != 0:
+                    id_v_rep.add(str(rep['idr']))
+            if id_reponses == id_v_rep:
+                score += question['defaultgrade']
+            else:
+                score -= question['penalty']
+            return score
+        case "truefalse":
+            id_reponse = reponse
+            for rep in question['reponses']:
+                if rep['fraction'] == 100:
+                    if id_reponse == str(question['reponses'][0]['idr']):
+                        score += question['defaultgrade']
+                    else:
+                        score -= question['penalty']
+            return score
+        case "Reponse courte":
+            if reponse == question['reponses'][0]:
+                score += question['defaultgrade']
+            else:
+                score -= question['penalty']
+    return score
+
+def get_essai(idu, idqq):
+    res = ses.query(RepUser, Question).filter(
+        RepUser.idUser == idu, Question.idQuestionnaire == idqq).order_by(
+        desc(RepUser.essaiNumero)).first()
+    if res is None:
+        return 0
+    for row in res:
+        return 0 if row.essaiNumero is None else row.essaiNumero
+
+
+def get_liste_id_type_question_in_questionnaire(idqq: int):
+    res = ses.query(Question).filter(Question.idQuestionnaire == idqq)
+    liste = list()
+    for row in res:
+        liste.append((row.idQuestion, (ses.query(Type).filter(Type.idType == row.idType))[0].nomType))
+    return liste
+
+def add_questionnaire2(nom, info, idu):
+    q = Questionnaire(idQuestionnaire=query_max(Questionnaire.idQuestionnaire)+1, nom=nom, info=info, idUser=idu)
+    ses.add(q)
+    ses.commit()
+
 def main():
     add_questionnaire(p)
 

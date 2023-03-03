@@ -30,6 +30,8 @@ auront des contenus individualisés (valeurs numériques ou autres différentes)
 ### Manuel d'installation :
 - Installer MySQL 8.0.26 https://dev.mysql.com/downloads/mysql/
 - Installer Python 3.9.7 https://www.python.org/downloads/release/python-397/
+- Lancer un venv ````python -m venv myenv```` puis ```myenv\Scripts\activate```
+- Installer les requirements ```pip install -r requirements.txt```
 - Dans le fichier ```setupdb.py``` modifier les lignes suivante avec vos informations de connexion
 ```python
 login, passwd, serveur, bd = "root", "ronceray", "localhost", "kairo"
