@@ -1,40 +1,47 @@
 
 {% extends 'base.html' %}
-{% block styles %}
-{{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='profil.css')}}">
+{% block styleandtitle %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/profil.css')}}">
+<title>Profil</title>
 {% endblock %}
 {% block connexion %}
 <body>
+    <div class="container">
     <h1 class="title">
         Bonjour, {{current_user.username}}!
-
-    </h1>
-    <div class="Questionnaire">
-        <h3>Username :</h3>
-                    {{ current_user.username }}
-                    <form action="{{ url_for("modifP") }}" method="post">
-                        <input type="submit" value="Modifier">
-                    </form>
-        <h3>Password :</h3>
-                    *********** 
-                    <form action="{{ url_for("modifP") }}" method="post">
-                        <input type="submit" value="Modifier">
-                    </form>
-        <ul>
-            {% for x in questionnaire %}
-        <p>{{x['idq']}}</p>
-            
-        </a>
-        {% endfor %}
-        </ul>
+    </h1> 
+    <div >
+        <div class="Actions">
+            <div class="action2" >
+            <h3>Username :</h3>
+                        {{ current_user.username }}
+                        <form class="modif1" action="{{ url_for("modifP") }}" method="post">
+                            <input type="submit" value="Modifier">
+                        </form>
+            </div>
+            <div class="action3" >
+            <h3>Password :</h3>
+                        *********** 
+                        <form class="modif2" action="{{ url_for("modifP") }}" method="post">
+                            <input type="submit" value="Modifier">
+                        </form>
+            </div>
+            <div class="action4" >
+            <ul>
+                <li>Questionnaires : </li>
+                {% for q in questionnaire %}
+            <p>{{ q['nom'] }}</p>
+            {% endfor %}
+            </ul>
+            </div>
+        </div>
     </div>
-    <div class ="form-group">
-            <div class="button">
-                <form action="{{ url_for("home") }}" method="post">
+    <div class="bout">
+            <div>
+                <form class ="valider" action="{{ url_for("home") }}" method="post">
                     <input type="submit" value="Valider">
                 </form>
-                <form action="{{ url_for("logout") }}" method="post">
+                <form class="logout" action="{{ url_for("logout") }}" method="post">
                     <input type="submit" value="Logout">
                 </form> 
             </div>
@@ -45,5 +52,7 @@
         </div>
         {% endif %}
         {% endwith %}
+    </div>
 </body>
+
 {% endblock %}

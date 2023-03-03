@@ -28,6 +28,7 @@ def get_liste_id_nom_questionnaire(idu: int = None):
 def get_questionnaire_name(idq:int)->str:
     res = ses.query(Questionnaire).filter(Questionnaire.idQuestionnaire == idq)
     return res[0].nom
+    
 def get_questionnaire(idq):
     res = ses.query(Questionnaire).filter(Questionnaire.idQuestionnaire == idq)
     test = list()

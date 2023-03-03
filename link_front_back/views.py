@@ -84,7 +84,7 @@ def about():
 @login_required
 def profil(idUser):
     questionnaire = get_questionnaires_idUser(idUser)
-    return render_template("profil.html", questionnaire)
+    return render_template("profil.html", questionnaire = questionnaire)
 
 
 @app.route("/logout", methods=["post"])
