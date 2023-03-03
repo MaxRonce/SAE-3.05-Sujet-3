@@ -121,5 +121,10 @@ body {
   width: 50%;
 }
 
+.buttonsquest {
+  margin-right: 2vw;
+  text-decoration: none;
+  
+}
 
 /*# sourceMappingURL=questionnaire.css.map */
