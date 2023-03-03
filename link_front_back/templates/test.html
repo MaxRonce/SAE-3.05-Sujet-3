@@ -7,6 +7,7 @@
     {% block content %}
 <form role="form"  method="post">
     {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
     <div class="Add_question_container">
     <h1>Ajouter Question</h1>
 
