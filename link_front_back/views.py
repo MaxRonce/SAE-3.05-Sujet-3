@@ -87,13 +87,14 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/profil")
+@app.route("/profil/<idUser>", methods=["GET", "POST"])
 @login_required
-def profil():
-    return render_template("profil.html")
+def profil(idUser):
+    questionnaire = get_questionnaires_idUser(idUser)
+    return render_template("profil.html", questionnaire = questionnaire)
 
 
-@app.route("/logout", methods=["post"])
+@app.route("/logout", methods=["post", "get"])
 def logout():
     logout_user()
     return redirect(url_for("home"))
@@ -214,7 +215,6 @@ def uploader_file():
             except exc.SQLAlchemyError as e:
                 flash('Error while uploading file')
                 flash(str(e))
-
     return render_template('import.html', form=form)
 
 
@@ -231,7 +231,6 @@ def downloader_file():
 def download_file(idQ):
     name = "Export" + idQ + ".xml"
     writter(name, 'link_front_back/parser/out/', get_dict_from_DB(idQ), category=True)
-
     return send_file("parser/out/" + name, as_attachment=True)
 
 
@@ -256,10 +255,23 @@ def sendanswers():
         else:
             rep = request.form.get(str(qid)) # pour valeur simple
         add_rep_user(current_user.get_id(), qid, numEssai, rep)
-
     return redirect(url_for("score", idqq=idqq, num_essai=numEssai))
 
 @app.route("/score/<idqq>/<num_essai>")
 def score(idqq, num_essai):
-
     return render_template("score.html", score=calcul_score_quizz(current_user.get_id(), idqq, num_essai))
+
+@app.route("/modifprofil", methods=["POST", "GET"])
+@login_required
+def modifP():
+    form = ModifPForm()
+    if form.validate_on_submit():
+        user = form.password_changed()
+        if user is None:
+            flash("le nom d'utilisateur est incorrect")
+        elif user is False:
+            flash("le mot de passe est incorrect")
+            return render_template('modifP.html', form=form)
+        else:
+            return redirect('logout')
+    return render_template('modifP.html', form=form)

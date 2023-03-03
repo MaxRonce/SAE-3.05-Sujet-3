@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+{% block styleandtitle %}
+{{ super () }}
+<link rel="stylesheet" href="{{url_for('static', filename='css/connexion.css')}}">
+{% endblock %}
+
+{% block content%}
+<h1>Modification</h1>
+<form method="post">
+    {{ form.csrf_token }}
+    <h3>Username</h3>
+    {{ form.act_username(class_="box", placeholder="Username") }}
+    <h3>Password</h3>
+    <h4>Tapez votre ancien mot de passe</h4>
+    {{ form.act_password(class_="box", placeholder="Actual Password") }}
+    <h4>Tapez votre nouveau mot de passe</h4>
+    {{ form.new_password(class_="box", placeholder="New Password") }}
+    <button class="button_slider">
+        <span class="background"></span>
+        <span class="arrow">
+            <span class="body"></span>
+            <span class="tip"></span>
+        </span>
+        <span class="text">valider</span>
+    </button>
+</form>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
+{% endblock %}
