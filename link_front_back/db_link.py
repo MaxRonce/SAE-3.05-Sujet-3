@@ -283,6 +283,11 @@ def get_liste_id_type_question_in_questionnaire(idqq: int):
         liste.append((row.idQuestion, (ses.query(Type).filter(Type.idType == row.idType))[0].nomType))
     return liste
 
+def add_questionnaire2(nom, info, idu):
+    q = Questionnaire(idQuestionnaire=query_max(Questionnaire.idQuestionnaire)+1, nom=nom, info=info, idUser=idu)
+    ses.add(q)
+    ses.commit()
+
 def main():
     add_questionnaire(p)
 

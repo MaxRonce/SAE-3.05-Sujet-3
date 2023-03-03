@@ -42,6 +42,10 @@ class EquestionForm(FlaskForm):
     valeurpn = IntegerField('Valeur des points négatifs')
     submit = SubmitField('Submit')
 
+class QuestionnaireForm(FlaskForm):
+    nom = StringField('Nom', validators=[DataRequired()])
+    info = StringField('Info')
+    submit = SubmitField('Submit')
 class QCMform(FlaskForm):
     reponse1 = StringField('Réponse', validators=[DataRequired()])
     reponse2 = StringField('Réponse')
