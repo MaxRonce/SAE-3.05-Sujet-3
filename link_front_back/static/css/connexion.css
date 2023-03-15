@@ -125,4 +125,9 @@ body {
   font-family: Oswald, serif;
 }
 
+.pbutton {
+
+  display:flex;
+  flex-direction: row;
+}
 /*# sourceMappingURL=connexion.css.map */

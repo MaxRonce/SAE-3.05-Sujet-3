@@ -4,6 +4,8 @@ from wtforms.validators import DataRequired, regexp
 
 from .db_link import get_liste_id_nom_questionnaire, get_user, add_user
 from .models import User
+from .setupdb import ses
+
 from hashlib import sha256
 
 class MultiCheckboxField(SelectMultipleField):
@@ -72,103 +74,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     def get_authenticated_user(self):
         user = get_user(self.username.data)
         if user is None:
@@ -189,3 +94,25 @@ class RegisterForm(FlaskForm):
         salted_input = sha256(salted_input.encode('utf-8')).hexdigest()
         add_user(self.username.data, salted_input)
         return True
+
+class ModifPForm(FlaskForm):
+    act_username = StringField('Username', validators=[DataRequired()])
+    act_password = PasswordField('Password', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[DataRequired()])
+    submit = SubmitField('Register')
+
+    def password_changed(self):
+        user = get_user(self.act_username.data)
+        if user is None:
+            return None
+        us = User(user.idUser, user.mdpUser)
+        salted_input = self.act_username.data + self.act_password.data
+        salted_input = sha256(salted_input.encode('utf-8')).hexdigest()
+        if salted_input != us.password:
+            return False
+        new_salt = self.act_username.data + self.new_password.data
+        salted_output = sha256(new_salt.encode('utf-8')).hexdigest()
+        user.mdpUser = new_salt
+        ses.add(user)
+        ses.commit()
+        return us
